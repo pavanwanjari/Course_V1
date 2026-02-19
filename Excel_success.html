@@ -4,12 +4,15 @@
 <title>Excel Course Download</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body{
 font-family:'Poppins',sans-serif;
 background:linear-gradient(135deg,#e0f7fa,#f4f7fc);
 text-align:center;
 padding:40px 15px;
+margin:0;
 }
 
 .success-box{
@@ -19,6 +22,12 @@ margin:auto;
 padding:40px 25px;
 border-radius:20px;
 box-shadow:0 15px 40px rgba(0,0,0,0.1);
+animation:fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 h2{
@@ -29,6 +38,7 @@ margin-bottom:10px;
 p{
 margin-bottom:25px;
 font-size:15px;
+line-height:1.6;
 }
 
 .download-btn{
@@ -47,6 +57,7 @@ transition:0.3s;
 
 .download-btn:hover{
 transform:scale(1.05);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
 .note{
@@ -63,6 +74,10 @@ color:#007bff;
 text-decoration:none;
 }
 
+.home-btn:hover{
+text-decoration:underline;
+}
+
 footer{
 margin-top:40px;
 font-size:12px;
@@ -76,8 +91,11 @@ color:#555;
 <div class="success-box">
 
 <h2>🎉 Payment Successful!</h2>
-<p>Thank you for purchasing the <b>Excel Complete Combo Course</b>.<br>
-Click below to access your course materials.</p>
+
+<p>
+Thank you for purchasing the <b>Excel Complete Combo Course</b>.<br>
+Click below to access your course materials.
+</p>
 
 <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing"
 class="download-btn" target="_blank">
@@ -90,7 +108,7 @@ class="download-btn" target="_blank">
 </a>
 
 <div class="note">
-⚠ If link does not open, contact us on WhatsApp.
+⚠ If links do not open, contact us on WhatsApp.
 </div>
 
 <a href="https://pavanwanjari.github.io/Course-website/" class="home-btn">
