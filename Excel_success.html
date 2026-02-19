@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Excel Course Download</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+font-family: 'Poppins', sans-serif;
+background: linear-gradient(135deg,#e0f7fa,#f4f7fc);
+text-align:center;
+padding:40px 15px;
+}
+
+.success-box{
+background:white;
+max-width:500px;
+margin:auto;
+padding:40px 25px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.1);
+}
+
+h2{
+color:#28a745;
+margin-bottom:10px;
+}
+
+p{
+margin-bottom:25px;
+font-size:15px;
+}
+
+.download-btn{
+display:block;
+margin:15px auto;
+padding:12px 20px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:30px;
+text-decoration:none;
+width:260px;
+font-weight:600;
+transition:0.3s;
+}
+
+.download-btn:hover{
+transform:scale(1.05);
+}
+
+.note{
+margin-top:20px;
+font-size:13px;
+color:#666;
+}
+
+.home-btn{
+display:inline-block;
+margin-top:20px;
+font-size:13px;
+color:#007bff;
+text-decoration:none;
+}
+
+footer{
+margin-top:40px;
+font-size:12px;
+color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="success-box" id="content">
+
+<h2>🎉 Payment Successful!</h2>
+<p>Thank you for purchasing the <b>Excel Complete Combo Course</b>.<br>
+Click below to access your course materials.</p>
+
+<a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing"
+class="download-btn" target="_blank">
+📘 Download Excel PDF
+</a>
+
+<a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing"
+class="download-btn" target="_blank">
+🎥 Watch Excel Video Course
+</a>
+
+<div class="note">
+⚠ If link does not open, contact us on WhatsApp.
+</div>
+
+<a href="Excel.html" class="home-btn">← Back to Home</a>
+
+</div>
+
+<footer>
+© 2026 Professional Skills Academy <br>
+📧 shubhams2018@gmail.com |
+📞 9403030512 / 7507940073
+</footer>
+
+<script>
+// Simple protection check
+if(!document.referrer.includes("Excel.html")){
+    document.getElementById("content").innerHTML = 
+    "<h2>Access Denied</h2><p>Please complete payment first.</p>";
+}
+</script>
+
+</body>
+</html>
