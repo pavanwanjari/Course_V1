@@ -10,22 +10,40 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#333;text-align:center;}
-header{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;padding:60px 15px;}
+header{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;padding:60px 15px;
+}
 header h1{font-size:28px;margin-bottom:10px;}
-.offer{background:red;padding:8px 20px;border-radius:30px;
-display:inline-block;margin-top:10px;font-weight:600;}
+.offer{
+background:red;padding:8px 20px;border-radius:30px;
+display:inline-block;margin-top:10px;font-weight:600;
+}
 .section{padding:50px 15px;}
-.card{background:white;max-width:500px;margin:auto;padding:30px;
-border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.1);}
+.card{
+background:white;max-width:500px;margin:auto;padding:30px;
+border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.1);
+}
+.card img{
+width:90px;
+margin-bottom:15px;
+}
 .price del{color:#999;}
 .price strong{color:#28a745;font-size:26px;}
-input{width:90%;max-width:350px;padding:10px;margin:8px;
-border-radius:8px;border:1px solid #ccc;}
-button{background:#28a745;color:white;padding:12px 25px;
-border:none;border-radius:30px;font-size:16px;cursor:pointer;margin-top:15px;}
+input{
+width:90%;max-width:350px;padding:10px;margin:8px;
+border-radius:8px;border:1px solid #ccc;
+}
+button{
+background:#28a745;color:white;padding:12px 25px;
+border:none;border-radius:30px;font-size:16px;
+cursor:pointer;margin-top:15px;transition:0.3s;
+}
 button:hover{transform:scale(1.05);}
-footer{background:#1d3557;color:white;padding:15px;font-size:12px;margin-top:40px;}
+footer{
+background:#1d3557;color:white;
+padding:15px;font-size:12px;margin-top:40px;
+}
 </style>
 </head>
 
@@ -39,16 +57,24 @@ footer{background:#1d3557;color:white;padding:15px;font-size:12px;margin-top:40p
 
 <div class="section">
 <div class="card">
+
+<!-- Excel Logo Restored -->
+<img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Excel Logo">
+
 <h2>Excel Complete Combo Course</h2>
+
 <div class="price">
 <del>₹999</del><br>
 <strong>₹1 Only</strong>
 </div>
 
-<p>✔ PDF Notes<br>
+<p>
+✔ PDF Notes<br>
 ✔ HD Video Course<br>
 ✔ Beginner to Advanced<br>
-✔ Lifetime Access</p>
+✔ Lifetime Access
+</p>
+
 </div>
 </div>
 
@@ -78,8 +104,14 @@ let email=document.getElementById("email").value.trim();
 let mobile=document.getElementById("mobile").value.trim();
 let designation=document.getElementById("designation").value.trim();
 
+// Basic Validation
 if(name==""||email==""||mobile==""||designation==""){
 alert("Please fill all details");
+return;
+}
+
+if(mobile.length < 10){
+alert("Enter valid mobile number");
 return;
 }
 
@@ -105,7 +137,7 @@ formData.append("payment_id",response.razorpay_payment_id);
 formData.append("order_id",response.razorpay_order_id || "");
 formData.append("signature",response.razorpay_signature || "");
 
-fetch("https://script.google.com/macros/s/AKfycbwMcKr7fWL6FxqLXlYxKppFzXC-LKils7KvE5FG6PWC9Rc3aMhQAxvCuv-FEf1WhCk/exec",{
+fetch("https://script.google.com/macros/s/AKfycbytKA3Hsq5KQrdOEykvWDUbv2XmKDdvgNi5a8fFSwJDBDIekBgmOpAWCSlW6L2Gw0n3/exec",{
 method:"POST",
 body:formData
 })
