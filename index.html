@@ -6,110 +6,26 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#333;}
-.container{width:92%;max-width:1100px;margin:auto;}
-
-header{
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;text-align:center;padding:60px 15px;
-}
-
-header h1{font-size:30px;margin-bottom:10px;}
-header p{font-size:16px;opacity:0.9;}
-
-.offer-badge{
-background:#ff0000;
-display:inline-block;
-padding:8px 18px;
-border-radius:30px;
-font-size:14px;
-margin-top:15px;
-font-weight:600;
-}
-
-.section{padding:50px 10px;text-align:center;}
-
-.course-card{
-background:white;
-max-width:500px;
-margin:auto;
-padding:30px;
-border-radius:20px;
-box-shadow:0 15px 40px rgba(0,0,0,0.1);
-}
-
-.course-card img{width:80px;margin-bottom:15px;}
-
-.price{margin:15px 0;}
-.old-price{text-decoration:line-through;color:#999;font-size:18px;}
-.new-price{color:#28a745;font-size:28px;font-weight:700;}
-
-.features{text-align:left;margin-top:20px;}
-.features li{margin:8px 0;}
-
-button{
-background:#28a745;
-color:white;
-padding:12px 25px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-font-size:16px;
-margin-top:20px;
-transition:0.3s;
-}
-
+body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#333;text-align:center;}
+header{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;padding:60px 15px;}
+header h1{font-size:28px;margin-bottom:10px;}
+.offer{background:red;padding:8px 20px;border-radius:30px;
+display:inline-block;margin-top:10px;font-weight:600;}
+.section{padding:50px 15px;}
+.card{background:white;max-width:500px;margin:auto;padding:30px;
+border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.1);}
+.price del{color:#999;}
+.price strong{color:#28a745;font-size:26px;}
+input{width:90%;max-width:350px;padding:10px;margin:8px;
+border-radius:8px;border:1px solid #ccc;}
+button{background:#28a745;color:white;padding:12px 25px;
+border:none;border-radius:30px;font-size:16px;cursor:pointer;margin-top:15px;}
 button:hover{transform:scale(1.05);}
-
-input{
-width:90%;
-max-width:350px;
-padding:10px;
-margin:8px;
-border-radius:8px;
-border:1px solid #ccc;
-font-size:14px;
-}
-
-.testimonial{
-background:white;
-padding:20px;
-margin:10px auto;
-border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
-max-width:400px;
-font-style:italic;
-}
-
-footer{
-background:#1d3557;
-color:white;
-text-align:center;
-padding:10px;
-font-size:12px;
-}
-
-.whatsapp-float{
-position:fixed;
-bottom:18px;
-right:18px;
-background:#25D366;
-color:white;
-width:55px;
-height:55px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:26px;
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
-text-decoration:none;
-z-index:999;
-}
+footer{background:#1d3557;color:white;padding:15px;font-size:12px;margin-top:40px;}
 </style>
 </head>
 
@@ -118,30 +34,21 @@ z-index:999;
 <header>
 <h1>Master Microsoft Excel</h1>
 <p>Professional Skills Academy</p>
-<div class="offer-badge">
-🔥 Offer: ₹999 Course at ₹1 Only | Valid Till 28 Feb 2026
-</div>
+<div class="offer">🔥 ₹999 Course at ₹1 Only</div>
 </header>
 
 <div class="section">
-<div class="container">
-<div class="course-card">
-<img src="https://img.icons8.com/color/96/microsoft-excel-2019.png">
+<div class="card">
 <h2>Excel Complete Combo Course</h2>
-
 <div class="price">
-<span class="old-price">₹999</span><br>
-<span class="new-price">₹1 Only</span>
+<del>₹999</del><br>
+<strong>₹1 Only</strong>
 </div>
 
-<ul class="features">
-<li>✔ Complete Excel PDF Notes</li>
-<li>✔ Full HD Video Lectures</li>
-<li>✔ Beginner to Advanced Level</li>
-<li>✔ Lifetime Access</li>
-</ul>
-
-</div>
+<p>✔ PDF Notes<br>
+✔ HD Video Course<br>
+✔ Beginner to Advanced<br>
+✔ Lifetime Access</p>
 </div>
 </div>
 
@@ -157,26 +64,11 @@ z-index:999;
 <button onclick="payNow()">Buy Now for ₹1</button>
 </div>
 
-<div class="section">
-<h2>What Students Say</h2>
-<div class="testimonial">
-"After this Excel course, I got promoted in my company!" – Rahul
-</div>
-<div class="testimonial">
-"Best Excel course in just ₹1. Worth it!" – Sneha
-</div>
-</div>
-
 <footer>
 © 2026 Professional Skills Academy <br>
 📧 shubhams2018@gmail.com |
 📞 9403030512 / 7507940073
 </footer>
-
-<a href="https://wa.me/919403030512?text=Hi%20I%20want%20Excel%20course"
-class="whatsapp-float" target="_blank">
-<i class="fab fa-whatsapp"></i>
-</a>
 
 <script>
 function payNow(){
@@ -200,29 +92,29 @@ var options={
 
 "handler": function (response) {
 
-fetch("https://script.google.com/macros/s/AKfycbxUuNU-nhFwGnNcE0iybPE1v81LjihXi479oqhGAnCNfOahXgQxyt30maOWITODA2g2/exec", {
+var formData=new URLSearchParams();
+formData.append("name",name);
+formData.append("mobile",mobile);
+formData.append("email",email);
+formData.append("profession",designation);
+formData.append("course","Excel Combo Course");
+formData.append("total",999);
+formData.append("discount",998);
+formData.append("netpayment",1);
+formData.append("payment_id",response.razorpay_payment_id);
+formData.append("order_id",response.razorpay_order_id || "");
+formData.append("signature",response.razorpay_signature || "");
+
+fetch("https://script.google.com/macros/s/AKfycbwMcKr7fWL6FxqLXlYxKppFzXC-LKils7KvE5FG6PWC9Rc3aMhQAxvCuv-FEf1WhCk/exec",{
 method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-name:name,
-mobile:mobile,
-email:email,
-profession:designation,
-course:"Excel Combo Course",
-total:999,
-discount:998,
-netpayment:1,
-payment_id:response.razorpay_payment_id,
-order_id:response.razorpay_order_id || "",
-signature:response.razorpay_signature || ""
-})
+body:formData
 })
 .then(res=>res.text())
 .then(data=>{
-console.log("Sheet Response:", data);
+console.log("Sheet Response:",data);
 })
 .catch(err=>{
-console.log("Sheet Error:", err);
+console.log("Sheet Error:",err);
 })
 .finally(()=>{
 window.location.href="https://pavanwanjari.github.io/Course-website/Excel_success.html";
@@ -246,10 +138,5 @@ rzp.open();
 }
 </script>
 
-
 </body>
 </html>
-
-
-
-
