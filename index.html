@@ -210,24 +210,35 @@ email:email,
 profession:designation,
 course:"Excel Combo Course",
 total:999,
-discount:900,
+discount:998,
 netpayment:1,
 payment_id:response.razorpay_payment_id,
-order_id:response.razorpay_order_id,
-signature:response.razorpay_signature
+order_id:response.razorpay_order_id || "",
+signature:response.razorpay_signature || ""
 })
 })
 .then(res=>res.text())
 .then(data=>{
-window.location.href="Excel_success.html";
+console.log("Sheet Response:", data);
 })
 .catch(err=>{
-alert("Payment done but error saving data. Contact support.");
+console.log("Sheet Error:", err);
+})
+.finally(()=>{
+window.location.href="https://pavanwanjari.github.io/Course-website/Excel_success.html";
 });
 
 },
 
-"prefill":{"name":name,"email":email}
+"prefill":{
+"name":name,
+"email":email,
+"contact":mobile
+},
+
+"theme":{
+"color":"#28a745"
+}
 };
 
 var rzp=new Razorpay(options);
@@ -235,8 +246,10 @@ rzp.open();
 }
 </script>
 
+
 </body>
 </html>
+
 
 
 
