@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Verify Email</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body style="font-family:Poppins;text-align:center;padding:50px;background:#f4f7fc;">
+
+<h2>Access Your Course</h2>
+<p>Enter your email to check purchase</p>
+
+<input type="email" id="email" placeholder="Enter your email"
+style="padding:12px;width:260px;border-radius:8px;border:1px solid #ccc;"><br><br>
+
+<button onclick="checkEmail()"
+style="padding:12px 25px;background:#28a745;color:white;border:none;border-radius:25px;">
+Check Now
+</button>
+
+<p id="msg" style="margin-top:15px;color:red;"></p>
+
+<script>
+
+function checkEmail(){
+
+var email=document.getElementById("email").value.trim();
+
+if(email==""){
+document.getElementById("msg").innerHTML="Please enter email.";
+return;
+}
+
+fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec?email=" + encodeURIComponent(email))
+.then(response=>response.text())
+.then(data=>{
+
+if(data.trim()=="FOUND"){
+sessionStorage.setItem("paid","yes");
+window.location.href="Excel_success_v3.html";
+}else{
+document.getElementById("msg").innerHTML="Email not found. Please purchase course.";
+setTimeout(()=>{window.location.href="index.html";},2000);
+}
+
+})
+.catch(()=>{
+document.getElementById("msg").innerHTML="Error checking email.";
+});
+
+}
+
+</script>
+
+</body>
+</html>
