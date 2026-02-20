@@ -19,8 +19,8 @@ header h1{font-size:32px;margin-bottom:10px;}
 .offer{
 background:red;padding:8px 20px;border-radius:30px;
 display:inline-block;margin-top:10px;font-weight:600;
-animation:pulse 1.5s infinite;
 color:white;
+animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
@@ -29,21 +29,33 @@ color:white;
 100%{transform:scale(1);}
 }
 
-.offer-date{
-margin-top:8px;
-font-size:14px;
-background:#fff3cd;
-color:#856404;
-display:inline-block;
-padding:6px 15px;
-border-radius:20px;
-}
-
 .section{padding:60px 15px;}
 
 .card{
 background:white;max-width:500px;margin:auto;padding:35px;
 border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.12);
+}
+
+/* 🔥 Animated Excel Logo */
+.logo-container{
+display:inline-block;
+animation:float 3s ease-in-out infinite;
+}
+
+.logo-container img{
+width:120px;
+transition:0.4s;
+filter:drop-shadow(0px 8px 15px rgba(0,0,0,0.25));
+}
+
+.logo-container img:hover{
+transform:rotate(10deg) scale(1.1);
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0px);}
 }
 
 .price del{color:#999;font-size:16px;}
@@ -65,6 +77,21 @@ box-shadow:0 8px 20px rgba(0,0,0,0.2);
 button:hover{
 transform:scale(1.07);
 background:#218838;
+}
+
+.already-btn{
+display:inline-block;
+margin-top:20px;
+padding:10px 25px;
+background:#1d3557;
+color:white;
+border-radius:25px;
+text-decoration:none;
+font-size:14px;
+transition:0.3s;
+}
+.already-btn:hover{
+background:#16324f;
 }
 
 footer{
@@ -103,11 +130,15 @@ transform:scale(1.15);
 <h1>Master Microsoft Excel</h1>
 <p>Professional Skills Academy</p>
 <div class="offer">🔥 ₹999 Course at ₹1 Only</div>
-<div class="offer-date">⏳ Limited Time Mega Offer</div>
 </header>
 
 <div class="section">
 <div class="card">
+
+<!-- 🔥 Animated Logo -->
+<div class="logo-container">
+<img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Excel Logo">
+</div>
 
 <h2>Excel Complete Combo Course</h2>
 
@@ -138,6 +169,10 @@ transform:scale(1.15);
 <h3>Total: ₹1</h3>
 <button onclick="payNow()">Buy Now for ₹1</button>
 
+<a href="check_email.html" class="already-btn">
+Already Purchased? Click Here
+</a>
+
 </div>
 
 <footer>
@@ -146,8 +181,7 @@ transform:scale(1.15);
 📞 9403030512 / 7507940073
 </footer>
 
-<!-- WhatsApp with Auto Message -->
-<a href="https://wa.me/919403030512?text=I%20want%20to%20know%20about%20the%20Excel%20Combo%20Course%20offer%20for%20%E2%82%B91%20only."
+<a href="https://wa.me/919403030512?text=Hello%20I%20want%20to%20know%20about%20the%20Excel%20Combo%20Course%20offer%20for%20%E2%82%B91."
 class="whatsapp-float" target="_blank">
 <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
 </a>
@@ -172,37 +206,14 @@ return;
 
 var options={
 "key":"rzp_live_yA31xxMPut8Ech",
-"amount":100,   // ₹1 = 100 paise
+"amount":100,
 "currency":"INR",
 "name":"Professional Skills Academy",
 "description":"Excel Combo Course - ₹1 Offer",
 
 "handler": function (response) {
-
-var formData=new URLSearchParams();
-formData.append("name",name);
-formData.append("mobile",mobile);
-formData.append("email",email);
-formData.append("profession",designation);
-formData.append("course","Excel Combo Course");
-formData.append("total",999);
-formData.append("discount",998);
-formData.append("netpayment",1);
-formData.append("payment_id",response.razorpay_payment_id);
-
-fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec",{
-method:"POST",
-body:formData
-})
-.then(res=>res.text())
-.then(data=>{
 alert("Payment Successful! 🎉");
 window.location.href="Excel_success_v3.html";
-})
-.catch(err=>{
-alert("Payment successful but error saving data.");
-});
-
 },
 
 "prefill":{
