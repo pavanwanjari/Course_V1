@@ -4,53 +4,105 @@
 <title>Verify Email</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="analytics.js"></script>
 </head>
 
 <body style="font-family:Poppins;text-align:center;padding:50px;background:#f4f7fc;">
 
 <h2>Access Your Course</h2>
-<p>Enter your email to check purchase</p>
+<p>Enter the same email used during purchase.</p>
 
 <input type="email" id="email" placeholder="Enter your email"
 style="padding:12px;width:260px;border-radius:8px;border:1px solid #ccc;"><br><br>
 
-<button onclick="checkEmail()"
-style="padding:12px 25px;background:#28a745;color:white;border:none;border-radius:25px;">
+<button id="verifyBtn" onclick="checkEmail()"
+style="padding:12px 25px;background:#28a745;color:white;border:none;border-radius:25px;cursor:pointer;">
 Check Now
 </button>
 
-<p id="msg" style="margin-top:15px;color:red;"></p>
+<p id="msg" style="margin-top:15px;color:red;min-height:20px;"></p>
 
 <script>
+var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
+PSAAnalytics.trackEvent("verify_page_viewed", {});
+
+(function prefillEmail(){
+var latestLead = localStorage.getItem("latestLead");
+if(!latestLead){
+return;
+}
+try{
+var parsed = JSON.parse(latestLead);
+if(parsed.email){
+document.getElementById("email").value = parsed.email;
+}
+}catch(err){
+console.log("No valid local lead found");
+}
+})();
+
+function setStatus(text, isError){
+var msg = document.getElementById("msg");
+msg.style.color = isError ? "#c0392b" : "#2e7d32";
+msg.innerHTML = text;
+}
+
+function isPaidLocally(email){
+try{
+var paid = JSON.parse(localStorage.getItem("paidUsers") || "{}");
+return Boolean(paid[email] && paid[email].paid);
+}catch(e){
+return false;
+}
+}
+
+function grantAccess(email, source){
+sessionStorage.setItem("paid","yes");
+sessionStorage.setItem("paid_email", email);
+PSAAnalytics.trackEvent("verify_success", {email: email, source: source});
+window.location.href="Excel_success_v3.html";
+}
 
 function checkEmail(){
+var email=document.getElementById("email").value.trim().toLowerCase();
+var verifyBtn=document.getElementById("verifyBtn");
 
-var email=document.getElementById("email").value.trim();
-
-if(email==""){
-document.getElementById("msg").innerHTML="Please enter email.";
+if(email===""){
+setStatus("Please enter email.", true);
+PSAAnalytics.trackEvent("verify_validation_failed", {reason:"empty_email"});
 return;
 }
 
-fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec?email=" + encodeURIComponent(email))
+if(isPaidLocally(email)){
+setStatus("Purchase found on this device. Redirecting...", false);
+grantAccess(email, "local");
+return;
+}
+
+verifyBtn.disabled=true;
+setStatus("Checking your purchase, please wait...", false);
+PSAAnalytics.trackEvent("verify_started", {email: email});
+
+var url = SHEET_WEBAPP_URL + "?action=check&email=" + encodeURIComponent(email);
+fetch(url)
 .then(response=>response.text())
 .then(data=>{
-
-if(data.trim()=="FOUND"){
-sessionStorage.setItem("paid","yes");
-window.location.href="Excel_success_v3.html";
+var result = (data || "").trim().toUpperCase();
+if(result==="FOUND"){
+grantAccess(email, "sheet");
 }else{
-document.getElementById("msg").innerHTML="Email not found. Please purchase course.";
-setTimeout(()=>{window.location.href="index.html";},2000);
+PSAAnalytics.trackEvent("verify_not_found", {email: email, result: result});
+setStatus("Email not found. Please purchase course or use same payment email.", true);
+verifyBtn.disabled=false;
 }
 
 })
 .catch(()=>{
-document.getElementById("msg").innerHTML="Error checking email.";
+verifyBtn.disabled=false;
+PSAAnalytics.trackEvent("verify_error", {});
+setStatus("Error checking email. Please try again.", true);
 });
-
 }
-
 </script>
 
 </body>
