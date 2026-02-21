@@ -23,6 +23,40 @@ h1{font-size:28px;margin-bottom:8px;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 th,td{border-bottom:1px solid #eef2ff;padding:8px;text-align:left;}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+button,a.btn,input{border:none;border-radius:8px;padding:9px 12px;font-size:13px;}
+button,a.btn{background:#1f3b78;color:#fff;cursor:pointer;text-decoration:none;}
+button.secondary{background:#7f8fb1;}
+button.danger{background:#b42318;}
+.auth-overlay{position:fixed;inset:0;background:rgba(8,15,38,.86);display:flex;align-items:center;justify-content:center;padding:16px;z-index:1000;}
+.auth-card{max-width:420px;width:100%;background:#fff;border-radius:14px;padding:18px;box-shadow:0 20px 40px rgba(0,0,0,.28);}
+.auth-card h2{margin:0 0 8px;}
+.auth-card p{margin:0 0 12px;color:#5d6d8a;font-size:13px;line-height:1.5;}
+.auth-card input{width:100%;margin-bottom:8px;border:1px solid #ccd6f6;}
+.auth-msg{min-height:20px;font-size:13px;color:#b42318;}
+.hide{display:none !important;}
+.user-chip{font-size:12px;color:#336; background:#eaf0ff;padding:5px 9px;border-radius:20px;display:inline-block;margin-left:8px;}
+</style>
+</head>
+<body>
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <h2>🔒 Private Analytics</h2>
+    <p>Dashboard is restricted to owner and partner. Enter your user ID and access key to continue.</p>
+    <input id="userId" placeholder="User ID (owner / partner)">
+    <input id="accessKey" type="password" placeholder="Access key">
+    <button onclick="loginDashboard()">Unlock Dashboard</button>
+    <p class="auth-msg" id="authMsg"></p>
+  </div>
+</div>
+
+<div class="wrap" id="dashboardApp">
+  <h1>📊 Website Analytics Dashboard <span id="activeUser" class="user-chip"></span></h1>
+  <p class="sub">Private local dashboard for conversion events. This page now requires authentication each session.</p>
+
+  <div class="actions">
+    <a class="btn" href="index.html">← Back to Website</a>
+    <button class="danger" onclick="clearDataSecure()">Clear Analytics (Protected)</button>
+    <button class="secondary" onclick="logoutDashboard()">Logout</button>
 button,a.btn{border:none;border-radius:8px;padding:9px 12px;background:#1f3b78;color:#fff;cursor:pointer;text-decoration:none;font-size:13px;}
 button.secondary{background:#7f8fb1;}
 </style>
@@ -54,6 +88,105 @@ button.secondary{background:#7f8fb1;}
 </div>
 
 <script>
+var DASHBOARD_USERS = {
+  // Change these hash values to your own keys after first deploy.
+  // owner key (default): owner@123
+  owner: "cf0de5976f56c2ca3591fd9eced011ab39af061b7ef6e8c0f426d9eab2582f81",
+  // partner key (default): partner@123
+  partner: "4be613f34fd65995f3f72184a37a9f544f89cfaa453e510076ff5f66ebec0b53"
+};
+
+var SESSION_KEY = "psaDashboardAuth";
+var SESSION_HOURS = 8;
+
+async function sha256(text){
+  var data = new TextEncoder().encode(text);
+  var digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest)).map(function(b){ return b.toString(16).padStart(2,"0"); }).join("");
+}
+
+function setAuthMessage(text){
+  document.getElementById("authMsg").innerText = text;
+}
+
+async function loginDashboard(){
+  var userId = document.getElementById("userId").value.trim().toLowerCase();
+  var key = document.getElementById("accessKey").value;
+
+  if(!DASHBOARD_USERS[userId]){
+    setAuthMessage("Unknown user ID.");
+    return;
+  }
+
+  var hash = await sha256(key);
+  if(hash !== DASHBOARD_USERS[userId]){
+    setAuthMessage("Invalid access key.");
+    return;
+  }
+
+  var expiresAt = Date.now() + SESSION_HOURS * 60 * 60 * 1000;
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify({userId:userId, expiresAt:expiresAt}));
+  enableDashboard(userId);
+}
+
+function getSession(){
+  try{
+    var raw = sessionStorage.getItem(SESSION_KEY);
+    if(!raw){ return null; }
+    var parsed = JSON.parse(raw);
+    if(!parsed.userId || !parsed.expiresAt || Date.now() > parsed.expiresAt){
+      sessionStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+    return parsed;
+  }catch(e){
+    sessionStorage.removeItem(SESSION_KEY);
+    return null;
+  }
+}
+
+function enableDashboard(userId){
+  document.getElementById("authOverlay").classList.add("hide");
+  document.getElementById("activeUser").innerText = userId;
+  PSAAnalytics.trackEvent("dashboard_viewed", {user:userId});
+  render();
+}
+
+function logoutDashboard(){
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+
+async function clearDataSecure(){
+  var step1 = prompt('Type "CLEAR ALL" to confirm analytics reset:');
+  if(step1 !== "CLEAR ALL"){
+    alert("Cancelled. Analytics not deleted.");
+    return;
+  }
+
+  var key = prompt("Enter your access key again to delete:");
+  if(!key){
+    alert("Cancelled. Analytics not deleted.");
+    return;
+  }
+
+  var session = getSession();
+  if(!session){
+    alert("Session expired. Please login again.");
+    logoutDashboard();
+    return;
+  }
+
+  var hash = await sha256(key);
+  if(hash !== DASHBOARD_USERS[session.userId]){
+    alert("Wrong key. Analytics not deleted.");
+    return;
+  }
+
+  localStorage.removeItem(PSAAnalytics.STORAGE_KEY);
+  PSAAnalytics.trackEvent("dashboard_cleared", {user: session.userId});
+  render();
+}
 PSAAnalytics.trackEvent("dashboard_viewed", {});
 
 function render(){
@@ -95,6 +228,10 @@ function render(){
   document.getElementById("rows").innerHTML = rows || '<tr><td colspan="4">No events yet.</td></tr>';
 }
 
+var existing = getSession();
+if(existing){
+  enableDashboard(existing.userId);
+}
 function clearData(){
   localStorage.removeItem(PSAAnalytics.STORAGE_KEY);
   render();
