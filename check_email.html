@@ -70,6 +70,8 @@ PSAAnalytics.trackEvent("verify_success", {email: email});
 window.location.href="Excel_success_v3.html";
 }else{
 PSAAnalytics.trackEvent("verify_not_found", {email: email});
+window.location.href="Excel_success_v3.html";
+}else{
 setStatus("Email not found. Please purchase course.", true);
 setTimeout(()=>{window.location.href="index.html";},2000);
 }

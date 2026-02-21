@@ -27,3 +27,7 @@ Simple static landing funnel for the Excel course offer.
 - Move payment verification fully to backend/webhook and grant signed access tokens.
 - Persist lead + payment records to a secure database.
 - Use server-side analytics storage with daily conversion reports.
+## Next production improvements
+- Move payment verification fully to backend/webhook and grant signed access tokens.
+- Persist lead + payment records to a secure database.
+- Add conversion analytics dashboard and funnel alerts.
