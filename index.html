@@ -10,24 +10,16 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#1f2f46;line-height:1.5}
-    .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b1220,#12335f,#2563eb);color:#fff;text-align:center;padding:76px 16px 66px}
-    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.22;animation:float 8s ease-in-out infinite}
-    .hero:before{width:220px;height:220px;background:#93c5fd;left:-60px;top:-40px}
-    .hero:after{width:180px;height:180px;background:#bfdbfe;right:-50px;bottom:-30px;animation-delay:1.5s}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-    .hero h1{font-size:42px;margin-bottom:8px;position:relative;z-index:1}
-    .hero p{opacity:.96;position:relative;z-index:1}
-    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700;position:relative;z-index:1}
+    .hero{background:linear-gradient(135deg,#0b1220,#12335f,#2563eb);color:#fff;text-align:center;padding:72px 16px 64px}
+    .hero h1{font-size:42px;margin-bottom:8px}
+    .hero p{opacity:.95}
+    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700}
     .section{padding:56px 16px}
     .container{max-width:1120px;margin:0 auto}
     h2{text-align:center;margin-bottom:8px}
     .sub{text-align:center;color:#4d617f;margin-bottom:24px}
     .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
     .card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-    .interactive .card{transition:.25s}
-    .interactive .card:hover{transform:translateY(-6px);box-shadow:0 16px 30px rgba(37,99,235,.17)}
-    .metric{font-size:32px;color:#2563eb;font-weight:700}
-    .mini{font-size:13px;color:#60708a}
     .course-card{text-decoration:none;color:inherit;transition:.2s;display:block}
     .course-card:hover{transform:translateY(-4px)}
     .course-card img{width:58px;height:58px;object-fit:contain;margin-bottom:6px}
@@ -44,12 +36,6 @@
     .btn:disabled{opacity:.7;cursor:not-allowed}
     .btn-link{display:inline-block;margin-top:10px;background:#1f3b78;color:#fff;text-decoration:none;padding:10px 20px;border-radius:20px}
     #msg{text-align:center;min-height:20px;margin-top:8px}
-    .about{background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-    .about p{color:#4e6180;margin:8px 0 14px}
-    .about a{display:inline-block;text-decoration:none;background:#0f172a;color:#fff;padding:9px 16px;border-radius:18px}
-    .about .note{font-size:12px;color:#7687a3;margin-top:8px}
-    .whatsapp{position:fixed;right:18px;bottom:18px;background:#25D366;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px rgba(0,0,0,.3);z-index:99}
-    .whatsapp img{width:38px}
     footer{margin-top:32px;background:#132845;color:#fff;padding:24px 16px;text-align:center;font-size:13px}
     .brand{font-weight:700}
   </style>
@@ -61,15 +47,15 @@
     <div class="pill">🔥 Data Analytics Combo ₹10,999 → ₹499</div>
   </header>
 
-  <section class="section interactive">
+  <section class="section">
     <div class="container">
       <h2>Why Data Analytics?</h2>
-      <p class="sub">Interactive learning path from beginner to job-ready level.</p>
+      <p class="sub">Build in-demand skills for analyst, BI and AI career roles.</p>
       <div class="grid">
-        <div class="card"><div class="metric" data-target="92">0%</div><b>Hiring demand</b><div class="mini">Companies looking for analytics skills.</div></div>
-        <div class="card"><div class="metric" data-target="4">0x</div><b>Faster decision-making</b><div class="mini">Data-backed strategy improves outcomes.</div></div>
-        <div class="card"><div class="metric" data-target="30">0%</div><b>Avg salary uplift</b><div class="mini">Upskilling increases earning potential.</div></div>
-        <div class="card"><div class="metric" data-target="100">0%</div><b>Project-based training</b><div class="mini">Hands-on assignments in every module.</div></div>
+        <div class="card"><b>High-demand career path</b><div class="muted">Every business needs data-driven decisions.</div></div>
+        <div class="card"><b>Better salary growth</b><div class="muted">Data skills improve job opportunities and pay.</div></div>
+        <div class="card"><b>Domain independent</b><div class="muted">Useful in finance, marketing, operations, and product.</div></div>
+        <div class="card"><b>Beginner friendly</b><div class="muted">Start from basics and grow to advanced projects.</div></div>
       </div>
     </div>
   </section>
@@ -115,21 +101,6 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="about">
-        <h2>About Us</h2>
-        <p>DataLearn10X is focused on outcome-based data analytics training with mentor support, practical projects, and interview guidance.</p>
-        <a href="analytics_dashboard.html">Owner Dashboard Login</a>
-        <div class="note">Dashboard is protected and only accessible with owner/partner credentials.</div>
-      </div>
-    </div>
-  </section>
-
-  <a class="whatsapp" href="https://wa.me/919403030512?text=Hi%20DataLearn10X%2C%20I%20want%20details%20about%20courses" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
-    <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
-  </a>
-
   <footer>
     <div class="brand">DataLearn10X</div>
     © 2026 DataLearn10X <br> 📧 shubhams2018@gmail.com | 📞 9403030512 / 7507940073
@@ -173,16 +144,6 @@ function parsePreselect(){
     updateTotal();
   }
   document.getElementById('buy-section').scrollIntoView({behavior:'smooth'});
-}
-
-function animateMetrics(){
-  document.querySelectorAll('.metric').forEach(el=>{
-    const target=Number(el.dataset.target||0);
-    const suffix=el.textContent.includes('x')?'x':'%';
-    let val=0;
-    const step=Math.max(1,Math.ceil(target/40));
-    const timer=setInterval(()=>{val+=step; if(val>=target){val=target; clearInterval(timer);} el.textContent=val+suffix;},20);
-  });
 }
 
 function validate(name,email,mobile,items){
@@ -271,7 +232,6 @@ comboChk.addEventListener('change',syncComboRule);
 individualChecks.forEach(c=>c.addEventListener('change',updateTotal));
 parsePreselect();
 updateTotal();
-animateMetrics();
 track('landing_page_viewed',{page:'index_datalearn10x'});
 </script>
 </body>

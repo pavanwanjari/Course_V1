@@ -31,10 +31,3 @@ Data Analytics training website with multi-course pages, payment flow, access ve
 ## Analytics files
 - `analytics.js`
 - `analytics_dashboard.html`
-
-
-## UX updates
-- Added interactive Why Data Analytics metrics section with animations.
-- Added floating WhatsApp support button on homepage.
-- Added About Us block with Owner Dashboard link (dashboard itself remains login-protected).
-- Fixed verify-email logic to avoid false-positive access from partial responses like "NOT FOUND".
