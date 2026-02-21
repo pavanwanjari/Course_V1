@@ -1,125 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Excel Course Download</title>
+<title>Course Access - DataLearn10X</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+<script src="analytics.js"></script>
 <style>
-body{
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#e0f7fa,#f4f7fc);
-text-align:center;
-padding:40px 15px;
-margin:0;
-}
-
-.success-box{
-background:white;
-max-width:500px;
-margin:auto;
-padding:40px 25px;
-border-radius:20px;
-box-shadow:0 15px 40px rgba(0,0,0,0.1);
-animation:fadeIn 0.6s ease-in-out;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-h2{color:#28a745;margin-bottom:10px;}
-p{margin-bottom:25px;font-size:15px;line-height:1.6;}
-
-.download-btn{
-display:block;
-margin:15px auto;
-padding:12px 20px;
-background:#28a745;
-color:white;
-border:none;
-border-radius:30px;
-text-decoration:none;
-width:260px;
-font-weight:600;
-transition:0.3s;
-}
-
-.download-btn:hover{
-transform:scale(1.05);
-box-shadow:0 8px 20px rgba(0,0,0,0.2);
-}
-
-.note{
-margin-top:20px;
-font-size:13px;
-color:#666;
-}
-
-.home-btn{
-display:inline-block;
-margin-top:20px;
-font-size:13px;
-color:#007bff;
-text-decoration:none;
-}
-
-.home-btn:hover{text-decoration:underline;}
-
-footer{
-margin-top:40px;
-font-size:12px;
-color:#555;
-}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#e8f7ff,#f4f7fc);margin:0;padding:35px 15px;text-align:center}
+.box{background:#fff;max-width:560px;margin:auto;padding:30px 24px;border-radius:18px;box-shadow:0 14px 36px rgba(0,0,0,.12)}
+h2{color:#16a34a}.download-btn{display:block;width:290px;max-width:95%;margin:12px auto;padding:12px;border-radius:25px;background:#16a34a;color:#fff;text-decoration:none;font-weight:600}
+.download-btn.alt{background:#1d3557}
+.note{font-size:13px;color:#666;margin-top:12px}
 </style>
+</head>
+<body>
+<div class="box">
+  <h2>🎉 Access Granted!</h2>
+  <p id="courseName">Your course materials are ready.</p>
+
+  <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing" class="download-btn" target="_blank">📘 Download PDF Notes</a>
+  <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing" class="download-btn" target="_blank">🎥 Watch Video Course</a>
+  <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing" class="download-btn alt" target="_blank">❓ Interview Questions</a>
+
+  <p class="note">If links do not open, contact us on WhatsApp with your payment email.</p>
+  <a href="index.html" class="download-btn alt">← Back to Home</a>
+</div>
 
 <script>
-// 🔐 PAGE PROTECTION
-if(sessionStorage.getItem("paid") !== "yes"){
-alert("Access Denied. Please verify your purchase.");
-window.location.href="check_email.html";
+function q(name){return new URLSearchParams(location.search).get(name)||'';}
+var email=(q('email')||sessionStorage.getItem('paid_email')||'').toLowerCase();
+var course=q('course')||sessionStorage.getItem('paid_course')||'Data Analytics Combo';
+var paid=sessionStorage.getItem('paid')==='yes';
+if(!paid && email){
+  try{var p=JSON.parse(localStorage.getItem('paidUsers')||'{}'); if(p[email] && p[email].paid){ paid=true; sessionStorage.setItem('paid','yes'); sessionStorage.setItem('paid_email',email); }}catch(e){}
 }
+if(!paid){ alert('Access denied. Please verify your purchase email.'); location.href='check_email.html'; }
+document.getElementById('courseName').innerText='You now have access to: '+course;
+PSAAnalytics.trackEvent('course_access_page_viewed',{email:email,course:course});
 </script>
-
-</head>
-
-<body>
-
-<div class="success-box">
-
-<h2>🎉 Access Granted!</h2>
-
-<p>
-Thank you for purchasing the <b>Excel Complete Combo Course</b>.<br>
-Click below to access your course materials.
-</p>
-
-<a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing"
-class="download-btn" target="_blank">
-📘 Download Excel PDF
-</a>
-
-<a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing"
-class="download-btn" target="_blank">
-🎥 Watch Excel Video Course
-</a>
-
-<div class="note">
-⚠ If links do not open, contact us on WhatsApp.
-</div>
-
-<a href="index.html" class="home-btn">
-← Back to Home
-</a>
-
-</div>
-
-<footer>
-© 2026 Professional Skills Academy <br>
-📧 shubhams2018@gmail.com |
-📞 9403030512 / 7507940073
-</footer>
-
 </body>
 </html>
