@@ -8,6 +8,16 @@ Data Analytics training website with multi-course pages, payment flow, access ve
 - Power BI: MRP ₹2500 → Offer ₹99
 - Tableau: MRP ₹2500 → Offer ₹99
 - SQL (MySQL): MRP ₹2000 → Offer ₹99
+- Machine Learning + Deep Learning: MRP ₹5000 → Offer ₹99
+- Data Analytics Combo (all courses): MRP ₹10,999 → Offer ₹499
+
+## Website flow
+1. User lands on `index.html` (Data Analytics homepage).
+2. User can open dedicated course pages.
+3. Cart supports multiple course selection and combo override.
+4. Payment is done via Razorpay from `index.html`.
+5. On success, user is redirected directly to `Excel_success_v3.html` with links.
+6. Returning users can use `check_email.html` to verify and regain access.
 - Data Analytics Combo (all courses): MRP ₹10,999 → Offer ₹399
 
 ## Website flow
