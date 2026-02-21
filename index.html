@@ -311,6 +311,7 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 
 <h3>Total: ₹1</h3>
 <button id="buyBtn" onclick="payNow()">Buy Now for ₹1</button>
+<div class="form-note">After successful payment, you will get direct course access instantly. Already purchased users can verify via email anytime.</div>
 <div class="form-note">After successful payment, click "Already Purchased" and verify using the same email.</div>
 <p id="formMsg" class="form-message"></p>
 
@@ -327,6 +328,7 @@ Already Purchased? Click Here
 <div class="faq-wrap">
 <div class="faq-item">
 <h4>How will I get course access after payment?</h4>
+<p>After successful payment, you get direct access instantly. If you return later, use the "Already Purchased" page with the same email.</p>
 <p>Complete payment, then verify your purchase email from the "Already Purchased" page to open your materials.</p>
 </div>
 <div class="faq-item">
@@ -353,6 +355,10 @@ class="whatsapp-float" target="_blank" rel="noopener noreferrer">
 </a>
 
 <script>
+var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
+
+function trackEvent(name, payload){
+window.PSAAnalytics.trackEvent(name, payload || {});
 function trackEvent(name, payload){
 window.PSAAnalytics.trackEvent(name, payload || {});
 if(!window.dataLayer){
@@ -371,6 +377,7 @@ msg.innerText = text;
 function getLeadData(){
 return {
 name: document.getElementById("name").value.trim(),
+email: document.getElementById("email").value.trim().toLowerCase(),
 email: document.getElementById("email").value.trim(),
 mobile: document.getElementById("mobile").value.trim(),
 designation: document.getElementById("designation").value.trim()
@@ -392,6 +399,66 @@ return "";
 
 function saveLeadLocally(data){
 localStorage.setItem("latestLead", JSON.stringify(data));
+}
+
+function markEmailAsPaid(email, paymentId){
+var key = "paidUsers";
+var paid = {};
+try{ paid = JSON.parse(localStorage.getItem(key) || "{}"); }catch(e){ paid = {}; }
+paid[email] = {paid:true, paymentId: paymentId || "", paidAt: new Date().toISOString()};
+localStorage.setItem(key, JSON.stringify(paid));
+}
+
+function buildSheetUrl(params){
+var qs = new URLSearchParams(params);
+return SHEET_WEBAPP_URL + "?" + qs.toString();
+}
+
+function recordPaymentToSheet(lead, paymentId){
+var primaryUrl = buildSheetUrl({
+action: "save",
+name: lead.name,
+email: lead.email,
+mobile: lead.mobile,
+designation: lead.designation,
+payment_id: paymentId,
+status: "PAID",
+source: "website"
+});
+
+var fallbackUrl = buildSheetUrl({
+name: lead.name,
+email: lead.email,
+mobile: lead.mobile,
+designation: lead.designation,
+payment_id: paymentId,
+status: "PAID"
+});
+
+return fetch(primaryUrl)
+.then(function(res){ return res.text(); })
+.then(function(text){
+var result = (text || "").trim();
+trackEvent("sheet_save_result", {result: result || "EMPTY"});
+if(result.toUpperCase() === "OK" || result.toUpperCase() === "SAVED" || result.toUpperCase() === "SUCCESS"){
+return true;
+}
+return fetch(fallbackUrl).then(function(res){ return res.text(); }).then(function(txt){
+trackEvent("sheet_save_fallback_result", {result: (txt || "").trim() || "EMPTY"});
+return true;
+});
+})
+.catch(function(err){
+trackEvent("sheet_save_failed", {error: String(err)});
+return false;
+});
+}
+
+function openSuccessPage(lead, paymentId){
+sessionStorage.setItem("paid", "yes");
+sessionStorage.setItem("paid_email", lead.email);
+markEmailAsPaid(lead.email, paymentId);
+window.location.href = "Excel_success_v3.html";
 }
 
 function payNow(){
@@ -425,6 +492,14 @@ var options={
 "designation":lead.designation
 },
 "handler": function (response) {
+var paymentId = response.razorpay_payment_id || "";
+trackEvent("payment_success", {payment_id: paymentId, email: lead.email});
+setMessage("Payment successful! Preparing your access...", false);
+
+recordPaymentToSheet(lead, paymentId).finally(function(){
+alert("Payment Successful! 🎉 You can now access your course.");
+openSuccessPage(lead, paymentId);
+});
 trackEvent("payment_success", {payment_id: response.razorpay_payment_id});
 alert("Payment Successful! 🎉");
 window.location.href="check_email.html";
@@ -442,6 +517,7 @@ var rzp=new Razorpay(options);
 rzp.on("payment.failed", function(response){
 buyBtn.disabled = false;
 setMessage("Payment failed. Please retry or contact support.", true);
+trackEvent("payment_failed", {reason: response.error && response.error.description ? response.error.description : "unknown"});
 trackEvent("payment_failed", {reason: response.error.description});
 });
 
