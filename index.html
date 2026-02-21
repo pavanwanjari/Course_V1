@@ -127,6 +127,44 @@ button:hover{
 transform:scale(1.07);
 background:#218838;
 }
+button:disabled{
+opacity:0.7;
+cursor:not-allowed;
+}
+
+.form-note{font-size:13px;color:#666;margin-top:10px;}
+.form-message{font-size:14px;color:#d35400;margin-top:8px;min-height:20px;}
+
+.trust-grid{
+max-width:900px;
+margin:30px auto 0;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+}
+.trust-item{
+background:white;
+border-radius:14px;
+padding:18px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+font-size:14px;
+line-height:1.5;
+}
+
+.faq{
+background:#ffffff;
+padding:60px 20px;
+}
+.faq-wrap{max-width:900px;margin:25px auto 0;text-align:left;}
+.faq-item{
+margin-bottom:14px;
+background:#f8faff;
+border:1px solid #e5ebff;
+border-radius:10px;
+padding:14px;
+}
+.faq-item h4{font-size:15px;margin-bottom:7px;color:#1d3557;}
+.faq-item p{font-size:14px;line-height:1.5;}
 
 .already-btn{
 display:inline-block;
@@ -155,6 +193,7 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 }
 .whatsapp-float img{width:38px;}
 </style>
+<script src="analytics.js"></script>
 </head>
 
 <body>
@@ -169,7 +208,7 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 <div class="card">
 
 <div class="logo-container">
-<img src="https://img.icons8.com/color/96/microsoft-excel-2019.png">
+<img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Excel course logo">
 </div>
 
 <h2>Excel Complete Combo Course</h2>
@@ -250,17 +289,30 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 </div>
 </div>
 
+<!-- Trust section -->
+<div class="section" style="padding-top:20px;">
+<h2>✅ Why You Can Buy Safely</h2>
+<div class="trust-grid">
+<div class="trust-item"><b>Instant Access:</b> Once payment is successful, use your purchase email to access materials immediately.</div>
+<div class="trust-item"><b>Support:</b> If you face any issue, message us on WhatsApp and our team will help quickly.</div>
+<div class="trust-item"><b>Policy:</b> Please verify your email correctly at checkout. Access is provided to the same email.</div>
+<div class="trust-item"><b>Secure Checkout:</b> Payment is processed through Razorpay encrypted checkout.</div>
+</div>
+</div>
+
 <!-- Enroll Section -->
 <div class="section">
 <h2>Enroll Now</h2>
 
-<input type="text" id="name" placeholder="Enter Name"><br>
-<input type="email" id="email" placeholder="Enter Email"><br>
-<input type="text" id="mobile" placeholder="Enter Mobile Number"><br>
+<input type="text" id="name" placeholder="Enter Name" autocomplete="name"><br>
+<input type="email" id="email" placeholder="Enter Email" autocomplete="email"><br>
+<input type="text" id="mobile" placeholder="Enter Mobile Number" inputmode="numeric" maxlength="10"><br>
 <input type="text" id="designation" placeholder="Enter Profession"><br>
 
 <h3>Total: ₹1</h3>
-<button onclick="payNow()">Buy Now for ₹1</button>
+<button id="buyBtn" onclick="payNow()">Buy Now for ₹1</button>
+<div class="form-note">After successful payment, click "Already Purchased" and verify using the same email.</div>
+<p id="formMsg" class="form-message"></p>
 
 <br>
 <a href="check_email.html" class="already-btn">
@@ -269,35 +321,130 @@ Already Purchased? Click Here
 
 </div>
 
+<!-- FAQ -->
+<div class="faq">
+<h2>❓ Frequently Asked Questions</h2>
+<div class="faq-wrap">
+<div class="faq-item">
+<h4>How will I get course access after payment?</h4>
+<p>Complete payment, then verify your purchase email from the "Already Purchased" page to open your materials.</p>
+</div>
+<div class="faq-item">
+<h4>What is included in this course?</h4>
+<p>You get structured learning resources with Excel notes and video content designed from beginner to advanced level.</p>
+</div>
+<div class="faq-item">
+<h4>What if payment succeeds but access is not visible?</h4>
+<p>Contact us on WhatsApp with payment details and registered email. We will help you manually.</p>
+</div>
+</div>
+</div>
+
 <footer>
 © 2026 Professional Skills Academy <br>
 📧 shubhams2018@gmail.com |
-📞 9403030512 / 7507940073
+📞 9403030512 / 7507940073<br>
 </footer>
 
 <a href="https://wa.me/919403030512?text=Hello%20I%20want%20to%20know%20about%20the%20Excel%20Course%20offer%20for%20₹1."
-class="whatsapp-float" target="_blank">
-<img src="https://img.icons8.com/color/48/whatsapp--v1.png">
+class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+<img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp support">
 </a>
 
 <script>
+function trackEvent(name, payload){
+window.PSAAnalytics.trackEvent(name, payload || {});
+}
+
+function setMessage(text, isError){
+var msg = document.getElementById("formMsg");
+msg.style.color = isError ? "#c0392b" : "#2e7d32";
+msg.innerText = text;
+}
+
+function getLeadData(){
+return {
+name: document.getElementById("name").value.trim(),
+email: document.getElementById("email").value.trim(),
+mobile: document.getElementById("mobile").value.trim(),
+designation: document.getElementById("designation").value.trim()
+};
+}
+
+function validateLead(data){
+if(!data.name || !data.email || !data.mobile || !data.designation){
+return "Please fill all details before payment.";
+}
+if(!/^\S+@\S+\.\S+$/.test(data.email)){
+return "Please enter a valid email address.";
+}
+if(!/^\d{10}$/.test(data.mobile)){
+return "Please enter a valid 10-digit mobile number.";
+}
+return "";
+}
+
+function saveLeadLocally(data){
+localStorage.setItem("latestLead", JSON.stringify(data));
+}
+
 function payNow(){
+var lead = getLeadData();
+var validationError = validateLead(lead);
+if(validationError){
+setMessage(validationError, true);
+trackEvent("lead_validation_failed", {reason: validationError});
+return;
+}
+
+setMessage("Opening secure checkout...", false);
+saveLeadLocally(lead);
+trackEvent("buy_now_clicked", {email: lead.email, mobile: lead.mobile});
+
+var buyBtn = document.getElementById("buyBtn");
+buyBtn.disabled = true;
+
 var options={
 "key":"rzp_live_yA31xxMPut8Ech",
 "amount":100,
 "currency":"INR",
 "name":"Professional Skills Academy",
 "description":"Excel Combo Course - ₹1 Offer",
-"handler": function () {
+"prefill":{
+"name":lead.name,
+"email":lead.email,
+"contact":lead.mobile
+},
+"notes":{
+"designation":lead.designation
+},
+"handler": function (response) {
+trackEvent("payment_success", {payment_id: response.razorpay_payment_id});
 alert("Payment Successful! 🎉");
-window.location.href="Excel_success_v3.html";
+window.location.href="check_email.html";
+},
+"modal": {
+"ondismiss": function(){
+buyBtn.disabled = false;
+setMessage("Checkout closed. You can try again.", true);
+trackEvent("checkout_dismissed", {});
+}
 }
 };
+
 var rzp=new Razorpay(options);
+rzp.on("payment.failed", function(response){
+buyBtn.disabled = false;
+setMessage("Payment failed. Please retry or contact support.", true);
+trackEvent("payment_failed", {reason: response.error.description});
+});
+
+trackEvent("checkout_opened", {});
 rzp.open();
 }
+
+trackEvent("landing_page_viewed", {});
 </script>
 
 </body>
 </html>
-
