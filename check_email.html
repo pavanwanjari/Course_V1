@@ -4,6 +4,7 @@
 <title>Verify Email</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="analytics.js"></script>
 </head>
 
 <body style="font-family:Poppins;text-align:center;padding:50px;background:#f4f7fc;">
@@ -22,6 +23,7 @@ Check Now
 <p id="msg" style="margin-top:15px;color:red;min-height:20px;"></p>
 
 <script>
+PSAAnalytics.trackEvent("verify_page_viewed", {});
 (function prefillEmail(){
 var latestLead = localStorage.getItem("latestLead");
 if(!latestLead){
@@ -50,11 +52,13 @@ var verifyBtn=document.getElementById("verifyBtn");
 
 if(email===""){
 setStatus("Please enter email.", true);
+PSAAnalytics.trackEvent("verify_validation_failed", {reason:"empty_email"});
 return;
 }
 
 verifyBtn.disabled=true;
 setStatus("Checking your purchase, please wait...", false);
+PSAAnalytics.trackEvent("verify_started", {email: email});
 
 fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec?email=" + encodeURIComponent(email))
 .then(response=>response.text())
@@ -62,6 +66,10 @@ fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQ
 
 if(data.trim()==="FOUND"){
 sessionStorage.setItem("paid","yes");
+PSAAnalytics.trackEvent("verify_success", {email: email});
+window.location.href="Excel_success_v3.html";
+}else{
+PSAAnalytics.trackEvent("verify_not_found", {email: email});
 window.location.href="Excel_success_v3.html";
 }else{
 setStatus("Email not found. Please purchase course.", true);
@@ -71,6 +79,7 @@ setTimeout(()=>{window.location.href="index.html";},2000);
 })
 .catch(()=>{
 verifyBtn.disabled=false;
+PSAAnalytics.trackEvent("verify_error", {});
 setStatus("Error checking email. Please try again.", true);
 });
 

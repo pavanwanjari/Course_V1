@@ -193,6 +193,7 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 }
 .whatsapp-float img{width:38px;}
 </style>
+<script src="analytics.js"></script>
 </head>
 
 <body>
@@ -342,6 +343,8 @@ Already Purchased? Click Here
 <footer>
 © 2026 Professional Skills Academy <br>
 📧 shubhams2018@gmail.com |
+📞 9403030512 / 7507940073<br>
+<a href="analytics_dashboard.html" style="color:#cfe8ff;">View Analytics Dashboard</a>
 📞 9403030512 / 7507940073
 </footer>
 
@@ -352,6 +355,7 @@ class="whatsapp-float" target="_blank" rel="noopener noreferrer">
 
 <script>
 function trackEvent(name, payload){
+window.PSAAnalytics.trackEvent(name, payload || {});
 if(!window.dataLayer){
 window.dataLayer=[];
 }
