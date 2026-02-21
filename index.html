@@ -352,6 +352,7 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 <h3>Total: ₹1</h3>
 <button id="buyBtn" onclick="payNow()">Buy Now for ₹1</button>
 <div class="form-note">After successful payment, you will get direct course access instantly. Already purchased users can verify via email anytime.</div>
+<div class="form-note">After successful payment, click "Already Purchased" and verify using the same email.</div>
 <p id="formMsg" class="form-message"></p>
 
 <br>
@@ -368,6 +369,7 @@ Already Purchased? Click Here
 <div class="faq-item">
 <h4>How will I get course access after payment?</h4>
 <p>After successful payment, you get direct access instantly. If you return later, use the "Already Purchased" page with the same email.</p>
+<p>Complete payment, then verify your purchase email from the "Already Purchased" page to open your materials.</p>
 </div>
 <div class="faq-item">
 <h4>What is included in this course?</h4>
@@ -384,6 +386,7 @@ Already Purchased? Click Here
 © 2026 Professional Skills Academy <br>
 📧 shubhams2018@gmail.com |
 📞 9403030512 / 7507940073<br>
+<a href="analytics_dashboard.html" style="color:#cfe8ff;">View Analytics Dashboard</a>
 </footer>
 
 <a href="https://wa.me/919403030512?text=Hello%20I%20want%20to%20know%20about%20the%20Excel%20Course%20offer%20for%20₹1."
@@ -396,6 +399,13 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpo
 
 function trackEvent(name, payload){
 window.PSAAnalytics.trackEvent(name, payload || {});
+function trackEvent(name, payload){
+window.PSAAnalytics.trackEvent(name, payload || {});
+if(!window.dataLayer){
+window.dataLayer=[];
+}
+window.dataLayer.push({event:name, ...payload});
+console.log("track", name, payload || {});
 }
 
 function setMessage(text, isError){
@@ -408,6 +418,7 @@ function getLeadData(){
 return {
 name: document.getElementById("name").value.trim(),
 email: document.getElementById("email").value.trim().toLowerCase(),
+email: document.getElementById("email").value.trim(),
 mobile: document.getElementById("mobile").value.trim(),
 designation: document.getElementById("designation").value.trim()
 };
@@ -529,6 +540,9 @@ recordPaymentToSheet(lead, paymentId).finally(function(){
 alert("Payment Successful! 🎉 You can now access your course.");
 openSuccessPage(lead, paymentId);
 });
+trackEvent("payment_success", {payment_id: response.razorpay_payment_id});
+alert("Payment Successful! 🎉");
+window.location.href="check_email.html";
 },
 "modal": {
 "ondismiss": function(){
@@ -544,6 +558,7 @@ rzp.on("payment.failed", function(response){
 buyBtn.disabled = false;
 setMessage("Payment failed. Please retry or contact support.", true);
 trackEvent("payment_failed", {reason: response.error && response.error.description ? response.error.description : "unknown"});
+trackEvent("payment_failed", {reason: response.error.description});
 });
 
 trackEvent("checkout_opened", {});

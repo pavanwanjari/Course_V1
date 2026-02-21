@@ -26,6 +26,7 @@ Check Now
 var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
 PSAAnalytics.trackEvent("verify_page_viewed", {});
 
+PSAAnalytics.trackEvent("verify_page_viewed", {});
 (function prefillEmail(){
 var latestLead = localStorage.getItem("latestLead");
 if(!latestLead){
@@ -65,6 +66,9 @@ window.location.href="Excel_success_v3.html";
 
 function checkEmail(){
 var email=document.getElementById("email").value.trim().toLowerCase();
+function checkEmail(){
+
+var email=document.getElementById("email").value.trim();
 var verifyBtn=document.getElementById("verifyBtn");
 
 if(email===""){
@@ -94,6 +98,20 @@ grantAccess(email, "sheet");
 PSAAnalytics.trackEvent("verify_not_found", {email: email, result: result});
 setStatus("Email not found. Please purchase course or use same payment email.", true);
 verifyBtn.disabled=false;
+fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec?email=" + encodeURIComponent(email))
+.then(response=>response.text())
+.then(data=>{
+
+if(data.trim()==="FOUND"){
+sessionStorage.setItem("paid","yes");
+PSAAnalytics.trackEvent("verify_success", {email: email});
+window.location.href="Excel_success_v3.html";
+}else{
+PSAAnalytics.trackEvent("verify_not_found", {email: email});
+window.location.href="Excel_success_v3.html";
+}else{
+setStatus("Email not found. Please purchase course.", true);
+setTimeout(()=>{window.location.href="index.html";},2000);
 }
 
 })
@@ -103,6 +121,9 @@ PSAAnalytics.trackEvent("verify_error", {});
 setStatus("Error checking email. Please try again.", true);
 });
 }
+
+}
+
 </script>
 
 </body>
