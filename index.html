@@ -155,6 +155,32 @@ line-height:1.5;
 background:#ffffff;
 padding:60px 20px;
 }
+
+.course-catalog{
+background:#eefaf5;
+padding:60px 20px;
+}
+.course-grid{
+max-width:1100px;
+margin:30px auto 0;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:18px;
+}
+.course-card-link{text-decoration:none;color:inherit;}
+.course-card{
+background:white;
+border-radius:16px;
+padding:18px;
+box-shadow:0 12px 30px rgba(0,0,0,0.08);
+transition:0.25s;
+}
+.course-card:hover{transform:translateY(-6px);}
+.course-card img{width:64px;height:64px;object-fit:contain;}
+.course-card h3{font-size:18px;margin:10px 0 6px;color:#1d3557;}
+.course-card p{font-size:13px;color:#555;line-height:1.4;}
+.course-card .price-tag{display:inline-block;margin-top:10px;background:#e9f7ef;color:#1a7f37;padding:5px 10px;border-radius:20px;font-weight:600;}
+
 .faq-wrap{max-width:900px;margin:25px auto 0;text-align:left;}
 .faq-item{
 margin-bottom:14px;
@@ -286,6 +312,20 @@ box-shadow:0 6px 15px rgba(0,0,0,0.3);
 <br><br><b>- Amit Singh</b>
 </div>
 
+</div>
+</div>
+
+
+<!-- Multi-Course Catalog -->
+<div class="course-catalog">
+<h2>📚 Explore More Job-Ready Courses</h2>
+<p>Click any course to see importance, complete roadmap, resources, and pricing options.</p>
+<div class="course-grid">
+<a class="course-card-link" href="course_advance_excel.html"><div class="course-card"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><p>Dashboards, formulas, automation, and reporting for real jobs.</p><span class="price-tag">From ₹1,499</span></div></a>
+<a class="course-card-link" href="course_python.html"><div class="course-card"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><p>Programming + automation + data analysis from zero to advanced.</p><span class="price-tag">From ₹2,499</span></div></a>
+<a class="course-card-link" href="course_power_bi.html"><div class="course-card"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><p>Business dashboards, DAX, and data modeling for analytics careers.</p><span class="price-tag">From ₹1,999</span></div></a>
+<a class="course-card-link" href="course_tableau.html"><div class="course-card"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><p>Interactive visualization and storytelling with live datasets.</p><span class="price-tag">From ₹1,999</span></div></a>
+<a class="course-card-link" href="course_mysql.html"><div class="course-card"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="MySQL"><h3>MySQL</h3><p>SQL queries, joins, optimization, and interview prep for data roles.</p><span class="price-tag">From ₹1,799</span></div></a>
 </div>
 </div>
 

@@ -67,6 +67,20 @@ Simple static landing funnel for the Excel course offer.
 - Move payment verification fully to backend/webhook and grant signed access tokens.
 - Persist lead + payment records to a secure database.
 - Move dashboard auth and analytics storage to server-side (best security).
+
+
+## Multi-course pages (new)
+- Index now includes a course catalog with links to dedicated pages:
+  - `course_advance_excel.html`
+  - `course_python.html`
+  - `course_power_bi.html`
+  - `course_tableau.html`
+  - `course_mysql.html`
+- Each course page includes:
+  - Why course is important
+  - Complete roadmap (step-by-step)
+  - Resources options (PDF, videos, interview questions)
+  - Single-course and combo pricing with buy/contact CTA
 - Use server-side analytics storage with daily conversion reports.
 ## Next production improvements
 - Move payment verification fully to backend/webhook and grant signed access tokens.
