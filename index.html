@@ -1,6 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Professional Skills Academy - Data Analytics Programs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="analytics.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#24364a;text-align:center}
+header{background:linear-gradient(135deg,#081221,#173a64,#2563eb);color:#fff;padding:70px 15px}
+header h1{font-size:38px;margin-bottom:8px}
+.offer-pill{display:inline-block;margin-top:12px;background:#ff3b3b;color:#fff;padding:9px 20px;border-radius:25px;font-weight:700}
+.section{padding:58px 16px}
+.card{max-width:900px;margin:auto;background:#fff;border-radius:20px;padding:28px;box-shadow:0 18px 45px rgba(0,0,0,.12)}
+.why-grid,.course-grid,.testi-grid,.price-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:20px}
+.box{background:#fff;padding:18px;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08);text-align:left}
+.course-card{text-decoration:none;color:inherit;background:#fff;padding:18px;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08);transition:.25s;text-align:left}
+.course-card:hover{transform:translateY(-6px)}
+.course-card img{width:60px;height:60px;object-fit:contain}
+.tag{display:inline-block;margin-top:8px;background:#e7f8ef;color:#157a38;border-radius:20px;padding:5px 10px;font-size:13px;font-weight:600}
+input,select{width:90%;max-width:360px;padding:12px;margin:7px;border:1px solid #c9d3e7;border-radius:8px}
+button{background:#16a34a;color:#fff;border:none;border-radius:28px;padding:13px 30px;font-size:16px;cursor:pointer}
+button:disabled{opacity:.7;cursor:not-allowed}
+.msg{min-height:20px;margin-top:8px;font-size:14px}
+.already-btn{display:inline-block;margin-top:15px;background:#1f3b78;color:#fff;padding:10px 22px;border-radius:20px;text-decoration:none}
+footer{margin-top:40px;background:#132845;color:#fff;padding:22px;font-size:13px}
+.whatsapp{position:fixed;right:18px;bottom:18px;background:#25D366;width:62px;height:62px;border-radius:50%;display:flex;justify-content:center;align-items:center;box-shadow:0 8px 15px rgba(0,0,0,.3)}
+.whatsapp img{width:36px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Master Data Analytics</h1>
+  <p>Job-ready programs by Professional Skills Academy</p>
+  <div class="offer-pill">🔥 Full Data Analytics Combo ₹10,999 at ₹399 Only</div>
+</header>
+
+<div class="section">
+  <div class="card">
+    <h2>🚀 Why Data Analytics is Important?</h2>
+    <div class="why-grid">
+      <div class="box"><b>High-demand skill</b><br>Analytics roles are growing in all industries.</div>
+      <div class="box"><b>Better salary</b><br>Data skills help you earn more and grow faster.</div>
+      <div class="box"><b>Decision making</b><br>Companies rely on data insights to scale.</div>
+      <div class="box"><b>Career switch friendly</b><br>Great for freshers and working professionals.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="background:#eef4ff">
+  <h2>📚 Choose Your Course</h2>
+  <p>Click any course to view roadmap, resources and pricing.</p>
+  <div class="course-grid" style="max-width:1100px;margin:20px auto 0">
+    <a class="course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><p>MRP ₹999 | Offer ₹49</p><span class="tag">View Details</span></a>
+    <a class="course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><p>MRP ₹3000 | Offer ₹99</p><span class="tag">View Details</span></a>
+    <a class="course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><p>MRP ₹2500 | Offer ₹99</p><span class="tag">View Details</span></a>
+    <a class="course-card" href="course_tableau.html"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><p>MRP ₹2500 | Offer ₹99</p><span class="tag">View Details</span></a>
+    <a class="course-card" href="course_mysql.html"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><p>MRP ₹2000 | Offer ₹99</p><span class="tag">View Details</span></a>
+  </div>
+</div>
+
+<div class="section">
+  <h2>⭐ Student Testimonials</h2>
+  <div class="testi-grid" style="max-width:1050px;margin:20px auto 0">
+    <div class="box">"I switched from BPO to Data Analyst role after this combo."<br><b>- Neha P.</b></div>
+    <div class="box">"Roadmap and interview questions were very practical."<br><b>- Rahul S.</b></div>
+    <div class="box">"Power BI + SQL projects helped me crack interviews."<br><b>- Aman K.</b></div>
+  </div>
+</div>
+
+<div class="section" id="buy-section" style="background:#f0fff5">
+  <h2>💳 Buy Now (Test Flow)</h2>
+  <div class="price-grid" style="max-width:900px;margin:18px auto">
+    <div class="box"><b>Single Course Offer</b><br>As low as <b>₹49 / ₹99</b> depending on course.</div>
+    <div class="box"><b>Combo Offer</b><br><del>₹10,999</del> <span style="color:#16a34a;font-weight:700">₹399 Only</span></div>
+  </div>
+  <input type="text" id="name" placeholder="Enter Name"><br>
+  <input type="email" id="email" placeholder="Enter Email"><br>
+  <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10"><br>
+  <select id="course">
+    <option value="Data Analytics Combo">Data Analytics Combo (₹399)</option>
+    <option value="Advance Excel">Advance Excel (₹49)</option>
+    <option value="Python">Python (₹99)</option>
+    <option value="Power BI">Power BI (₹99)</option>
+    <option value="Tableau">Tableau (₹99)</option>
+    <option value="SQL (MySQL)">SQL (MySQL) (₹99)</option>
+  </select><br>
+  <button id="buyBtn" onclick="payNow()">Buy Now</button>
+  <p id="msg" class="msg"></p>
+  <a href="check_email.html" class="already-btn">Already Purchased? Access Course</a>
+</div>
+
+<footer>
+  © 2026 Professional Skills Academy <br>📧 shubhams2018@gmail.com | 📞 9403030512 / 7507940073
+</footer>
+
+<a class="whatsapp" href="https://wa.me/919403030512?text=I%20want%20details%20about%20data%20analytics%20courses" target="_blank" rel="noopener noreferrer"><img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp"></a>
+
+<script>
+var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
+var PRICE_MAP = {"Data Analytics Combo":399,"Advance Excel":49,"Python":99,"Power BI":99,"Tableau":99,"SQL (MySQL)":99};
+
+function trackEvent(n,p){ window.PSAAnalytics.trackEvent(n,p||{}); }
+function setMsg(t,e){ var m=document.getElementById('msg'); m.style.color=e?'#b42318':'#157a38'; m.innerText=t; }
+function getLead(){ return {name:document.getElementById('name').value.trim(),email:document.getElementById('email').value.trim().toLowerCase(),mobile:document.getElementById('mobile').value.trim(),course:document.getElementById('course').value}; }
+function valid(d){ if(!d.name||!d.email||!d.mobile) return 'Please fill all fields.'; if(!/^\S+@\S+\.\S+$/.test(d.email)) return 'Enter valid email.'; if(!/^\d{10}$/.test(d.mobile)) return 'Enter valid 10-digit mobile.'; return ''; }
+function markPaid(email,paymentId,course){ var k='paidUsers'; var obj={}; try{obj=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}; obj[email]={paid:true,paymentId:paymentId,course:course,paidAt:new Date().toISOString()}; localStorage.setItem(k,JSON.stringify(obj)); }
+function buildUrl(params){ return SHEET_WEBAPP_URL+'?'+new URLSearchParams(params).toString(); }
+function savePayment(lead,pid){
+  var url1=buildUrl({action:'save',name:lead.name,email:lead.email,mobile:lead.mobile,course:lead.course,payment_id:pid,status:'PAID'});
+  var url2=buildUrl({name:lead.name,email:lead.email,mobile:lead.mobile,course:lead.course,payment_id:pid,status:'PAID'});
+  return fetch(url1).then(r=>r.text()).then(t=>{trackEvent('sheet_save_result',{result:(t||'').trim()}); if(/OK|SAVED|SUCCESS/i.test(t||'')) return true; return fetch(url2).then(r=>r.text()).then(x=>{trackEvent('sheet_save_fallback_result',{result:(x||'').trim()}); return true;});}).catch(e=>{trackEvent('sheet_save_failed',{error:String(e)}); return false;});
+}
+function openSuccess(lead,pid){ sessionStorage.setItem('paid','yes'); sessionStorage.setItem('paid_email',lead.email); sessionStorage.setItem('paid_course',lead.course); markPaid(lead.email,pid,lead.course); location.href='Excel_success_v3.html?email='+encodeURIComponent(lead.email)+'&course='+encodeURIComponent(lead.course); }
+
+function payNow(){
+  var lead=getLead(); var er=valid(lead); if(er){setMsg(er,true); trackEvent('lead_validation_failed',{reason:er}); return;}
+  var amount=(PRICE_MAP[lead.course]||399)*100;
+  localStorage.setItem('latestLead',JSON.stringify(lead));
+  document.getElementById('buyBtn').disabled=true;
+  setMsg('Opening secure checkout...',false);
+  var options={key:'rzp_live_yA31xxMPut8Ech',amount:amount,currency:'INR',name:'Professional Skills Academy',description:lead.course+' Course',prefill:{name:lead.name,email:lead.email,contact:lead.mobile},notes:{course:lead.course},handler:function(res){var pid=res.razorpay_payment_id||''; trackEvent('payment_success',{payment_id:pid,course:lead.course}); setMsg('Payment success. Opening your course access...',false); savePayment(lead,pid).finally(function(){openSuccess(lead,pid);});},modal:{ondismiss:function(){document.getElementById('buyBtn').disabled=false;setMsg('Checkout closed. Try again.',true);trackEvent('checkout_dismissed',{});}}};
+  var rzp=new Razorpay(options);
+  rzp.on('payment.failed',function(resp){document.getElementById('buyBtn').disabled=false;setMsg('Payment failed. Please retry.',true);trackEvent('payment_failed',{reason:resp.error && resp.error.description ? resp.error.description : 'unknown'});});
+  trackEvent('checkout_opened',{course:lead.course,amount:amount});
+  rzp.open();
+}
+trackEvent('landing_page_viewed',{page:'data_analytics_home'});
+</script>
 <title>Professional Skills Academy - Excel Course</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
