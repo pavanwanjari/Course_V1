@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MySQL Course - Professional Skills Academy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="analytics.js"></script>
+<style>
+*{box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#233047;margin:0;}
+header{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;text-align:center;padding:50px 16px;}
+header img{width:84px;height:84px;object-fit:contain;}
+.wrap{max-width:1050px;margin:0 auto;padding:28px 16px 50px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+.card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 10px 24px rgba(0,0,0,.08);}
+.card h3{margin:0 0 8px;color:#1d3557;}
+ul{padding-left:20px;line-height:1.7;}
+.roadmap-step{padding:10px;border-left:4px solid #4f79ff;background:#eef3ff;border-radius:8px;margin:8px 0;}
+.price-box{display:flex;gap:14px;flex-wrap:wrap;}
+.price-item{flex:1;min-width:210px;background:#f8fafc;padding:14px;border:1px solid #e3e9f6;border-radius:10px;}
+.price{font-size:26px;color:#1a7f37;font-weight:700;}
+.actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+.btn{display:inline-block;background:#28a745;color:#fff;text-decoration:none;padding:11px 18px;border-radius:26px;font-size:14px;}
+.btn.secondary{background:#1d3557;}
+footer{text-align:center;padding:20px;font-size:13px;color:#546;}
+</style>
+</head>
+<body>
+<header>
+<img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="MySQL logo">
+<h1>MySQL Course</h1>
+<p>Importance, complete roadmap, resources, and pricing</p>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card">
+      <h3>🚀 Why MySQL is Important?</h3>
+      <ul>
+        <li>SQL is mandatory for data and backend-related jobs.</li>
+        <li>MySQL is beginner-friendly and production-proven database tech.</li>
+        <li>Strong SQL helps in interviews and day-to-day analytics work.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📦 What You Will Get</h3>
+      <ul>
+        <li>✔ SQL fundamentals to advanced</li>
+        <li>✔ Joins, subqueries, CTEs</li>
+        <li>✔ Indexing + query optimization</li>
+        <li>✔ Business case practice</li>
+        <li>📘 PDF Notes</li>
+        <li>🎥 Video Lessons</li>
+        <li>❓ Interview Questions</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>🗺️ Complete Roadmap</h3>
+    <div class="roadmap-step"><b>Step 1:</b> Database Basics</div>
+    <div class="roadmap-step"><b>Step 2:</b> SQL Queries + Filters</div>
+    <div class="roadmap-step"><b>Step 3:</b> Joins + Aggregations</div>
+    <div class="roadmap-step"><b>Step 4:</b> Subqueries + CTEs + Window Functions</div>
+    <div class="roadmap-step"><b>Step 5:</b> Optimization + Real Cases</div>
+    <div class="roadmap-step"><b>Step 6:</b> Interview Questions + Assignments</div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>💰 Pricing Plans</h3>
+    <div class="price-box">
+      <div class="price-item">
+        <h4>Single Course (MySQL)</h4>
+        <div class="price">₹1,799</div>
+        <p>Includes PDF + Videos + Interview Questions</p>
+      </div>
+      <div class="price-item">
+        <h4>Data Analytics Combo</h4>
+        <div class="price">₹4,999</div>
+        <p>Includes Advance Excel + Python + Power BI + Tableau + MySQL</p>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="https://wa.me/919403030512?text=I%20want%20to%20buy%20MySQL%20course" target="_blank" rel="noopener noreferrer">Buy This Course</a>
+      <a class="btn secondary" href="https://wa.me/919403030512?text=I%20want%20the%20full%20combo%20courses" target="_blank" rel="noopener noreferrer">Buy Combo</a>
+      <a class="btn secondary" href="index.html">← Back to Home</a>
+      <a class="btn secondary" href="check_email.html">Already Purchased?</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+© 2026 Professional Skills Academy | WhatsApp: 9403030512
+</footer>
+
+<script>
+PSAAnalytics.trackEvent("course_page_viewed", {course: "MySQL"});
+</script>
+</body>
+</html>
