@@ -57,18 +57,6 @@ button.danger{background:#b42318;}
     <a class="btn" href="index.html">← Back to Website</a>
     <button class="danger" onclick="clearDataSecure()">Clear Analytics (Protected)</button>
     <button class="secondary" onclick="logoutDashboard()">Logout</button>
-button,a.btn{border:none;border-radius:8px;padding:9px 12px;background:#1f3b78;color:#fff;cursor:pointer;text-decoration:none;font-size:13px;}
-button.secondary{background:#7f8fb1;}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>📊 Website Analytics Dashboard</h1>
-  <p class="sub">Local dashboard using tracked events from this browser. For production, connect the same events to GA4/Looker Studio.</p>
-
-  <div class="actions">
-    <a class="btn" href="index.html">← Back to Website</a>
-    <button class="secondary" onclick="clearData()">Clear Local Analytics</button>
   </div>
 
   <div class="grid" id="summary"></div>
@@ -187,7 +175,6 @@ async function clearDataSecure(){
   PSAAnalytics.trackEvent("dashboard_cleared", {user: session.userId});
   render();
 }
-PSAAnalytics.trackEvent("dashboard_viewed", {});
 
 function render(){
   var events = PSAAnalytics.getStoredEvents();
@@ -232,12 +219,6 @@ var existing = getSession();
 if(existing){
   enableDashboard(existing.userId);
 }
-function clearData(){
-  localStorage.removeItem(PSAAnalytics.STORAGE_KEY);
-  render();
-}
-
-render();
 </script>
 </body>
 </html>
