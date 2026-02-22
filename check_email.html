@@ -22,11 +22,32 @@ button{padding:12px 25px;background:#16a34a;color:#fff;border:none;border-radius
 <script>
 var SHEET_WEBAPP_URL="https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
 PSAAnalytics.trackEvent('verify_page_viewed',{});
-(function(){try{var l=JSON.parse(localStorage.getItem('latestLead')||'{}'); if(l.email) document.getElementById('email').value=l.email;}catch(e){}})();
+sessionStorage.removeItem('paid');
+
 function setMsg(t,e){var m=document.getElementById('msg'); m.style.color=e?'#b42318':'#157a38'; m.innerText=t;}
 function getPaidLocal(email){try{var p=JSON.parse(localStorage.getItem('paidUsers')||'{}'); return p[email]||null;}catch(e){return null;}}
-function grant(email,course,source){sessionStorage.setItem('paid','yes');sessionStorage.setItem('paid_email',email);if(course) sessionStorage.setItem('paid_course',course); PSAAnalytics.trackEvent('verify_success',{email:email,source:source}); window.location.href='Excel_success_v3.html?email='+encodeURIComponent(email)+'&course='+encodeURIComponent(course||'Data Analytics Combo');}
-function checkFoundText(text){var t=(text||'').trim().toUpperCase(); return t==='FOUND' || t==='TRUE' || t==='YES' || t==='PAID' || t.includes('FOUND');}
+function grant(email,course,source){
+  sessionStorage.setItem('paid','yes');
+  sessionStorage.setItem('paid_email',email);
+  if(course) sessionStorage.setItem('paid_course',course);
+  PSAAnalytics.trackEvent('verify_success',{email:email,source:source});
+  window.location.href='Excel_success_v3.html?email='+encodeURIComponent(email)+'&course='+encodeURIComponent(course||'Data Analytics Combo');
+}
+
+function normalizeResult(text){
+  var t=(text||'').trim();
+  var up=t.toUpperCase();
+  if(!t) return {found:false,course:''};
+  if(['FOUND','TRUE','YES','PAID','SUCCESS','OK'].includes(up)) return {found:true,course:''};
+  if(['NOT FOUND','NOT_FOUND','FALSE','NO','UNPAID','ERROR'].includes(up)) return {found:false,course:''};
+  try{
+    var parsed=JSON.parse(t);
+    if(parsed && (parsed.found===true || parsed.status==='FOUND' || parsed.paid===true)){
+      return {found:true,course:parsed.course||''};
+    }
+  }catch(e){}
+  return {found:false,course:''};
+}
 
 function checkEmail(){
   var email=document.getElementById('email').value.trim().toLowerCase();
@@ -34,18 +55,28 @@ function checkEmail(){
   var local = getPaidLocal(email);
   if(local && local.paid){ setMsg('Purchase found. Redirecting...',false); grant(email, local.course || 'Data Analytics Combo','local'); return; }
 
-  var btn=document.getElementById('verifyBtn'); btn.disabled=true; setMsg('Checking your purchase...',false);
+  var btn=document.getElementById('verifyBtn');
+  btn.disabled=true;
+  setMsg('Checking your purchase...',false);
   var url1=SHEET_WEBAPP_URL+'?action=check&email='+encodeURIComponent(email);
   var url2=SHEET_WEBAPP_URL+'?email='+encodeURIComponent(email);
 
   fetch(url1).then(r=>r.text()).then(function(t){
-    if(checkFoundText(t)){ grant(email,'Data Analytics Combo','sheet'); return; }
+    var r1=normalizeResult(t);
+    if(r1.found){ grant(email,r1.course||'Data Analytics Combo','sheet'); return; }
+
     return fetch(url2).then(r=>r.text()).then(function(x){
-      if(checkFoundText(x)){ grant(email,'Data Analytics Combo','sheet_legacy'); return; }
-      setMsg('Email not found. Please use same payment email or contact support.',true); btn.disabled=false;
+      var r2=normalizeResult(x);
+      if(r2.found){ grant(email,r2.course||'Data Analytics Combo','sheet_legacy'); return; }
+      setMsg('Email not found. Please use same payment email or contact support.',true);
+      btn.disabled=false;
       PSAAnalytics.trackEvent('verify_not_found',{email:email,result:(x||'').trim()});
     });
-  }).catch(function(){ btn.disabled=false; setMsg('Error checking email. Please try again.',true); PSAAnalytics.trackEvent('verify_error',{}); });
+  }).catch(function(){
+    btn.disabled=false;
+    setMsg('Error checking email. Please try again.',true);
+    PSAAnalytics.trackEvent('verify_error',{});
+  });
 }
 </script>
 </body>

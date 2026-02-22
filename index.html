@@ -10,16 +10,26 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#1f2f46;line-height:1.5}
-    .hero{background:linear-gradient(135deg,#0b1220,#12335f,#2563eb);color:#fff;text-align:center;padding:72px 16px 64px}
-    .hero h1{font-size:42px;margin-bottom:8px}
-    .hero p{opacity:.95}
-    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700}
+    .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b1220,#12335f,#2563eb);color:#fff;text-align:center;padding:82px 16px 68px}
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;opacity:.22;animation:float 8s ease-in-out infinite}
+    .hero:before{width:240px;height:240px;background:#93c5fd;left:-70px;top:-50px}
+    .hero:after{width:180px;height:180px;background:#bfdbfe;right:-40px;bottom:-30px;animation-delay:1.2s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .brand-link{text-decoration:none;color:#fff}
+    .hero h1{font-size:42px;margin-bottom:8px;position:relative;z-index:1;cursor:pointer}
+    .hero p{opacity:.96;position:relative;z-index:1}
+    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700;position:relative;z-index:1;animation:pulse 1.6s infinite}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
     .section{padding:56px 16px}
     .container{max-width:1120px;margin:0 auto}
     h2{text-align:center;margin-bottom:8px}
     .sub{text-align:center;color:#4d617f;margin-bottom:24px}
     .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
     .card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .interactive .card{transition:.25s}
+    .interactive .card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 16px 30px rgba(37,99,235,.17)}
+    .metric{font-size:32px;color:#2563eb;font-weight:700}
+    .mini{font-size:13px;color:#60708a}
     .course-card{text-decoration:none;color:inherit;transition:.2s;display:block}
     .course-card:hover{transform:translateY(-4px)}
     .course-card img{width:58px;height:58px;object-fit:contain;margin-bottom:6px}
@@ -36,26 +46,33 @@
     .btn:disabled{opacity:.7;cursor:not-allowed}
     .btn-link{display:inline-block;margin-top:10px;background:#1f3b78;color:#fff;text-decoration:none;padding:10px 20px;border-radius:20px}
     #msg{text-align:center;min-height:20px;margin-top:8px}
+    .about{background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .about p{color:#4e6180;margin:8px 0 14px}
+    .about a{display:inline-block;text-decoration:none;background:#0f172a;color:#fff;padding:9px 16px;border-radius:18px}
+    .about .note{font-size:12px;color:#7687a3;margin-top:8px}
+    .whatsapp{position:fixed;right:18px;bottom:18px;background:#25D366;width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px rgba(0,0,0,.35);z-index:9999;animation:waBob 2.2s infinite}
+    @keyframes waBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .whatsapp img{width:38px}
     footer{margin-top:32px;background:#132845;color:#fff;padding:24px 16px;text-align:center;font-size:13px}
     .brand{font-weight:700}
   </style>
 </head>
 <body>
   <header class="hero">
-    <h1>DataLearn10X</h1>
+    <a class="brand-link" href="index.html"><h1>DataLearn10X</h1></a>
     <p>Job-ready Data Analytics Programs with practical projects.</p>
-    <div class="pill">🔥 Data Analytics Combo ₹10,999 → ₹499</div>
+    <div class="pill">🔥 All Courses Offer ₹1 (Testing) | Combo ₹1 (Testing)</div>
   </header>
 
-  <section class="section">
+  <section class="section interactive">
     <div class="container">
       <h2>Why Data Analytics?</h2>
-      <p class="sub">Build in-demand skills for analyst, BI and AI career roles.</p>
+      <p class="sub">Interactive learning path from beginner to job-ready level.</p>
       <div class="grid">
-        <div class="card"><b>High-demand career path</b><div class="muted">Every business needs data-driven decisions.</div></div>
-        <div class="card"><b>Better salary growth</b><div class="muted">Data skills improve job opportunities and pay.</div></div>
-        <div class="card"><b>Domain independent</b><div class="muted">Useful in finance, marketing, operations, and product.</div></div>
-        <div class="card"><b>Beginner friendly</b><div class="muted">Start from basics and grow to advanced projects.</div></div>
+        <div class="card"><div class="metric" data-target="92">0%</div><b>Hiring demand</b><div class="mini">Companies looking for analytics skills.</div></div>
+        <div class="card"><div class="metric" data-target="4">0x</div><b>Faster decision-making</b><div class="mini">Data-backed strategy improves outcomes.</div></div>
+        <div class="card"><div class="metric" data-target="30">0%</div><b>Avg salary uplift</b><div class="mini">Upskilling increases earning potential.</div></div>
+        <div class="card"><div class="metric" data-target="100">0%</div><b>Project-based training</b><div class="mini">Hands-on assignments in every module.</div></div>
       </div>
     </div>
   </section>
@@ -65,12 +82,12 @@
       <h2>Explore Courses</h2>
       <p class="sub">Open any course page for roadmap, resources and details.</p>
       <div class="grid">
-        <a class="card course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><div class="muted">MRP ₹999 | Offer ₹49</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><div class="muted">MRP ₹3000 | Offer ₹99</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><div class="muted">MRP ₹2500 | Offer ₹99</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_tableau.html"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><div class="muted">MRP ₹2500 | Offer ₹99</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_mysql.html"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">MRP ₹2000 | Offer ₹99</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹5000 | Offer ₹99</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><div class="muted">MRP ₹999 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><div class="muted">MRP ₹3000 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><div class="muted">MRP ₹2500 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_tableau.html"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><div class="muted">MRP ₹2500 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_mysql.html"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">MRP ₹2000 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹5000 | Offer ₹1</div><span class="tag">Open Course</span></a>
       </div>
     </div>
   </section>
@@ -80,13 +97,13 @@
       <h2>Buy Courses (Multi-select Cart)</h2>
       <p class="sub">Select one or more courses. Combo overrides individual selection.</p>
       <div class="cart-grid">
-        <label class="chk"><input type="checkbox" class="courseChk" value="Advance Excel" data-price="49"> Advance Excel (₹49)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Python" data-price="99"> Python (₹99)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Power BI" data-price="99"> Power BI (₹99)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Tableau" data-price="99"> Tableau (₹99)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="SQL (MySQL)" data-price="99"> SQL (MySQL) (₹99)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Machine Learning + Deep Learning" data-price="99"> ML + DL (₹99)</label>
-        <label class="chk" style="background:#edf4ff;border-color:#8cb8ff"><input type="checkbox" id="comboChk" value="Data Analytics Combo" data-price="499"> <b>Data Analytics Combo (all courses) ₹499</b></label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Advance Excel" data-price="1"> Advance Excel (₹1)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Python" data-price="1"> Python (₹1)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Power BI" data-price="1"> Power BI (₹1)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Tableau" data-price="1"> Tableau (₹1)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="SQL (MySQL)" data-price="1"> SQL (MySQL) (₹1)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Machine Learning + Deep Learning" data-price="1"> ML + DL (₹1)</label>
+        <label class="chk" style="background:#edf4ff;border-color:#8cb8ff"><input type="checkbox" id="comboChk" value="Data Analytics Combo" data-price="1"> <b>Data Analytics Combo (all courses) ₹1</b></label>
       </div>
 
       <div class="total" id="totalText">Total: ₹0</div>
@@ -100,6 +117,21 @@
       </div>
     </div>
   </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="about">
+        <h2>About Us</h2>
+        <p>DataLearn10X is focused on outcome-based data analytics training with mentor support, practical projects, and interview guidance.</p>
+        <a href="analytics_dashboard.html">Owner Dashboard Login</a>
+        <div class="note">Dashboard is protected and only accessible with owner/partner credentials.</div>
+      </div>
+    </div>
+  </section>
+
+  <a class="whatsapp" href="https://wa.me/919403030512?text=Hi%20DataLearn10X%2C%20I%20want%20details%20about%20courses" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
+    <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
+  </a>
 
   <footer>
     <div class="brand">DataLearn10X</div>
@@ -115,7 +147,7 @@ function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}
 
 function selectedItems(){
-  if(comboChk.checked){return [{name:'Data Analytics Combo',price:499}];}
+  if(comboChk.checked){return [{name:'Data Analytics Combo',price:1}];}
   return individualChecks.filter(c=>c.checked).map(c=>({name:c.value,price:Number(c.dataset.price)}));
 }
 
@@ -146,6 +178,16 @@ function parsePreselect(){
   document.getElementById('buy-section').scrollIntoView({behavior:'smooth'});
 }
 
+function animateMetrics(){
+  document.querySelectorAll('.metric').forEach(el=>{
+    const target=Number(el.dataset.target||0);
+    const suffix=el.textContent.includes('x')?'x':'%';
+    let val=0;
+    const step=Math.max(1,Math.ceil(target/40));
+    const timer=setInterval(()=>{val+=step; if(val>=target){val=target; clearInterval(timer);} el.textContent=val+suffix;},20);
+  });
+}
+
 function validate(name,email,mobile,items){
   if(items.length===0) return 'Please select at least one course.';
   if(!name||!email||!mobile) return 'Please fill all details.';
@@ -162,14 +204,25 @@ function markPaid(email,paymentId,courses){
 }
 
 function savePayment(lead,paymentId,total){
-  const base={name:lead.name,email:lead.email,mobile:lead.mobile,course:lead.courses.join(' | '),payment_id:paymentId,status:'PAID',amount:total};
-  const u1=SHEET_WEBAPP_URL+'?'+new URLSearchParams({...base,action:'save'}).toString();
-  const u2=SHEET_WEBAPP_URL+'?'+new URLSearchParams(base).toString();
-  return fetch(u1).then(r=>r.text()).then(t=>{
-    track('sheet_save_result',{result:(t||'').trim()});
-    if(/OK|SAVED|SUCCESS/i.test(t||'')) return true;
-    return fetch(u2).then(r=>r.text()).then(x=>{track('sheet_save_fallback_result',{result:(x||'').trim()}); return true;});
-  }).catch(err=>{track('sheet_save_failed',{error:String(err)}); return false;});
+  const payload={
+    name:lead.name,
+    mobile:lead.mobile,
+    email:lead.email,
+    profession:'Student',
+    course:lead.courses.join(' | '),
+    total:String(total),
+    discount:'0',
+    netpayment:String(total),
+    payment_id:paymentId,
+    order_id:'',
+    signature:''
+  };
+
+  const postBody = new URLSearchParams(payload);
+  return fetch(SHEET_WEBAPP_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:postBody.toString()})
+    .then(r=>r.text())
+    .then(t=>{track('sheet_save_result',{result:(t||'').trim()}); return true;})
+    .catch(err=>{track('sheet_save_failed',{error:String(err)}); return false;});
 }
 
 function openAccess(lead,paymentId){
@@ -232,6 +285,7 @@ comboChk.addEventListener('change',syncComboRule);
 individualChecks.forEach(c=>c.addEventListener('change',updateTotal));
 parsePreselect();
 updateTotal();
+animateMetrics();
 track('landing_page_viewed',{page:'index_datalearn10x'});
 </script>
 </body>
