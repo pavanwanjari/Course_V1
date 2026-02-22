@@ -26,3 +26,8 @@ Frontend save now uses POST form fields matching provided Apps Script:
 ## Analytics files
 - `analytics.js`
 - `analytics_dashboard.html`
+
+
+## Analytics dashboard login
+- UserID: `DataLearn10X`
+- Access key: `Owner@123`

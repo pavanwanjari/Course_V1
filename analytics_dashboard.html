@@ -41,8 +41,8 @@ button.danger{background:#b42318;}
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
     <h2>🔒 Private Analytics</h2>
-    <p>Dashboard is restricted to owner and partner. Enter your user ID and access key to continue.</p>
-    <input id="userId" placeholder="User ID (owner / partner)">
+    <p>Dashboard is restricted to owner access. Enter your user ID and access key to continue.</p>
+    <input id="userId" placeholder="User ID (DataLearn10X)">
     <input id="accessKey" type="password" placeholder="Access key">
     <button onclick="loginDashboard()">Unlock Dashboard</button>
     <p class="auth-msg" id="authMsg"></p>
@@ -77,11 +77,8 @@ button.danger{background:#b42318;}
 
 <script>
 var DASHBOARD_USERS = {
-  // Change these hash values to your own keys after first deploy.
-  // owner key (default): owner@123
-  owner: "cf0de5976f56c2ca3591fd9eced011ab39af061b7ef6e8c0f426d9eab2582f81",
-  // partner key (default): partner@123
-  partner: "4be613f34fd65995f3f72184a37a9f544f89cfaa453e510076ff5f66ebec0b53"
+  // DataLearn10X key (default): Owner@123
+  datalearn10x: "553feacf899a72916b2b50e4c95f587a06d6d1b8b4e6b433beb5fea315d0acb0"
 };
 
 var SESSION_KEY = "psaDashboardAuth";
