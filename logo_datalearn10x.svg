@@ -1,0 +1,17 @@
+<svg width="260" height="72" viewBox="0 0 260 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="8" y1="8" x2="92" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF6B6B"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="80" y1="10" x2="230" y2="66" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="8" width="16" height="56" rx="3" fill="url(#g1)"/>
+  <path d="M22 8H45C57 8 64 15 64 27V45C64 57 57 64 45 64H22V52H42C47 52 50 49 50 44V28C50 23 47 20 42 20H22V8Z" fill="url(#g1)"/>
+  <rect x="6" y="52" width="30" height="12" rx="3" fill="url(#g1)"/>
+  <text x="80" y="28" font-family="Poppins, Arial, sans-serif" font-size="14" font-weight="600" fill="#0F172A">DataLearn</text>
+  <text x="79" y="57" font-family="Poppins, Arial, sans-serif" font-size="34" font-weight="800" fill="url(#g2)">10X</text>
+</svg>

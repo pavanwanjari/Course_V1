@@ -1,57 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Verify Email</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Email - DataLearn10X</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="analytics.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Poppins,sans-serif;text-align:center;background:linear-gradient(160deg,#fff7ed,#fdf2f8 55%,#eef2ff);min-height:100vh}
+header{padding:36px 12px 18px;animation:fade .7s ease both}@keyframes fade{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.logo{width:200px;max-width:80vw;display:block;margin:0 auto 10px}
+.wrap{max-width:460px;margin:10px auto;background:#fff;padding:24px;border-radius:14px;box-shadow:0 12px 24px rgba(45,27,105,.14)}
+input{padding:12px;width:100%;border-radius:8px;border:1px solid #d8b4fe}button{padding:12px 25px;background:#7c3aed;color:#fff;border:none;border-radius:25px;cursor:pointer;margin-top:10px}
+#msg{margin-top:14px;min-height:20px}
+</style>
 </head>
-
-<body style="font-family:Poppins;text-align:center;padding:50px;background:#f4f7fc;">
-
+<body>
+<header><a href="index.html"><img class="logo" src="logo_datalearn10x.svg" alt="DataLearn10X"></a></header>
+<div class="wrap">
 <h2>Access Your Course</h2>
-<p>Enter your email to check purchase</p>
-
-<input type="email" id="email" placeholder="Enter your email"
-style="padding:12px;width:260px;border-radius:8px;border:1px solid #ccc;"><br><br>
-
-<button onclick="checkEmail()"
-style="padding:12px 25px;background:#28a745;color:white;border:none;border-radius:25px;">
-Check Now
-</button>
-
-<p id="msg" style="margin-top:15px;color:red;"></p>
-
+<p>Enter the same email used at payment.</p><br>
+<input type="email" id="email" placeholder="Enter your email">
+<button id="verifyBtn" onclick="checkEmail()">Check Now</button>
+<p id="msg"></p>
+</div>
 <script>
-
-function checkEmail(){
-
-var email=document.getElementById("email").value.trim();
-
-if(email==""){
-document.getElementById("msg").innerHTML="Please enter email.";
-return;
-}
-
-fetch("https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec?email=" + encodeURIComponent(email))
-.then(response=>response.text())
-.then(data=>{
-
-if(data.trim()=="FOUND"){
-sessionStorage.setItem("paid","yes");
-window.location.href="Excel_success_v3.html";
-}else{
-document.getElementById("msg").innerHTML="Email not found. Please purchase course.";
-setTimeout(()=>{window.location.href="index.html";},2000);
-}
-
-})
-.catch(()=>{
-document.getElementById("msg").innerHTML="Error checking email.";
-});
-
-}
-
+var SHEET_WEBAPP_URL="https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
+PSAAnalytics.trackEvent('verify_page_viewed',{});
+sessionStorage.removeItem('paid');
+function setMsg(t,e){var m=document.getElementById('msg'); m.style.color=e?'#b42318':'#157a38'; m.innerText=t;}
+function getPaidLocal(email){try{var p=JSON.parse(localStorage.getItem('paidUsers')||'{}'); return p[email]||null;}catch(e){return null;}}
+function grant(email,course,source){sessionStorage.setItem('paid','yes');sessionStorage.setItem('paid_email',email);if(course) sessionStorage.setItem('paid_course',course);PSAAnalytics.trackEvent('verify_success',{email:email,source:source});window.location.href='Excel_success_v3.html?email='+encodeURIComponent(email)+'&course='+encodeURIComponent(course||'Data Analytics Combo');}
+function normalizeResult(text){var t=(text||'').trim();var up=t.toUpperCase();if(!t) return {found:false,course:''};if(['FOUND','TRUE','YES','PAID','SUCCESS','OK'].includes(up)) return {found:true,course:''};if(['NOT FOUND','NOT_FOUND','FALSE','NO','UNPAID','ERROR'].includes(up)) return {found:false,course:''};try{var parsed=JSON.parse(t);if(parsed && (parsed.found===true || parsed.status==='FOUND' || parsed.paid===true)){return {found:true,course:parsed.course||''};}}catch(e){}return {found:false,course:''};}
+function checkEmail(){var email=document.getElementById('email').value.trim().toLowerCase();if(!email){setMsg('Please enter email.',true);return;}var local=getPaidLocal(email);if(local&&local.paid){setMsg('Purchase found. Redirecting...',false);grant(email,local.course||'Data Analytics Combo','local');return;}var btn=document.getElementById('verifyBtn');btn.disabled=true;setMsg('Checking your purchase...',false);var url1=SHEET_WEBAPP_URL+'?action=check&email='+encodeURIComponent(email);var url2=SHEET_WEBAPP_URL+'?email='+encodeURIComponent(email);fetch(url1).then(r=>r.text()).then(function(t){var r1=normalizeResult(t);if(r1.found){grant(email,r1.course||'Data Analytics Combo','sheet');return;}return fetch(url2).then(r=>r.text()).then(function(x){var r2=normalizeResult(x);if(r2.found){grant(email,r2.course||'Data Analytics Combo','sheet_legacy');return;}setMsg('Email not found. Please use same payment email or contact support.',true);btn.disabled=false;PSAAnalytics.trackEvent('verify_not_found',{email:email,result:(x||'').trim()});});}).catch(function(){btn.disabled=false;setMsg('Error checking email. Please try again.',true);PSAAnalytics.trackEvent('verify_error',{});});}
 </script>
-
 </body>
 </html>
