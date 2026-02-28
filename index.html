@@ -17,7 +17,7 @@
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
     .hero h1{font-size:42px;margin-bottom:8px;position:relative;z-index:1;cursor:pointer}
     .hero p{opacity:.96;position:relative;z-index:1}
-    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700;position:relative;z-index:1;animation:pulse 1.6s infinite}
+    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700;position:relative;z-index:1;animation:pulse 1.6s infinite;color:#fff;text-decoration:none;cursor:pointer;border:none}
     @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
     .section{padding:56px 16px}
     .container{max-width:1120px;margin:0 auto}
@@ -64,7 +64,7 @@
   <header class="hero">
     <h1>DataLearn10X</h1>
     <p>Job-ready Data Analytics Programs with practical projects.</p>
-    <div class="pill">🔥 All Courses Offer ₹1 (Testing) | Combo ₹1 (Testing)</div>
+    <a class="pill" id="offerPill" href="#explore-courses" aria-label="Go to Explore Courses">🔥 All Courses Offer ₹1 (Testing) | Combo ₹1 (Testing)</a>
   </header>
 
   <section class="section interactive">
@@ -95,7 +95,7 @@
     </div>
   </section>
 
-  <section class="section" style="background:#f0f6ff">
+  <section class="section" id="explore-courses" style="background:#f0f6ff">
     <div class="container">
       <h2>Explore Courses</h2>
       <p class="sub">Open any course page for roadmap, resources and details.</p>
@@ -150,6 +150,8 @@
 const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
 const comboChk = document.getElementById('comboChk');
 const individualChecks = Array.from(document.querySelectorAll('.courseChk'));
+const offerPill = document.getElementById('offerPill');
+const exploreSection = document.getElementById('explore-courses');
 
 function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}
@@ -287,6 +289,14 @@ function payNow(){
   });
 
   rzp.open();
+}
+
+if(offerPill && exploreSection){
+  offerPill.addEventListener('click',function(e){
+    e.preventDefault();
+    exploreSection.scrollIntoView({behavior:'smooth'});
+    track('offer_pill_clicked',{target:'explore_courses'});
+  });
 }
 
 comboChk.addEventListener('change',syncComboRule);
