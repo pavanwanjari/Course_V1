@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join DataLearn10X job-ready data analytics programs with practical projects in Excel, Python, Power BI, Tableau, SQL, and ML.">
   <title>DataLearn10X - Data Analytics Programs</title>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="analytics.js"></script>
@@ -53,6 +54,10 @@
     .btn-link{display:inline-block;margin-top:10px;background:#1f3b78;color:#fff;text-decoration:none;padding:10px 20px;border-radius:20px}
     .btn-link.secondary{background:#0f172a}
     #msg{text-align:center;min-height:20px;margin-top:8px}
+    .hiring-wrap{background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .logo-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-top:16px}
+    .logo-card{background:#f8fbff;border:1px solid #dbe8ff;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:center;min-height:76px}
+    .logo-card img{max-width:100%;max-height:36px;object-fit:contain;filter:grayscale(.1)}
     .whatsapp{position:fixed;right:18px;bottom:18px;background:#25D366;width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px rgba(0,0,0,.35);z-index:9999;animation:waBob 2.2s infinite}
     @keyframes waBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
     .whatsapp img{width:38px}
@@ -136,6 +141,28 @@
     </div>
   </section>
 
+
+  <section class="section" id="hiring-companies">
+    <div class="container">
+      <div class="hiring-wrap">
+        <h2>Top 10 Indian Companies Hiring Data Analysts</h2>
+        <p class="sub" style="margin-bottom:8px">For informational purposes only: these leading Indian companies hire data analyst candidates and offer strong packages with career growth opportunities.</p>
+        <div class="logo-grid">
+          <div class="logo-card"><img src="assets/logos/real/tcs.png" alt="TCS logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/tcs.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/infosys.png" alt="Infosys logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/infosys.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/wipro.png" alt="Wipro logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/wipro.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/hcltech.png" alt="HCLTech logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hcltech.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/techmahindra.png" alt="Tech Mahindra logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/techmahindra.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/reliance.png" alt="Reliance logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/reliance.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/icici.png" alt="ICICI Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/icici.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/hdfc.png" alt="HDFC Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hdfc.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/flipkart.png" alt="Flipkart logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/flipkart.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/real/zomato.png" alt="Zomato logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/zomato.svg';"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <a class="whatsapp" href="https://wa.me/919403030512?text=Hi%20DataLearn10X%2C%20I%20want%20details%20about%20courses" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
     <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
   </a>
@@ -147,7 +174,7 @@
   </footer>
 
 <script>
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzOObmcsyQcTFxzXhYMegyAXRWyFX2cmjhdCaToNZr1iDcLW2Rywx29qVoViNy_Gu_r/exec";
 const comboChk = document.getElementById('comboChk');
 const individualChecks = Array.from(document.querySelectorAll('.courseChk'));
 const offerPill = document.getElementById('offerPill');
