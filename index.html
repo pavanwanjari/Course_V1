@@ -15,11 +15,9 @@
     .hero:before{width:240px;height:240px;background:#93c5fd;left:-70px;top:-50px}
     .hero:after{width:180px;height:180px;background:#bfdbfe;right:-40px;bottom:-30px;animation-delay:1.2s}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-    .brand-link{text-decoration:none;color:#fff}
     .hero h1{font-size:42px;margin-bottom:8px;position:relative;z-index:1;cursor:pointer}
-    .hero-logo{width:230px;max-width:80vw;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));}
     .hero p{opacity:.96;position:relative;z-index:1}
-    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700;position:relative;z-index:1;animation:pulse 1.6s infinite}
+    .pill{display:inline-block;margin-top:14px;background:#ff3b3b;padding:9px 20px;border-radius:24px;font-weight:700;position:relative;z-index:1;animation:pulse 1.6s infinite;color:#fff;text-decoration:none;cursor:pointer;border:none}
     @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
     .section{padding:56px 16px}
     .container{max-width:1120px;margin:0 auto}
@@ -36,6 +34,13 @@
     .course-card img{width:58px;height:58px;object-fit:contain;margin-bottom:6px}
     .tag{display:inline-block;margin-top:8px;background:#e8f8ef;color:#157a38;padding:4px 10px;border-radius:16px;font-size:12px;font-weight:600}
     .muted{color:#5d6f89;font-size:14px}
+    .audience-wrap{background:linear-gradient(135deg,#ffffff,#eef4ff);border-radius:20px;padding:26px;box-shadow:0 14px 34px rgba(37,99,235,.12)}
+    .audience-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:18px}
+    .audience-item{background:#fff;border:1px solid #dbe8ff;border-radius:14px;padding:16px;display:flex;gap:10px;align-items:flex-start;transition:.2s}
+    .audience-item:hover{transform:translateY(-4px);box-shadow:0 12px 22px rgba(15,23,42,.12)}
+    .audience-icon{font-size:20px;line-height:1}
+    .audience-item h3{font-size:17px;margin-bottom:4px}
+    .audience-item p{margin:0;color:#556987;font-size:14px}
     .buy-wrap{background:#eef4ff;border-radius:16px;padding:22px}
     .cart-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0}
     .chk{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #d9e4fb;border-radius:10px;padding:10px}
@@ -47,10 +52,6 @@
     .btn:disabled{opacity:.7;cursor:not-allowed}
     .btn-link{display:inline-block;margin-top:10px;background:#1f3b78;color:#fff;text-decoration:none;padding:10px 20px;border-radius:20px}
     #msg{text-align:center;min-height:20px;margin-top:8px}
-    .about{background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-    .about p{color:#4e6180;margin:8px 0 14px}
-    .about a{display:inline-block;text-decoration:none;background:#0f172a;color:#fff;padding:9px 16px;border-radius:18px}
-    .about .note{font-size:12px;color:#7687a3;margin-top:8px}
     .whatsapp{position:fixed;right:18px;bottom:18px;background:#25D366;width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px rgba(0,0,0,.35);z-index:9999;animation:waBob 2.2s infinite}
     @keyframes waBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
     .whatsapp img{width:38px}
@@ -59,15 +60,10 @@
   </style>
 </head>
 <body>
-<a href="index.html" aria-label="DataLearn10X Home" style="display:inline-block;margin:12px 0 0 12px">
-  <img src="dl10x.png" alt="DataLearn10X logo" style="height:34px;width:auto;display:block">
-</a>
-
   <header class="hero">
-    <a class="brand-link" href="index.html" aria-label="DataLearn10X Home"><img class="hero-logo" src="dl10x.png" alt="DataLearn10X logo"></a>
     <h1>DataLearn10X</h1>
     <p>Job-ready Data Analytics Programs with practical projects.</p>
-    <div class="pill">🔥 All Courses Offer ₹1 (Testing) | Combo ₹1 (Testing)</div>
+    <a class="pill" id="offerPill" href="#explore-courses" aria-label="Go to Explore Courses">🔥 All Courses Offer ₹1 | Combo ₹1</a>
   </header>
 
   <section class="section interactive">
@@ -83,7 +79,22 @@
     </div>
   </section>
 
-  <section class="section" style="background:#f0f6ff">
+  <section class="section">
+    <div class="container">
+      <div class="audience-wrap">
+        <h2>Who is this course for ?</h2>
+        <p class="sub">Designed for learners at every stage who want practical, job-focused analytics skills.</p>
+        <div class="audience-grid">
+          <div class="audience-item"><span class="audience-icon">🎓</span><div><h3>Students & Freshers</h3><p>Build portfolio-ready projects and gain confidence for your first analytics role.</p></div></div>
+          <div class="audience-item"><span class="audience-icon">💼</span><div><h3>Working Professionals</h3><p>Switch to analytics or upskill quickly with hands-on tools used in real jobs.</p></div></div>
+          <div class="audience-item"><span class="audience-icon">📈</span><div><h3>Business Owners & Managers</h3><p>Learn to read dashboards and make smarter, data-backed business decisions.</p></div></div>
+          <div class="audience-item"><span class="audience-icon">🧠</span><div><h3>Career Restarters</h3><p>Follow a beginner-friendly path with mentor support and structured learning steps.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="explore-courses" style="background:#f0f6ff">
     <div class="container">
       <h2>Explore Courses</h2>
       <p class="sub">Open any course page for roadmap, resources and details.</p>
@@ -124,23 +135,13 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="about">
-        <h2>About Us</h2>
-        <p>DataLearn10X is focused on outcome-based data analytics training with mentor support, practical projects, and interview guidance.</p>
-        <a href="analytics_dashboard.html">Owner Dashboard Login</a>
-        <div class="note">Dashboard is protected and only accessible with owner/partner credentials.</div>
-      </div>
-    </div>
-  </section>
-
   <a class="whatsapp" href="https://wa.me/919403030512?text=Hi%20DataLearn10X%2C%20I%20want%20details%20about%20courses" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
     <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
   </a>
 
   <footer>
     <div class="brand">DataLearn10X</div>
+    <div style="margin:8px 0 6px;"><a href="about.html" style="color:#bfdbfe;text-decoration:none;font-weight:600;">About Us</a></div>
     © 2026 DataLearn10X <br> 📧 shubhams2018@gmail.com | 📞 9403030512 / 7507940073
   </footer>
 
@@ -148,6 +149,8 @@
 const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwtalK3uLH3IUTpozV5tXy-MfEzDvT1rQhpTv9_2M3fP8uclyeBL0WIcIqEXSrBN-2h9Q/exec";
 const comboChk = document.getElementById('comboChk');
 const individualChecks = Array.from(document.querySelectorAll('.courseChk'));
+const offerPill = document.getElementById('offerPill');
+const exploreSection = document.getElementById('explore-courses');
 
 function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}
@@ -285,6 +288,14 @@ function payNow(){
   });
 
   rzp.open();
+}
+
+if(offerPill && exploreSection){
+  offerPill.addEventListener('click',function(e){
+    e.preventDefault();
+    exploreSection.scrollIntoView({behavior:'smooth'});
+    track('offer_pill_clicked',{target:'explore_courses'});
+  });
 }
 
 comboChk.addEventListener('change',syncComboRule);
