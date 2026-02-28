@@ -22,11 +22,9 @@ h2{color:#16a34a}.download-btn{display:block;width:290px;max-width:95%;margin:12
   <h2>🎉 Access Granted!</h2>
   <p id="courseName">Your course materials are ready.</p>
 
-  <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing" class="download-btn" target="_blank">📘 Download PDF Notes</a>
-  <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing" class="download-btn" target="_blank">🎥 Watch Video Course</a>
-  <a href="https://drive.google.com/file/d/1_jgHEhCRVnjbwL8l9BIbcH--Nal-D-gn/view?usp=sharing" class="download-btn alt" target="_blank">❓ Interview Questions</a>
+  <div id="linksWrap"></div>
 
-  <p class="note">If links do not open, contact us on WhatsApp with your payment email.</p>
+  <p class="note">Only courses you purchased are shown below. If links do not open, contact us on WhatsApp with your payment email.</p>
   <a href="index.html" class="download-btn alt">← Back to Home</a>
 </div>
 
@@ -36,11 +34,65 @@ var email=(q('email')||sessionStorage.getItem('paid_email')||'').toLowerCase();
 var course=q('course')||sessionStorage.getItem('paid_course')||'Data Analytics Combo';
 var paid=sessionStorage.getItem('paid')==='yes';
 if(!paid && email){
-  try{var p=JSON.parse(localStorage.getItem('paidUsers')||'{}'); if(p[email] && p[email].paid){ paid=true; sessionStorage.setItem('paid','yes'); sessionStorage.setItem('paid_email',email); }}catch(e){}
+  try{var p=JSON.parse(localStorage.getItem('paidUsers')||'{}'); if(p[email] && p[email].paid){ paid=true; sessionStorage.setItem('paid','yes'); sessionStorage.setItem('paid_email',email); if(!q('course') && p[email].course){course=p[email].course;sessionStorage.setItem('paid_course',course);} }}catch(e){}
 }
 if(!paid){ alert('Access denied. Please verify your purchase email.'); location.href='check_email.html'; }
-document.getElementById('courseName').innerText='You now have access to: '+course;
-PSAAnalytics.trackEvent('course_access_page_viewed',{email:email,course:course});
+
+var COURSE_LINKS={
+  'Advance Excel':'https://drive.google.com/drive/folders/1yVzGnzxou19ybLbGiKOvvYdyU5vHmKXH?usp=sharing',
+  'Python':'https://drive.google.com/drive/folders/1yVzGnzxou19ybLbGiKOvvYdyU5vHmKXH?usp=sharing',
+  'Power BI':'https://drive.google.com/drive/folders/1yVzGnzxou19ybLbGiKOvvYdyU5vHmKXH?usp=sharing',
+  'Tableau':'https://drive.google.com/drive/folders/1yVzGnzxou19ybLbGiKOvvYdyU5vHmKXH?usp=sharing',
+  'SQL (MySQL)':'https://drive.google.com/drive/folders/1yVzGnzxou19ybLbGiKOvvYdyU5vHmKXH?usp=sharing',
+  'Machine Learning + Deep Learning':'https://drive.google.com/drive/folders/1yVzGnzxou19ybLbGiKOvvYdyU5vHmKXH?usp=sharing'
+};
+var ALL_COURSES=['Advance Excel','Python','Power BI','Tableau','SQL (MySQL)','Machine Learning + Deep Learning'];
+
+function normalizeCourseName(name){
+  var n=(name||'').trim();
+  if(!n) return '';
+  var lower=n.toLowerCase();
+  if(lower==='data analytics combo' || lower==='combo') return 'Data Analytics Combo';
+  if(lower==='sql' || lower==='my sql' || lower==='mysql' || lower==='sql (mysql)') return 'SQL (MySQL)';
+  if(lower==='ml + dl' || lower==='ml&dl' || lower==='ml and dl') return 'Machine Learning + Deep Learning';
+  return n;
+}
+
+function extractCourses(raw){
+  var text=(raw||'').trim();
+  if(!text) return [];
+  var normalized = normalizeCourseName(text);
+  if(normalized==='Data Analytics Combo') return ALL_COURSES.slice();
+
+  var parts=text.split(/\s*\||,\s*/g).map(normalizeCourseName).filter(Boolean);
+  var unique=[];
+  parts.forEach(function(c){
+    if(c==='Data Analytics Combo'){
+      ALL_COURSES.forEach(function(all){ if(unique.indexOf(all)===-1) unique.push(all); });
+    } else if(COURSE_LINKS[c] && unique.indexOf(c)===-1){
+      unique.push(c);
+    }
+  });
+  return unique;
+}
+
+var purchasedCourses=extractCourses(course);
+if(!purchasedCourses.length){ purchasedCourses=ALL_COURSES.slice(); }
+
+document.getElementById('courseName').innerText='You now have access to: '+purchasedCourses.join(', ');
+
+var wrap=document.getElementById('linksWrap');
+purchasedCourses.forEach(function(c){
+  var a=document.createElement('a');
+  a.href=COURSE_LINKS[c];
+  a.className='download-btn';
+  a.target='_blank';
+  a.rel='noopener noreferrer';
+  a.innerText='📚 Open '+c+' Course Material';
+  wrap.appendChild(a);
+});
+
+PSAAnalytics.trackEvent('course_access_page_viewed',{email:email,course:course,visibleCourses:purchasedCourses.join(' | ')});
 </script>
 </body>
 </html>
