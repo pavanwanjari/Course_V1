@@ -10,7 +10,7 @@ DataLearn10X training website with multi-course pages, payment flow, access veri
 - SQL (MySQL): Offer ₹1
 - Machine Learning + Deep Learning: Offer ₹1
 - Data Analytics Cheat Sheets: Offer ₹1
-- 1000+ HR Emails: Offer ₹1
+- 20000+ HR Emails: Offer ₹1
 - Data Analytics Combo (all courses + resources): Offer ₹1
 
 ## Website flow
