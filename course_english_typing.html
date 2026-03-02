@@ -32,6 +32,19 @@ textarea:focus{outline:2px solid #6991ff}
 .lv{padding:8px;border-radius:10px;border:1px solid #3a4d80;background:#131f3b;color:#dce7ff;cursor:pointer;font-weight:700}
 .lv.lock{opacity:.45;cursor:not-allowed}.lv.active{background:#3458c9}.lv.done{background:#1f8f52}
 .tips{margin-top:10px;font-size:13px;color:var(--muted);line-height:1.6}
+
+.finger-guide{margin-top:12px;background:#0d1730;border:1px solid #30457d;border-radius:12px;padding:10px}
+.finger-guide h4{margin:0 0 8px}
+.fingers{display:grid;grid-template-columns:repeat(8,minmax(50px,1fr));gap:6px}
+.finger{padding:6px;border-radius:8px;text-align:center;font-size:12px;border:1px solid #3a4d80;background:#152446}
+.finger b{display:block;font-size:11px;color:#9db0d8}
+.keyboard-wrap{margin-top:10px;background:#0b1328;border:1px solid #33497e;border-radius:12px;padding:10px}
+.kb-row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:6px}
+.key{padding:8px 4px;text-align:center;border-radius:8px;background:#142041;border:1px solid #3a4d80;font-weight:700;font-size:12px;color:#dce7ff;min-height:34px;display:flex;align-items:center;justify-content:center}
+.key.active{background:#facc15;color:#1a1a1a;border-color:#facc15}
+.key.correct{background:#22c55e;color:#08210f;border-color:#22c55e}
+.key.wrong{background:#ef4444;color:#fff;border-color:#ef4444}
+.kb-note{font-size:12px;color:#9db0d8;margin-top:4px}
 @media (max-width:960px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
@@ -73,6 +86,32 @@ textarea:focus{outline:2px solid #6991ff}
         <button class="btn sec" id="clearProgressBtn" style="margin-top:8px">Clear My Progress</button>
       </div>
       <div class="tips">Suggested routine: 20 minutes daily (10 levels/day). Track improvement by comparing your best WPM at the same level each week.</div>
+
+      <div class="finger-guide">
+        <h4>Finger Placement Guide (Home Row)</h4>
+        <div class="fingers">
+          <div class="finger">A<b>Left Pinky</b></div><div class="finger">S<b>Left Ring</b></div><div class="finger">D<b>Left Middle</b></div><div class="finger">F<b>Left Index</b></div>
+          <div class="finger">J<b>Right Index</b></div><div class="finger">K<b>Right Middle</b></div><div class="finger">L<b>Right Ring</b></div><div class="finger">;<b>Right Pinky</b></div>
+        </div>
+        <div class="kb-note">Place thumbs on <b>Space</b>. Feel the small bumps on <b>F</b> and <b>J</b> to return to home position without looking.</div>
+      </div>
+
+      <div class="keyboard-wrap">
+        <h4 style="margin:0 0 8px">Live Keyboard Highlight</h4>
+        <div class="kb-row">
+          <div class="key" data-key="q">Q</div><div class="key" data-key="w">W</div><div class="key" data-key="e">E</div><div class="key" data-key="r">R</div><div class="key" data-key="t">T</div><div class="key" data-key="y">Y</div><div class="key" data-key="u">U</div><div class="key" data-key="i">I</div><div class="key" data-key="o">O</div><div class="key" data-key="p">P</div>
+        </div>
+        <div class="kb-row">
+          <div class="key" data-key="a">A</div><div class="key" data-key="s">S</div><div class="key" data-key="d">D</div><div class="key" data-key="f">F</div><div class="key" data-key="g">G</div><div class="key" data-key="h">H</div><div class="key" data-key="j">J</div><div class="key" data-key="k">K</div><div class="key" data-key="l">L</div><div class="key" data-key=";">;</div>
+        </div>
+        <div class="kb-row">
+          <div class="key" data-key="z">Z</div><div class="key" data-key="x">X</div><div class="key" data-key="c">C</div><div class="key" data-key="v">V</div><div class="key" data-key="b">B</div><div class="key" data-key="n">N</div><div class="key" data-key="m">M</div><div class="key" data-key=",">,</div><div class="key" data-key=".">.</div><div class="key" data-key="/">/</div>
+        </div>
+        <div class="kb-row" style="grid-template-columns:2fr 6fr 2fr">
+          <div class="key" data-key="shift">Shift</div><div class="key" data-key=" ">Space</div><div class="key" data-key="backspace">Backspace</div>
+        </div>
+        <div class="kb-note">When you start typing, the expected next key glows yellow. Correct presses flash green, wrong presses flash red.</div>
+      </div>
     </div>
 
     <aside class="card">
@@ -124,6 +163,32 @@ textarea:focus{outline:2px solid #6991ff}
   const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
   const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
 
+  const keyEls=Array.from(document.querySelectorAll('.key'));
+
+  function normalizeKey(k){
+    if(k==='Spacebar') return ' ';
+    if(k==='Esc') return 'escape';
+    return (k||'').toLowerCase();
+  }
+
+  function paintExpectedKey(){
+    keyEls.forEach(el=>el.classList.remove('active'));
+    const target=levels[s.level-1]||'';
+    const nextChar=target[input.value.length] || ' ';
+    const key=normalizeKey(nextChar);
+    const el=keyEls.find(x=>x.dataset.key===key);
+    if(el) el.classList.add('active');
+  }
+
+  function flashKey(keyName, ok){
+    const key=normalizeKey(keyName);
+    const el=keyEls.find(x=>x.dataset.key===key);
+    if(!el) return;
+    el.classList.remove('wrong','correct');
+    el.classList.add(ok?'correct':'wrong');
+    setTimeout(()=>el.classList.remove('wrong','correct'),180);
+  }
+
   function save(){
     localStorage.setItem('typing_level',s.level);
     localStorage.setItem('typing_unlocked',s.unlocked);
@@ -162,6 +227,7 @@ textarea:focus{outline:2px solid #6991ff}
       else { html+=`<span class="todo">${target[i]}</span>`; }
     }
     promptEl.innerHTML=html;
+    paintExpectedKey();
   }
 
   function stats(){
@@ -211,7 +277,9 @@ textarea:focus{outline:2px solid #6991ff}
     clearInterval(s.timer); s.started=false; s.secs=60; input.value=''; input.disabled=false;
     timeEl.textContent='60s'; wpmEl.textContent='0'; cpmEl.textContent='0'; accEl.textContent='100%';
     renderPrompt(); renderLevels();
+    keyEls.forEach(el=>el.classList.remove('correct','wrong'));
     bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
+    paintExpectedKey();
   }
 
   function render(){
@@ -234,6 +302,17 @@ textarea:focus{outline:2px solid #6991ff}
     if(s.level<s.unlocked){ s.level++; resetLevel(); render(); }
     else msg.textContent='Complete current level first to unlock the next one.';
   };
+  input.addEventListener('keydown', (e)=>{
+    if(!s.started) start();
+    const target=levels[s.level-1]||'';
+    const expected=target[input.value.length] || '';
+    const pressed=normalizeKey(e.key);
+    if(['shift','control','alt','meta','tab','capslock','enter'].includes(pressed)) return;
+    if(pressed==='backspace'){ flashKey('backspace', true); return; }
+    const expectedNorm=normalizeKey(expected);
+    flashKey(pressed, pressed===expectedNorm);
+  });
+
   input.addEventListener('input', ()=>{ if(!s.started) start(); renderPrompt(); const st=stats(); if(input.value===levels[s.level-1] && st.acc>=95) finish(); });
 
   resetLevel(); render();
