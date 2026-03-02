@@ -315,6 +315,16 @@ textarea:focus{outline:2px solid #6991ff}
 
   input.addEventListener('input', ()=>{ if(!s.started) start(); renderPrompt(); const st=stats(); if(input.value===levels[s.level-1] && st.acc>=95) finish(); });
 
+  ['paste','drop','copy','cut'].forEach(evt=>{
+    input.addEventListener(evt,(e)=>{
+      e.preventDefault();
+      msg.textContent='Copy, paste, cut, and drag-drop are disabled. Please type manually for practice.';
+      msg.style.color='#ffd7a1';
+    });
+  });
+
+  input.addEventListener('contextmenu',(e)=>e.preventDefault());
+
   resetLevel(); render();
   if(s.lastPractice){ msg.textContent='Welcome back! Your progress has been resumed from this browser.'; }
   PSAAnalytics.trackEvent('course_page_viewed',{course:'English Typing Mastery 100 Levels'});
