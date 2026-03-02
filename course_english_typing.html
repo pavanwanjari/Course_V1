@@ -67,6 +67,15 @@ textarea:focus{outline:2px solid #6991ff}
         <div class="stat"><small>Time</small><b id="time">60s</b></div>
         <div class="stat"><small>Streak</small><b id="streak">0</b></div>
       </div>
+      <div class="finger-guide">
+              <h4>Finger Placement Guide (Home Row)</h4>
+              <div class="fingers">
+                <div class="finger">A<b>Left Pinky</b></div><div class="finger">S<b>Left Ring</b></div><div class="finger">D<b>Left Middle</b></div><div class="finger">F<b>Left Index</b></div>
+                <div class="finger">J<b>Right Index</b></div><div class="finger">K<b>Right Middle</b></div><div class="finger">L<b>Right Ring</b></div><div class="finger">;<b>Right Pinky</b></div>
+              </div>
+              <div class="kb-note">Place thumbs on <b>Space</b>. Feel the small bumps on <b>F</b> and <b>J</b> to return to home position without looking.</div>
+            </div>
+
       <p id="prompt" aria-live="polite"></p>
       <textarea id="input" placeholder="Start typing here exactly as shown above..."></textarea>
       <div class="controls">
@@ -75,27 +84,9 @@ textarea:focus{outline:2px solid #6991ff}
         <button class="btn ok" id="nextBtn">Next Level</button>
       </div>
       <div id="msg">Tip: Focus on accuracy first, then speed. Complete a level to unlock the next.</div>
-      <div class="card" style="margin-top:10px;background:#0d1730;border-color:#30457d;padding:10px">
-        <b style="display:block;margin-bottom:6px">Your Saved Progress (auto-resume)</b>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:6px;font-size:13px;color:#cfe0ff">
-          <div>Highest Unlocked: <b id="progressUnlocked">1</b></div>
-          <div>Completed Levels: <b id="progressCompleted">0</b></div>
-          <div>Total Practice Time: <b id="progressTime">0m</b></div>
-          <div>Last Practice: <b id="progressLast">-</b></div>
-        </div>
-        <button class="btn sec" id="clearProgressBtn" style="margin-top:8px">Clear My Progress</button>
-      </div>
-      <div class="tips">Suggested routine: 20 minutes daily (10 levels/day). Track improvement by comparing your best WPM at the same level each week.</div>
+            <div class="tips">Suggested routine: 20 minutes daily (10 levels/day). Track improvement by comparing your best WPM at the same level each week.</div>
 
-      <div class="finger-guide">
-        <h4>Finger Placement Guide (Home Row)</h4>
-        <div class="fingers">
-          <div class="finger">A<b>Left Pinky</b></div><div class="finger">S<b>Left Ring</b></div><div class="finger">D<b>Left Middle</b></div><div class="finger">F<b>Left Index</b></div>
-          <div class="finger">J<b>Right Index</b></div><div class="finger">K<b>Right Middle</b></div><div class="finger">L<b>Right Ring</b></div><div class="finger">;<b>Right Pinky</b></div>
-        </div>
-        <div class="kb-note">Place thumbs on <b>Space</b>. Feel the small bumps on <b>F</b> and <b>J</b> to return to home position without looking.</div>
-      </div>
-
+      
       <div class="keyboard-wrap">
         <h4 style="margin:0 0 8px">Live Keyboard Highlight</h4>
         <div class="kb-row">
@@ -112,6 +103,18 @@ textarea:focus{outline:2px solid #6991ff}
         </div>
         <div class="kb-note">When you start typing, the expected next key glows yellow. Correct presses flash green, wrong presses flash red.</div>
       </div>
+
+      <div class="card" style="margin-top:10px;background:#0d1730;border-color:#30457d;padding:10px">
+        <b style="display:block;margin-bottom:6px">Your Saved Progress (auto-resume)</b>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:6px;font-size:13px;color:#cfe0ff">
+          <div>Highest Unlocked: <b id="progressUnlocked">1</b></div>
+          <div>Completed Levels: <b id="progressCompleted">0</b></div>
+          <div>Total Practice Time: <b id="progressTime">0m</b></div>
+          <div>Last Practice: <b id="progressLast">-</b></div>
+        </div>
+        <button class="btn sec" id="clearProgressBtn" style="margin-top:8px">Clear My Progress</button>
+      </div>
+
     </div>
 
     <aside class="card">
