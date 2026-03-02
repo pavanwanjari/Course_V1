@@ -59,7 +59,7 @@ textarea:focus{outline:2px solid #6991ff}
 
   <section class="grid">
     <div class="card">
-      <div class="level-head"><h2 style="margin:0">Level <span id="levelNum">1</span> / 100</h2><div id="bestText" style="color:#a9beed">Best WPM: 0</div></div>
+      <div class="level-head"><h2 style="margin:0">Level <span id="levelNum">1</span> / 100</h2><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div id="levelCondition" class="badge" style="background:#24365f;border-color:#355aa7">Condition: Lowercase Basics</div><div id="bestText" style="color:#a9beed">Best WPM: 0</div></div></div>
       <div class="stats">
         <div class="stat"><small>WPM</small><b id="wpm">0</b></div>
         <div class="stat"><small>CPM</small><b id="cpm">0</b></div>
@@ -89,6 +89,9 @@ textarea:focus{outline:2px solid #6991ff}
       
       <div class="keyboard-wrap">
         <h4 style="margin:0 0 8px">Live Keyboard Highlight</h4>
+        <div class="kb-row" style="grid-template-columns:repeat(12,1fr)">
+          <div class="key" data-key="1">1</div><div class="key" data-key="2">2</div><div class="key" data-key="3">3</div><div class="key" data-key="4">4</div><div class="key" data-key="5">5</div><div class="key" data-key="6">6</div><div class="key" data-key="7">7</div><div class="key" data-key="8">8</div><div class="key" data-key="9">9</div><div class="key" data-key="0">0</div><div class="key" data-key="-">-</div><div class="key" data-key="=">=</div>
+        </div>
         <div class="kb-row">
           <div class="key" data-key="q">Q</div><div class="key" data-key="w">W</div><div class="key" data-key="e">E</div><div class="key" data-key="r">R</div><div class="key" data-key="t">T</div><div class="key" data-key="y">Y</div><div class="key" data-key="u">U</div><div class="key" data-key="i">I</div><div class="key" data-key="o">O</div><div class="key" data-key="p">P</div>
         </div>
@@ -134,23 +137,38 @@ textarea:focus{outline:2px solid #6991ff}
 
 <script>
 (function(){
-  const pool = [
-    'data analysis begins with clean, reliable and well structured information every day',
+  const lowercasePool = [
+    'data analysis begins with clean reliable and well structured information every day',
     'practice makes progress when your fingers stay relaxed and your eyes read ahead',
     'strong communication and fast typing improve productivity in every office role',
-    'small daily sessions can build big confidence for interviews and online assessments',
-    'accuracy first and then speed is the best strategy for long term typing improvement',
-    'a focused learner keeps posture straight and wrists light to avoid typing fatigue',
-    'business reports require attention to numbers details and clear written summaries',
-    'consistent keyboard practice helps candidates complete assignments faster and better',
-    'every level builds rhythm timing and confidence for practical workplace communication',
-    'you can improve quickly when feedback is visible and goals are clearly defined'
+    'small daily sessions can build big confidence for interviews and online assessments'
   ];
-  const levels = Array.from({length:100}, (_,i)=>{
-    const base = pool[i % pool.length];
-    const extra = i<20 ? '' : i<50 ? ' focus on smooth flow and fewer mistakes' : i<80 ? ' maintain speed while preserving perfect punctuation and spacing' : ' type confidently under pressure with steady rhythm and professional quality';
-    return `${base}${extra}. level ${i+1}`;
-  });
+  const uppercasePool = [
+    'Data Analysis Builds Career Confidence Through Daily Practice And Discipline',
+    'Strong Typing Habits Improve Interview Performance For Freshers And Professionals',
+    'Keyboard Accuracy Creates Better Reports Emails And Client Communication Quality'
+  ];
+  const numberPool = [
+    'Daily target 25 words in 60 seconds with 95 percent accuracy and 0 shortcuts',
+    'Type 10 reports 5 updates and 3 follow ups before 6 pm every weekday',
+    'Practice 30 minutes for 7 days to improve from 20 wpm to 35 wpm'
+  ];
+  const symbolPool = [
+    'Email: hiring.team@company.com | Score: 92% | Time: 08:30 pm.',
+    'Task #1: clean-data, Task #2: build-dashboard, Task #3: send-report!',
+    'Use brackets ( ), commas, dots, and slashes / to type real office text.'
+  ];
+
+  function makeLevel(i){
+    const n=i+1;
+    if(n<=20) return {condition:'Lowercase Basics', text:`${lowercasePool[i%lowercasePool.length]}. level ${n}`};
+    if(n<=40) return {condition:'Sentence Case + Capitals', text:`${uppercasePool[i%uppercasePool.length]}. Level ${n}`};
+    if(n<=60) return {condition:'Numbers + Speed Control', text:`${numberPool[i%numberPool.length]}. level ${n}`};
+    if(n<=80) return {condition:'Symbols + Punctuation', text:`${symbolPool[i%symbolPool.length]} level ${n}`};
+    return {condition:'Mixed Challenge (Caps + Numbers + Symbols)', text:`${uppercasePool[i%uppercasePool.length]} | KPI ${20+(i%9)}% | Batch ${100+n} | Focus: accuracy > 95%. Level ${n}`};
+  }
+
+  const levels = Array.from({length:100}, (_,i)=>makeLevel(i));
 
   const s = {
     level: Number(localStorage.getItem('typing_level')||1),
@@ -162,7 +180,7 @@ textarea:focus{outline:2px solid #6991ff}
   };
 
   const $ = id=>document.getElementById(id);
-  const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels');
+  const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels'), levelCondition=$('levelCondition');
   const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
   const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
 
@@ -171,12 +189,17 @@ textarea:focus{outline:2px solid #6991ff}
   function normalizeKey(k){
     if(k==='Spacebar') return ' ';
     if(k==='Esc') return 'escape';
-    return (k||'').toLowerCase();
+    const raw=(k||'').toLowerCase();
+    const shiftMap={
+      '!':'1','@':'2','#':'3','$':'4','%':'5','^':'6','&':'7','*':'8','(':'9',')':'0',
+      '_':'-','+':'=',':':';','<':',','>':'.','?':'/'
+    };
+    return shiftMap[raw] || raw;
   }
 
   function paintExpectedKey(){
     keyEls.forEach(el=>el.classList.remove('active'));
-    const target=levels[s.level-1]||'';
+    const target=((levels[s.level-1]||{}).text)||'';
     const nextChar=target[input.value.length] || ' ';
     const key=normalizeKey(nextChar);
     const el=keyEls.find(x=>x.dataset.key===key);
@@ -222,7 +245,7 @@ textarea:focus{outline:2px solid #6991ff}
   }
 
   function renderPrompt(){
-    const target=levels[s.level-1], val=input.value;
+    const target=(levels[s.level-1]||{}).text||'', val=input.value;
     let html='';
     for(let i=0;i<target.length;i++){
       if(i<val.length){ html+=`<span class="done">${target[i]}</span>`; }
@@ -234,7 +257,7 @@ textarea:focus{outline:2px solid #6991ff}
   }
 
   function stats(){
-    const target=levels[s.level-1], typed=input.value;
+    const target=(levels[s.level-1]||{}).text||'', typed=input.value;
     const mins=(60-s.secs)/60 || 1/60;
     let correct=0;
     for(let i=0;i<typed.length;i++) if(typed[i]===target[i]) correct++;
@@ -247,7 +270,7 @@ textarea:focus{outline:2px solid #6991ff}
 
   function finish(){
     clearInterval(s.timer); s.started=false; input.disabled=true;
-    const target=levels[s.level-1], st=stats();
+    const target=(levels[s.level-1]||{}).text||'', st=stats();
     const pass=input.value===target && st.acc>=95;
     if(pass){
       s.streak += 1;
@@ -288,6 +311,7 @@ textarea:focus{outline:2px solid #6991ff}
   function render(){
     levelNum.textContent=s.level;
     bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
+    levelCondition.textContent='Condition: '+((levels[s.level-1]||{}).condition||'Practice');
     renderLevels(); renderPrompt(); stats(); renderProgress();
   }
 
@@ -307,7 +331,7 @@ textarea:focus{outline:2px solid #6991ff}
   };
   input.addEventListener('keydown', (e)=>{
     if(!s.started) start();
-    const target=levels[s.level-1]||'';
+    const target=((levels[s.level-1]||{}).text)||'';
     const expected=target[input.value.length] || '';
     const pressed=normalizeKey(e.key);
     if(['shift','control','alt','meta','tab','capslock','enter'].includes(pressed)) return;
@@ -316,7 +340,7 @@ textarea:focus{outline:2px solid #6991ff}
     flashKey(pressed, pressed===expectedNorm);
   });
 
-  input.addEventListener('input', ()=>{ if(!s.started) start(); renderPrompt(); const st=stats(); if(input.value===levels[s.level-1] && st.acc>=95) finish(); });
+  input.addEventListener('input', ()=>{ if(!s.started) start(); renderPrompt(); const st=stats(); if(input.value===((levels[s.level-1]||{}).text||'') && st.acc>=95) finish(); });
 
   ['paste','drop','copy','cut'].forEach(evt=>{
     input.addEventListener(evt,(e)=>{
