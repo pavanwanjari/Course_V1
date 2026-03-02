@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Join DataLearn10X job-ready data analytics programs with practical projects in Excel, Python, Power BI, Tableau, SQL, and ML.">
   <title>DataLearn10X - Data Analytics Programs</title>
+<link rel="icon" type="image/png" href="dl10x.png">
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="analytics.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -47,7 +48,7 @@
     .chk{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #d9e4fb;border-radius:10px;padding:10px}
     .chk input{margin-top:3px}
     .form{margin-top:10px;text-align:center}
-    .form input{width:92%;max-width:380px;padding:12px;margin:6px;border:1px solid #c8d5f0;border-radius:8px}
+    .form input,.form select{width:92%;max-width:380px;padding:12px;margin:6px;border:1px solid #c8d5f0;border-radius:8px;background:#fff;color:#1f2f46}
     .total{font-size:22px;font-weight:700;color:#14532d;text-align:center;margin:10px 0}
     .btn{display:inline-block;background:#16a34a;color:#fff;border:none;padding:12px 30px;border-radius:24px;cursor:pointer;font-weight:600}
     .btn:disabled{opacity:.7;cursor:not-allowed}
@@ -116,7 +117,8 @@
         <a class="card course-card" href="course_mysql.html"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">MRP ₹2000 | Offer ₹1</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹5000 | Offer ₹1</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_cheat_sheets.html"><img src="https://img.icons8.com/color/96/todo-list.png" alt="Cheat Sheets"><h3>Data Analytics Cheat Sheets</h3><div class="muted">MRP ₹100 | Offer ₹1</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_hr_emails.html"><img src="https://img.icons8.com/color/96/new-post.png" alt="HR Emails"><h3>1000+ HR Emails</h3><div class="muted">MRP ₹100 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_hr_emails.html"><img src="https://img.icons8.com/color/96/new-post.png" alt="HR Emails"><h3>20000+ HR Emails</h3><div class="muted">MRP ₹100 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_english_typing.html"><img src="https://img.icons8.com/color/96/keyboard.png" alt="Typing Course"><h3>English Typing Course (100 Levels)</h3><div class="muted">100% Free Practice for All</div><span class="tag">Start Free</span></a>
       </div>
     </div>
   </section>
@@ -133,7 +135,7 @@
         <label class="chk"><input type="checkbox" class="courseChk" value="SQL (MySQL)" data-price="1"> SQL (MySQL) (₹1)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Machine Learning + Deep Learning" data-price="1"> ML + DL (₹1)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Data Analytics Cheat Sheets" data-price="1"> Data Analytics Cheat Sheets (₹1)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="1000+ HR Emails" data-price="1"> 1000+ HR Emails (₹1)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="20000+ HR Emails" data-price="1"> 20000+ HR Emails (₹1)</label>
         <label class="chk" style="background:#edf4ff;border-color:#8cb8ff"><input type="checkbox" id="comboChk" value="Data Analytics Combo" data-price="1"> <b>Data Analytics Combo (all courses + resources) ₹1</b></label>
       </div>
 
@@ -142,6 +144,7 @@
         <input type="text" id="name" placeholder="Enter Name"><br>
         <input type="email" id="email" placeholder="Enter Email"><br>
         <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10"><br>
+        <input type="text" id="profession" placeholder="Enter Current Profession (e.g., Student / Working Professional)"><br>
         <button class="btn" id="buyBtn" onclick="payNow()">Buy Now</button>
         <p id="msg"></p>
         <a class="btn-link" href="check_email.html">Already Purchased? Access Course</a>
@@ -157,26 +160,26 @@
         <p class="sub" style="margin-bottom:8px">For informational purposes only: these leading Indian companies hire data analyst candidates and offer strong packages with career growth opportunities.</p>
         <div class="logo-marquee" aria-label="Top Indian companies logos moving in one row">
           <div class="logo-track">
-          <div class="logo-card"><img src="assets/logos/real/tcs.png" alt="TCS logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/tcs.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/infosys.png" alt="Infosys logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/infosys.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/wipro.png" alt="Wipro logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/wipro.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/hcltech.png" alt="HCLTech logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hcltech.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/techmahindra.png" alt="Tech Mahindra logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/techmahindra.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/reliance.png" alt="Reliance logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/reliance.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/icici.png" alt="ICICI Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/icici.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/hdfc.png" alt="HDFC Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hdfc.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/flipkart.png" alt="Flipkart logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/flipkart.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/zomato.png" alt="Zomato logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/zomato.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/tcs.png" alt="TCS logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/tcs.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/infosys.png" alt="Infosys logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/infosys.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/wipro.png" alt="Wipro logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/wipro.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/hcltech.png" alt="HCLTech logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hcltech.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/techmahindra.png" alt="Tech Mahindra logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/techmahindra.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/reliance.png" alt="Reliance logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/reliance.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/icici.png" alt="ICICI Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/icici.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/hdfc.png" alt="HDFC Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hdfc.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/flipkart.png" alt="Flipkart logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/flipkart.svg';"></div>
-          <div class="logo-card"><img src="assets/logos/real/zomato.png" alt="Zomato logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/zomato.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/tcs.svg" alt="TCS logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/tcs.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/infosys.svg" alt="Infosys logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/infosys.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/wipro.svg" alt="Wipro logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/wipro.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/hcltech.svg" alt="HCLTech logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hcltech.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/techmahindra.svg" alt="Tech Mahindra logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/techmahindra.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/reliance.svg" alt="Reliance logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/reliance.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/icici.svg" alt="ICICI Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/icici.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/hdfc.svg" alt="HDFC Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hdfc.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/flipkart.svg" alt="Flipkart logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/flipkart.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/zomato.svg" alt="Zomato logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/zomato.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/tcs.svg" alt="TCS logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/tcs.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/infosys.svg" alt="Infosys logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/infosys.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/wipro.svg" alt="Wipro logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/wipro.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/hcltech.svg" alt="HCLTech logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hcltech.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/techmahindra.svg" alt="Tech Mahindra logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/techmahindra.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/reliance.svg" alt="Reliance logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/reliance.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/icici.svg" alt="ICICI Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/icici.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/hdfc.svg" alt="HDFC Bank logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/hdfc.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/flipkart.svg" alt="Flipkart logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/flipkart.svg';"></div>
+          <div class="logo-card"><img src="assets/logos/zomato.svg" alt="Zomato logo" loading="lazy" onerror="this.onerror=null;this.src='assets/logos/zomato.svg';"></div>
           </div>
         </div>
       </div>
@@ -245,9 +248,9 @@ function animateMetrics(){
   });
 }
 
-function validate(name,email,mobile,items){
+function validate(name,email,mobile,profession,items){
   if(items.length===0) return 'Please select at least one course.';
-  if(!name||!email||!mobile) return 'Please fill all details.';
+  if(!name||!email||!mobile||!profession) return 'Please fill all details.';
   if(!/^\S+@\S+\.\S+$/.test(email)) return 'Please enter a valid email.';
   if(!/^\d{10}$/.test(mobile)) return 'Please enter a valid 10-digit mobile number.';
   return '';
@@ -265,7 +268,7 @@ function savePayment(lead,paymentId,total){
     name:lead.name,
     mobile:lead.mobile,
     email:lead.email,
-    profession:'Student',
+    profession:lead.profession,
     course:lead.courses.join(' | '),
     total:String(total),
     discount:'0',
@@ -297,10 +300,11 @@ function payNow(){
     name:document.getElementById('name').value.trim(),
     email:document.getElementById('email').value.trim().toLowerCase(),
     mobile:document.getElementById('mobile').value.trim(),
+    profession:document.getElementById('profession').value.trim(),
     courses:items.map(i=>i.name)
   };
 
-  const err=validate(lead.name,lead.email,lead.mobile,items);
+  const err=validate(lead.name,lead.email,lead.mobile,lead.profession,items);
   if(err){setMsg(err,true);return;}
 
   localStorage.setItem('latestLead',JSON.stringify(lead));
@@ -314,7 +318,7 @@ function payNow(){
     name:'DataLearn10X',
     description:lead.courses.join(', '),
     prefill:{name:lead.name,email:lead.email,contact:lead.mobile},
-    notes:{courses:lead.courses.join(', ')},
+    notes:{courses:lead.courses.join(', '),profession:lead.profession},
     handler:function(res){
       const paymentId=res.razorpay_payment_id||'';
       track('payment_success',{payment_id:paymentId,courses:lead.courses,total:total});
