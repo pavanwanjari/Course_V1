@@ -48,7 +48,7 @@
     .chk{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #d9e4fb;border-radius:10px;padding:10px}
     .chk input{margin-top:3px}
     .form{margin-top:10px;text-align:center}
-    .form input{width:92%;max-width:380px;padding:12px;margin:6px;border:1px solid #c8d5f0;border-radius:8px}
+    .form input,.form select{width:92%;max-width:380px;padding:12px;margin:6px;border:1px solid #c8d5f0;border-radius:8px;background:#fff;color:#1f2f46}
     .total{font-size:22px;font-weight:700;color:#14532d;text-align:center;margin:10px 0}
     .btn{display:inline-block;background:#16a34a;color:#fff;border:none;padding:12px 30px;border-radius:24px;cursor:pointer;font-weight:600}
     .btn:disabled{opacity:.7;cursor:not-allowed}
@@ -144,6 +144,7 @@
         <input type="text" id="name" placeholder="Enter Name"><br>
         <input type="email" id="email" placeholder="Enter Email"><br>
         <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10"><br>
+        <input type="text" id="profession" placeholder="Enter Current Profession (e.g., Student / Working Professional)"><br>
         <button class="btn" id="buyBtn" onclick="payNow()">Buy Now</button>
         <p id="msg"></p>
         <a class="btn-link" href="check_email.html">Already Purchased? Access Course</a>
@@ -247,9 +248,9 @@ function animateMetrics(){
   });
 }
 
-function validate(name,email,mobile,items){
+function validate(name,email,mobile,profession,items){
   if(items.length===0) return 'Please select at least one course.';
-  if(!name||!email||!mobile) return 'Please fill all details.';
+  if(!name||!email||!mobile||!profession) return 'Please fill all details.';
   if(!/^\S+@\S+\.\S+$/.test(email)) return 'Please enter a valid email.';
   if(!/^\d{10}$/.test(mobile)) return 'Please enter a valid 10-digit mobile number.';
   return '';
@@ -267,7 +268,7 @@ function savePayment(lead,paymentId,total){
     name:lead.name,
     mobile:lead.mobile,
     email:lead.email,
-    profession:'Student',
+    profession:lead.profession,
     course:lead.courses.join(' | '),
     total:String(total),
     discount:'0',
@@ -299,10 +300,11 @@ function payNow(){
     name:document.getElementById('name').value.trim(),
     email:document.getElementById('email').value.trim().toLowerCase(),
     mobile:document.getElementById('mobile').value.trim(),
+    profession:document.getElementById('profession').value.trim(),
     courses:items.map(i=>i.name)
   };
 
-  const err=validate(lead.name,lead.email,lead.mobile,items);
+  const err=validate(lead.name,lead.email,lead.mobile,lead.profession,items);
   if(err){setMsg(err,true);return;}
 
   localStorage.setItem('latestLead',JSON.stringify(lead));
@@ -316,7 +318,7 @@ function payNow(){
     name:'DataLearn10X',
     description:lead.courses.join(', '),
     prefill:{name:lead.name,email:lead.email,contact:lead.mobile},
-    notes:{courses:lead.courses.join(', ')},
+    notes:{courses:lead.courses.join(', '),profession:lead.profession},
     handler:function(res){
       const paymentId=res.razorpay_payment_id||'';
       track('payment_success',{payment_id:paymentId,courses:lead.courses,total:total});
