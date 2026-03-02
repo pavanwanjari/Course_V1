@@ -62,6 +62,16 @@ textarea:focus{outline:2px solid #6991ff}
         <button class="btn ok" id="nextBtn">Next Level</button>
       </div>
       <div id="msg">Tip: Focus on accuracy first, then speed. Complete a level to unlock the next.</div>
+      <div class="card" style="margin-top:10px;background:#0d1730;border-color:#30457d;padding:10px">
+        <b style="display:block;margin-bottom:6px">Your Saved Progress (auto-resume)</b>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:6px;font-size:13px;color:#cfe0ff">
+          <div>Highest Unlocked: <b id="progressUnlocked">1</b></div>
+          <div>Completed Levels: <b id="progressCompleted">0</b></div>
+          <div>Total Practice Time: <b id="progressTime">0m</b></div>
+          <div>Last Practice: <b id="progressLast">-</b></div>
+        </div>
+        <button class="btn sec" id="clearProgressBtn" style="margin-top:8px">Clear My Progress</button>
+      </div>
       <div class="tips">Suggested routine: 20 minutes daily (10 levels/day). Track improvement by comparing your best WPM at the same level each week.</div>
     </div>
 
@@ -104,17 +114,29 @@ textarea:focus{outline:2px solid #6991ff}
     level: Number(localStorage.getItem('typing_level')||1),
     unlocked: Number(localStorage.getItem('typing_unlocked')||1),
     bestWpm: JSON.parse(localStorage.getItem('typing_best')||'{}'),
+    totalSeconds: Number(localStorage.getItem('typing_total_seconds')||0),
+    lastPractice: localStorage.getItem('typing_last_practice')||'',
     timer:null, started:false, secs:60, typed:'', streak:0
   };
 
   const $ = id=>document.getElementById(id);
   const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels');
   const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
+  const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
 
   function save(){
     localStorage.setItem('typing_level',s.level);
     localStorage.setItem('typing_unlocked',s.unlocked);
     localStorage.setItem('typing_best',JSON.stringify(s.bestWpm));
+    localStorage.setItem('typing_total_seconds',String(s.totalSeconds));
+    localStorage.setItem('typing_last_practice',s.lastPractice||'');
+  }
+
+  function renderProgress(){
+    progressUnlocked.textContent=s.unlocked;
+    progressCompleted.textContent=Object.keys(s.bestWpm).length;
+    progressTime.textContent=Math.floor(s.totalSeconds/60)+'m '+(s.totalSeconds%60)+'s';
+    progressLast.textContent=s.lastPractice?new Date(s.lastPractice).toLocaleString():'-';
   }
 
   function renderLevels(){
@@ -174,7 +196,8 @@ textarea:focus{outline:2px solid #6991ff}
 
   function tick(){
     if(s.secs<=0){ finish(); return; }
-    s.secs--; timeEl.textContent=s.secs+'s'; stats();
+    s.secs--; s.totalSeconds++; s.lastPractice=new Date().toISOString();
+    timeEl.textContent=s.secs+'s'; stats(); renderProgress(); save();
   }
 
   function start(){
@@ -194,11 +217,19 @@ textarea:focus{outline:2px solid #6991ff}
   function render(){
     levelNum.textContent=s.level;
     bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
-    renderLevels(); renderPrompt(); stats();
+    renderLevels(); renderPrompt(); stats(); renderProgress();
   }
 
   $('startBtn').onclick=start;
   $('resetBtn').onclick=()=>{resetLevel(); msg.textContent='Level reset. Press Start.'; msg.style.color='#d7e2ff';};
+
+  $('clearProgressBtn').onclick=()=>{
+    if(!confirm('Clear all saved typing progress on this browser?')) return;
+    ['typing_level','typing_unlocked','typing_best','typing_total_seconds','typing_last_practice'].forEach(k=>localStorage.removeItem(k));
+    s.level=1; s.unlocked=1; s.bestWpm={}; s.totalSeconds=0; s.lastPractice=''; s.streak=0;
+    resetLevel(); render();
+    msg.textContent='Progress cleared. You can start again from Level 1.';
+  };
   $('nextBtn').onclick=()=>{
     if(s.level<s.unlocked){ s.level++; resetLevel(); render(); }
     else msg.textContent='Complete current level first to unlock the next one.';
@@ -206,6 +237,7 @@ textarea:focus{outline:2px solid #6991ff}
   input.addEventListener('input', ()=>{ if(!s.started) start(); renderPrompt(); const st=stats(); if(input.value===levels[s.level-1] && st.acc>=95) finish(); });
 
   resetLevel(); render();
+  if(s.lastPractice){ msg.textContent='Welcome back! Your progress has been resumed from this browser.'; }
   PSAAnalytics.trackEvent('course_page_viewed',{course:'English Typing Mastery 100 Levels'});
 })();
 </script>
