@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>English Typing Mastery (100 Levels) - DataLearn10X</title>
+<link rel="icon" type="image/png" href="dl10x.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Practice English typing with 100 progressive levels. Track WPM, CPM, accuracy, streak and best score for free.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="analytics.js"></script>
+<style>
+:root{--bg:#0f172a;--card:#111b33;--muted:#9db0d8;--txt:#f2f6ff;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--pri:#4f7cff;--pri2:#7c3aed}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at 20% 10%,#1f2a4d 0,#0f172a 45%,#0b1328 100%);color:var(--txt)}
+a{color:inherit}
+.wrap{max-width:1150px;margin:auto;padding:18px 14px 34px}
+.hero{background:linear-gradient(120deg,#1f3b78,#334fbd,#6236ff);border-radius:18px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.hero h1{margin:0 0 6px;font-size:clamp(24px,4vw,36px)}
+.hero p{margin:0;color:#e5ecff}
+.badges{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}.badge{background:#ffffff26;border:1px solid #ffffff33;padding:6px 10px;border-radius:999px;font-size:12px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+.card{background:linear-gradient(180deg,#131f3b,#111b33);border:1px solid #31416f;border-radius:16px;padding:16px}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(90px,1fr));gap:8px}.stat{background:#0e1730;border:1px solid #2f3e6a;border-radius:12px;padding:10px;text-align:center}.stat b{font-size:20px;display:block}
+#prompt{line-height:1.7;background:#0d162d;border:1px solid #2f3e6a;border-radius:12px;padding:14px;min-height:110px;font-size:18px}
+#prompt .done{color:var(--ok)} #prompt .active{background:#ffd166;color:#0b1328;padding:0 2px;border-radius:4px} #prompt .todo{color:#98a9d0}
+textarea{width:100%;margin-top:10px;border:1px solid #3f5188;background:#0b1328;color:#fff;border-radius:12px;padding:12px;font-size:17px;min-height:120px;resize:vertical}
+textarea:focus{outline:2px solid #6991ff}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}.pri{background:var(--pri);color:#fff}.sec{background:#24365f;color:#fff}.ok{background:var(--ok);color:#04220f}
+#msg{margin-top:8px;color:#d7e2ff;font-size:14px}
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.level-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-height:500px;overflow:auto;padding-right:4px;margin-top:10px}
+.lv{padding:8px;border-radius:10px;border:1px solid #3a4d80;background:#131f3b;color:#dce7ff;cursor:pointer;font-weight:700}
+.lv.lock{opacity:.45;cursor:not-allowed}.lv.active{background:#3458c9}.lv.done{background:#1f8f52}
+.tips{margin-top:10px;font-size:13px;color:var(--muted);line-height:1.6}
+
+.finger-guide{margin-top:12px;background:#0d1730;border:1px solid #30457d;border-radius:12px;padding:10px}
+.finger-guide h4{margin:0 0 8px}
+.fingers{display:grid;grid-template-columns:repeat(8,minmax(50px,1fr));gap:6px}
+.finger{padding:6px;border-radius:8px;text-align:center;font-size:12px;border:1px solid #3a4d80;background:#152446}
+.finger b{display:block;font-size:11px;color:#9db0d8}
+.keyboard-wrap{margin-top:10px;background:#0b1328;border:1px solid #33497e;border-radius:12px;padding:10px}
+.kb-row{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:6px}
+.key{padding:8px 4px;text-align:center;border-radius:8px;background:#142041;border:1px solid #3a4d80;font-weight:700;font-size:12px;color:#dce7ff;min-height:34px;display:flex;align-items:center;justify-content:center}
+.key.active{background:#facc15;color:#1a1a1a;border-color:#facc15}
+.key.correct{background:#22c55e;color:#08210f;border-color:#22c55e}
+.key.wrong{background:#ef4444;color:#fff;border-color:#ef4444}
+.kb-note{font-size:12px;color:#9db0d8;margin-top:4px}
+
+.g-card{margin-top:10px;background:#0d1730;border:1px solid #30457d;border-radius:12px;padding:10px}
+.badge-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.achv{font-size:12px;background:#1c2f58;border:1px solid #3d5fa8;border-radius:999px;padding:4px 8px;color:#dbe6ff}
+.board-list{margin:8px 0 0;padding-left:18px;color:#d5e4ff;font-size:13px;line-height:1.7}
+.inline-input{width:100%;padding:9px;border-radius:8px;border:1px solid #3a4d80;background:#111c36;color:#fff;margin-top:6px}
+
+@media (max-width:960px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:10px"><img src="dl10x.png" alt="DataLearn10X logo" style="height:34px"> <b>Back to Home</b></a>
+  <section class="hero">
+    <h1>Free English Typing Mastery Course</h1>
+    <p>100 levels • real-time speed tracking • accuracy coaching • completely free for everyone.</p>
+    <div class="badges"><span class="badge">No Payment</span><span class="badge">Beginner to Advanced</span><span class="badge">WPM + CPM + Accuracy</span><span class="badge">Best Score Memory</span></div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="level-head"><h2 style="margin:0">Level <span id="levelNum">1</span> / 100</h2><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div id="levelCondition" class="badge" style="background:#24365f;border-color:#355aa7">Condition: Lowercase Basics</div><div id="bestText" style="color:#a9beed">Best WPM: 0</div></div></div>
+      <div class="stats">
+        <div class="stat"><small>WPM</small><b id="wpm">0</b></div>
+        <div class="stat"><small>CPM</small><b id="cpm">0</b></div>
+        <div class="stat"><small>Accuracy</small><b id="acc">100%</b></div>
+        <div class="stat"><small>Time</small><b id="time">60s</b></div>
+        <div class="stat"><small>Streak</small><b id="streak">0</b></div>
+      </div>
+      <div class="finger-guide">
+              <h4>Finger Placement Guide (Home Row)</h4>
+              <div class="fingers">
+                <div class="finger">A<b>Left Pinky</b></div><div class="finger">S<b>Left Ring</b></div><div class="finger">D<b>Left Middle</b></div><div class="finger">F<b>Left Index</b></div>
+                <div class="finger">J<b>Right Index</b></div><div class="finger">K<b>Right Middle</b></div><div class="finger">L<b>Right Ring</b></div><div class="finger">;<b>Right Pinky</b></div>
+              </div>
+              <div class="kb-note">Place thumbs on <b>Space</b>. Feel the small bumps on <b>F</b> and <b>J</b> to return to home position without looking.</div>
+            </div>
+
+      <p id="prompt" aria-live="polite"></p>
+      <textarea id="input" placeholder="Start typing here exactly as shown above..."></textarea>
+      <div class="controls">
+        <button class="btn pri" id="startBtn">Start</button>
+        <button class="btn sec" id="resetBtn">Reset</button>
+        <button class="btn ok" id="nextBtn">Next Level</button>
+      </div>
+      <div id="msg">Tip: Focus on accuracy first, then speed. Complete a level to unlock the next.</div>
+            <div class="tips">Suggested routine: 20 minutes daily (10 levels/day). Track improvement by comparing your best WPM at the same level each week.</div>
+
+      
+      <div class="keyboard-wrap">
+        <h4 style="margin:0 0 8px">Live Keyboard Highlight</h4>
+        <div class="kb-row" style="grid-template-columns:repeat(12,1fr)">
+          <div class="key" data-key="1">1</div><div class="key" data-key="2">2</div><div class="key" data-key="3">3</div><div class="key" data-key="4">4</div><div class="key" data-key="5">5</div><div class="key" data-key="6">6</div><div class="key" data-key="7">7</div><div class="key" data-key="8">8</div><div class="key" data-key="9">9</div><div class="key" data-key="0">0</div><div class="key" data-key="-">-</div><div class="key" data-key="=">=</div>
+        </div>
+        <div class="kb-row">
+          <div class="key" data-key="q">Q</div><div class="key" data-key="w">W</div><div class="key" data-key="e">E</div><div class="key" data-key="r">R</div><div class="key" data-key="t">T</div><div class="key" data-key="y">Y</div><div class="key" data-key="u">U</div><div class="key" data-key="i">I</div><div class="key" data-key="o">O</div><div class="key" data-key="p">P</div>
+        </div>
+        <div class="kb-row">
+          <div class="key" data-key="a">A</div><div class="key" data-key="s">S</div><div class="key" data-key="d">D</div><div class="key" data-key="f">F</div><div class="key" data-key="g">G</div><div class="key" data-key="h">H</div><div class="key" data-key="j">J</div><div class="key" data-key="k">K</div><div class="key" data-key="l">L</div><div class="key" data-key=";">;</div>
+        </div>
+        <div class="kb-row">
+          <div class="key" data-key="z">Z</div><div class="key" data-key="x">X</div><div class="key" data-key="c">C</div><div class="key" data-key="v">V</div><div class="key" data-key="b">B</div><div class="key" data-key="n">N</div><div class="key" data-key="m">M</div><div class="key" data-key=",">,</div><div class="key" data-key=".">.</div><div class="key" data-key="/">/</div>
+        </div>
+        <div class="kb-row" style="grid-template-columns:2fr 6fr 2fr">
+          <div class="key" data-key="shift">Shift</div><div class="key" data-key=" ">Space</div><div class="key" data-key="backspace">Backspace</div>
+        </div>
+        <div class="kb-note">When you start typing, the expected next key glows yellow. Correct presses flash green, wrong presses flash red.</div>
+      </div>
+
+      <div class="card" style="margin-top:10px;background:#0d1730;border-color:#30457d;padding:10px">
+        <b style="display:block;margin-bottom:6px">Your Saved Progress (auto-resume)</b>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:6px;font-size:13px;color:#cfe0ff">
+          <div>Highest Unlocked: <b id="progressUnlocked">1</b></div>
+          <div>Completed Levels: <b id="progressCompleted">0</b></div>
+          <div>Total Practice Time: <b id="progressTime">0m</b></div>
+          <div>Last Practice: <b id="progressLast">-</b></div>
+        </div>
+        <button class="btn sec" id="clearProgressBtn" style="margin-top:8px">Clear My Progress</button>
+      </div>
+
+    </div>
+
+    <aside class="card">
+      <div class="level-head"><h3 style="margin:0">Levels</h3><small style="color:#a9beed">Complete to unlock</small></div>
+      <div id="levels" class="level-grid"></div>
+      <div class="tips">
+        <b>How this helps candidates:</b>
+        <ul>
+          <li>Improves typing speed for online assessments/interviews.</li>
+          <li>Builds confidence for email drafting and documentation jobs.</li>
+          <li>Creates consistent keyboard muscle memory over 100 levels.</li>
+        </ul>
+      </div>
+
+      <div class="g-card">
+        <b>🏅 Achievements</b>
+        <div id="badgeWrap" class="badge-wrap"></div>
+      </div>
+
+      <div class="g-card">
+        <b>📈 Weekly Leaderboard (This Browser)</b>
+        <input id="playerName" class="inline-input" type="text" placeholder="Enter your name for leaderboard">
+        <button class="btn sec" id="submitBoardBtn" style="margin-top:8px">Submit Current Best WPM</button>
+        <ol id="boardList" class="board-list"></ol>
+      </div>
+
+      <div class="g-card">
+        <b>🎓 Level 100 Certificate</b>
+        <div class="kb-note">Complete level 100 to unlock your printable certificate.</div>
+        <button class="btn sec" id="certificateBtn" style="margin-top:8px" disabled>Download Certificate</button>
+      </div>
+    </aside>
+  </section>
+</div>
+
+<script>
+(function(){
+  const lowercasePool = [
+    'data analysis begins with clean reliable and well structured information every day',
+    'practice makes progress when your fingers stay relaxed and your eyes read ahead',
+    'strong communication and fast typing improve productivity in every office role',
+    'small daily sessions can build big confidence for interviews and online assessments'
+  ];
+  const uppercasePool = [
+    'Data Analysis Builds Career Confidence Through Daily Practice And Discipline',
+    'Strong Typing Habits Improve Interview Performance For Freshers And Professionals',
+    'Keyboard Accuracy Creates Better Reports Emails And Client Communication Quality'
+  ];
+  const numberPool = [
+    'Daily target 25 words in 60 seconds with 95 percent accuracy and 0 shortcuts',
+    'Type 10 reports 5 updates and 3 follow ups before 6 pm every weekday',
+    'Practice 30 minutes for 7 days to improve from 20 wpm to 35 wpm'
+  ];
+  const symbolPool = [
+    'Email: hiring.team@company.com | Score: 92% | Time: 08:30 pm.',
+    'Task #1: clean-data, Task #2: build-dashboard, Task #3: send-report!',
+    'Use brackets ( ), commas, dots, and slashes / to type real office text.'
+  ];
+
+  function makeLevel(i){
+    const n=i+1;
+    if(n<=20) return {condition:'Lowercase Basics', text:`${lowercasePool[i%lowercasePool.length]}. level ${n}`};
+    if(n<=40) return {condition:'Sentence Case + Capitals', text:`${uppercasePool[i%uppercasePool.length]}. Level ${n}`};
+    if(n<=60) return {condition:'Numbers + Speed Control', text:`${numberPool[i%numberPool.length]}. level ${n}`};
+    if(n<=80) return {condition:'Symbols + Punctuation', text:`${symbolPool[i%symbolPool.length]} level ${n}`};
+    return {condition:'Mixed Challenge (Caps + Numbers + Symbols)', text:`${uppercasePool[i%uppercasePool.length]} | KPI ${20+(i%9)}% | Batch ${100+n} | Focus: accuracy > 95%. Level ${n}`};
+  }
+
+  const levels = Array.from({length:100}, (_,i)=>makeLevel(i));
+
+  const s = {
+    level: Number(localStorage.getItem('typing_level')||1),
+    unlocked: Number(localStorage.getItem('typing_unlocked')||1),
+    bestWpm: JSON.parse(localStorage.getItem('typing_best')||'{}'),
+    totalSeconds: Number(localStorage.getItem('typing_total_seconds')||0),
+    lastPractice: localStorage.getItem('typing_last_practice')||'',
+    board: JSON.parse(localStorage.getItem('typing_weekly_board')||'[]'),
+    timer:null, started:false, secs:60, typed:'', streak:0
+  };
+
+  const $ = id=>document.getElementById(id);
+  const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels'), levelCondition=$('levelCondition');
+  const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
+  const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
+  const badgeWrap=$('badgeWrap'), boardList=$('boardList'), playerName=$('playerName'), certificateBtn=$('certificateBtn');
+
+  const keyEls=Array.from(document.querySelectorAll('.key'));
+
+  function overallBest(){
+    const vals=Object.values(s.bestWpm||{}).map(Number);
+    return vals.length?Math.max(...vals):0;
+  }
+
+  function cleanBoard(){
+    const weekMs=7*24*60*60*1000;
+    const now=Date.now();
+    s.board=(s.board||[]).filter(r=>now-new Date(r.when).getTime()<=weekMs);
+  }
+
+  function renderGamification(){
+    cleanBoard();
+    const badges=[];
+    if(s.unlocked>=10) badges.push('Level Explorer (10+)');
+    if(s.unlocked>=25) badges.push('Consistency Champ (25+)');
+    if(s.unlocked>=50) badges.push('Halfway Hero (50+)');
+    if(s.bestWpm[100]) badges.push('Century Finisher (100)');
+    if(overallBest()>=40) badges.push('Speed Sprinter (40+ WPM)');
+    if(overallBest()>=60) badges.push('Speed Master (60+ WPM)');
+    if(s.totalSeconds>=1800) badges.push('30-Minute Grinder');
+    badgeWrap.innerHTML=badges.length?badges.map(b=>`<span class="achv">${b}</span>`).join(''):'<span class="achv">Start practicing to unlock badges</span>';
+
+    s.board.sort((a,b)=>b.score-a.score);
+    boardList.innerHTML=s.board.slice(0,10).map(r=>`<li><b>${r.name}</b> — ${r.score} WPM <span style="color:#9db0d8">(${new Date(r.when).toLocaleDateString()})</span></li>`).join('') || '<li>No scores yet. Submit your best WPM.</li>';
+
+    certificateBtn.disabled=!s.bestWpm[100];
+  }
+
+  function normalizeKey(k){
+    if(k==='Spacebar') return ' ';
+    if(k==='Esc') return 'escape';
+    const raw=(k||'').toLowerCase();
+    const shiftMap={
+      '!':'1','@':'2','#':'3','$':'4','%':'5','^':'6','&':'7','*':'8','(':'9',')':'0',
+      '_':'-','+':'=',':':';','<':',','>':'.','?':'/'
+    };
+    return shiftMap[raw] || raw;
+  }
+
+  function paintExpectedKey(){
+    keyEls.forEach(el=>el.classList.remove('active'));
+    const target=((levels[s.level-1]||{}).text)||'';
+    const nextChar=target[input.value.length] || ' ';
+    const key=normalizeKey(nextChar);
+    const el=keyEls.find(x=>x.dataset.key===key);
+    if(el) el.classList.add('active');
+  }
+
+  function flashKey(keyName, ok){
+    const key=normalizeKey(keyName);
+    const el=keyEls.find(x=>x.dataset.key===key);
+    if(!el) return;
+    el.classList.remove('wrong','correct');
+    el.classList.add(ok?'correct':'wrong');
+    setTimeout(()=>el.classList.remove('wrong','correct'),180);
+  }
+
+  function save(){
+    localStorage.setItem('typing_level',s.level);
+    localStorage.setItem('typing_unlocked',s.unlocked);
+    localStorage.setItem('typing_best',JSON.stringify(s.bestWpm));
+    localStorage.setItem('typing_total_seconds',String(s.totalSeconds));
+    localStorage.setItem('typing_last_practice',s.lastPractice||'');
+    localStorage.setItem('typing_weekly_board',JSON.stringify(s.board||[]));
+  }
+
+  function renderProgress(){
+    progressUnlocked.textContent=s.unlocked;
+    progressCompleted.textContent=Object.keys(s.bestWpm).length;
+    progressTime.textContent=Math.floor(s.totalSeconds/60)+'m '+(s.totalSeconds%60)+'s';
+    progressLast.textContent=s.lastPractice?new Date(s.lastPractice).toLocaleString():'-';
+  }
+
+  function renderLevels(){
+    levelsWrap.innerHTML='';
+    for(let i=1;i<=100;i++){
+      const b=document.createElement('button');
+      b.className='lv'; b.textContent=i;
+      if(i>s.unlocked) b.classList.add('lock');
+      if(i===s.level) b.classList.add('active');
+      if(s.bestWpm[i]) b.classList.add('done');
+      b.disabled=i>s.unlocked;
+      b.onclick=()=>{s.level=i;resetLevel();render();};
+      levelsWrap.appendChild(b);
+    }
+  }
+
+  function renderPrompt(){
+    const target=(levels[s.level-1]||{}).text||'', val=input.value;
+    let html='';
+    for(let i=0;i<target.length;i++){
+      if(i<val.length){ html+=`<span class="done">${target[i]}</span>`; }
+      else if(i===val.length){ html+=`<span class="active">${target[i]||''}</span>`; }
+      else { html+=`<span class="todo">${target[i]}</span>`; }
+    }
+    promptEl.innerHTML=html;
+    paintExpectedKey();
+  }
+
+  function stats(){
+    const target=(levels[s.level-1]||{}).text||'', typed=input.value;
+    const mins=(60-s.secs)/60 || 1/60;
+    let correct=0;
+    for(let i=0;i<typed.length;i++) if(typed[i]===target[i]) correct++;
+    const acc=typed.length?Math.round((correct/typed.length)*100):100;
+    const wpm=Math.max(0,Math.round((correct/5)/mins));
+    const cpm=Math.max(0,Math.round(correct/mins));
+    wpmEl.textContent=wpm; cpmEl.textContent=cpm; accEl.textContent=acc+'%'; streakEl.textContent=s.streak;
+    return {acc,wpm,cpm,correct};
+  }
+
+  function finish(){
+    clearInterval(s.timer); s.started=false; input.disabled=true;
+    const target=(levels[s.level-1]||{}).text||'', st=stats();
+    const pass=input.value===target && st.acc>=95;
+    if(pass){
+      s.streak += 1;
+      if(!s.bestWpm[s.level] || st.wpm>s.bestWpm[s.level]) s.bestWpm[s.level]=st.wpm;
+      if(s.level===s.unlocked && s.unlocked<100) s.unlocked++;
+      msg.textContent=`Great! Level ${s.level} completed. WPM ${st.wpm}, Accuracy ${st.acc}%.`;
+      msg.style.color='#9df5ba';
+    }else{
+      s.streak=0;
+      msg.textContent='Level not completed. Type the full paragraph exactly with at least 95% accuracy and try again.';
+      msg.style.color='#ffd7a1';
+    }
+    save(); render();
+  }
+
+  function tick(){
+    if(s.secs<=0){ finish(); return; }
+    s.secs--; s.totalSeconds++; s.lastPractice=new Date().toISOString();
+    timeEl.textContent=s.secs+'s'; stats(); renderProgress(); save();
+  }
+
+  function start(){
+    if(s.started) return;
+    s.started=true; input.disabled=false; input.focus();
+    msg.textContent='Typing started. Keep accuracy high!'; msg.style.color='#d7e2ff';
+    s.timer=setInterval(tick,1000);
+  }
+
+  function resetLevel(){
+    clearInterval(s.timer); s.started=false; s.secs=60; input.value=''; input.disabled=false;
+    timeEl.textContent='60s'; wpmEl.textContent='0'; cpmEl.textContent='0'; accEl.textContent='100%';
+    renderPrompt(); renderLevels();
+    keyEls.forEach(el=>el.classList.remove('correct','wrong'));
+    bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
+    paintExpectedKey();
+  }
+
+  function render(){
+    levelNum.textContent=s.level;
+    bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
+    levelCondition.textContent='Condition: '+((levels[s.level-1]||{}).condition||'Practice');
+    renderLevels(); renderPrompt(); stats(); renderProgress(); renderGamification();
+  }
+
+  $('startBtn').onclick=start;
+  $('resetBtn').onclick=()=>{resetLevel(); msg.textContent='Level reset. Press Start.'; msg.style.color='#d7e2ff';};
+
+  $('clearProgressBtn').onclick=()=>{
+    if(!confirm('Clear all saved typing progress on this browser?')) return;
+    ['typing_level','typing_unlocked','typing_best','typing_total_seconds','typing_last_practice','typing_weekly_board'].forEach(k=>localStorage.removeItem(k));
+    s.level=1; s.unlocked=1; s.bestWpm={}; s.totalSeconds=0; s.lastPractice=''; s.board=[]; s.streak=0;
+    resetLevel(); render();
+    msg.textContent='Progress cleared. You can start again from Level 1.';
+  };
+  $('nextBtn').onclick=()=>{
+    if(s.level<s.unlocked){ s.level++; resetLevel(); render(); }
+    else msg.textContent='Complete current level first to unlock the next one.';
+  };
+  input.addEventListener('keydown', (e)=>{
+    if(!s.started) start();
+    const target=((levels[s.level-1]||{}).text)||'';
+    const expected=target[input.value.length] || '';
+    const pressed=normalizeKey(e.key);
+    if(['shift','control','alt','meta','tab','capslock','enter'].includes(pressed)) return;
+    if(pressed==='backspace'){ flashKey('backspace', true); return; }
+    const expectedNorm=normalizeKey(expected);
+    flashKey(pressed, pressed===expectedNorm);
+  });
+
+  input.addEventListener('input', ()=>{ if(!s.started) start(); renderPrompt(); const st=stats(); if(input.value===((levels[s.level-1]||{}).text||'') && st.acc>=95) finish(); });
+
+  ['paste','drop','copy','cut'].forEach(evt=>{
+    input.addEventListener(evt,(e)=>{
+      e.preventDefault();
+      msg.textContent='Copy, paste, cut, and drag-drop are disabled. Please type manually for practice.';
+      msg.style.color='#ffd7a1';
+    });
+  });
+
+  input.addEventListener('contextmenu',(e)=>e.preventDefault());
+
+  $('submitBoardBtn').onclick=()=>{
+    const name=(playerName.value||'').trim()||'Anonymous';
+    const score=Math.max(overallBest(), Number(wpmEl.textContent)||0);
+    if(score<=0){ msg.textContent='Type and complete at least one level before submitting leaderboard score.'; msg.style.color='#ffd7a1'; return; }
+    cleanBoard();
+    s.board.push({name:name.slice(0,24), score, when:new Date().toISOString()});
+    save(); renderGamification();
+    msg.textContent='Score submitted to weekly leaderboard!'; msg.style.color='#9df5ba';
+  };
+
+  certificateBtn.onclick=()=>{
+    if(!s.bestWpm[100]) return;
+    const name=(playerName.value||'').trim()||'Learner';
+    const w=window.open('','_blank');
+    if(!w) return;
+    w.document.write(`<html><head><title>Typing Certificate</title><style>body{font-family:Arial;padding:30px;text-align:center}h1{font-size:40px;margin-bottom:10px}.box{border:6px solid #1d4ed8;padding:30px;border-radius:12px}p{font-size:20px}</style></head><body><div class="box"><h1>Certificate of Completion</h1><p>This certifies that <b>${name}</b> completed <b>English Typing Mastery (100 Levels)</b>.</p><p>Best WPM: <b>${overallBest()}</b> | Date: <b>${new Date().toLocaleDateString()}</b></p><p>DataLearn10X</p></div></body></html>`);
+    w.document.close();
+    w.focus();
+    w.print();
+  };
+
+  resetLevel(); render();
+  if(s.lastPractice){ msg.textContent='Welcome back! Your progress has been resumed from this browser.'; }
+  PSAAnalytics.trackEvent('course_page_viewed',{course:'English Typing Mastery 100 Levels'});
+})();
+</script>
+</body>
+</html>
