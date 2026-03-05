@@ -45,6 +45,13 @@ textarea:focus{outline:2px solid #6991ff}
 .key.correct{background:#22c55e;color:#08210f;border-color:#22c55e}
 .key.wrong{background:#ef4444;color:#fff;border-color:#ef4444}
 .kb-note{font-size:12px;color:#9db0d8;margin-top:4px}
+
+.g-card{margin-top:10px;background:#0d1730;border:1px solid #30457d;border-radius:12px;padding:10px}
+.badge-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.achv{font-size:12px;background:#1c2f58;border:1px solid #3d5fa8;border-radius:999px;padding:4px 8px;color:#dbe6ff}
+.board-list{margin:8px 0 0;padding-left:18px;color:#d5e4ff;font-size:13px;line-height:1.7}
+.inline-input{width:100%;padding:9px;border-radius:8px;border:1px solid #3a4d80;background:#111c36;color:#fff;margin-top:6px}
+
 @media (max-width:960px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
@@ -131,6 +138,24 @@ textarea:focus{outline:2px solid #6991ff}
           <li>Creates consistent keyboard muscle memory over 100 levels.</li>
         </ul>
       </div>
+
+      <div class="g-card">
+        <b>🏅 Achievements</b>
+        <div id="badgeWrap" class="badge-wrap"></div>
+      </div>
+
+      <div class="g-card">
+        <b>📈 Weekly Leaderboard (This Browser)</b>
+        <input id="playerName" class="inline-input" type="text" placeholder="Enter your name for leaderboard">
+        <button class="btn sec" id="submitBoardBtn" style="margin-top:8px">Submit Current Best WPM</button>
+        <ol id="boardList" class="board-list"></ol>
+      </div>
+
+      <div class="g-card">
+        <b>🎓 Level 100 Certificate</b>
+        <div class="kb-note">Complete level 100 to unlock your printable certificate.</div>
+        <button class="btn sec" id="certificateBtn" style="margin-top:8px" disabled>Download Certificate</button>
+      </div>
     </aside>
   </section>
 </div>
@@ -176,6 +201,7 @@ textarea:focus{outline:2px solid #6991ff}
     bestWpm: JSON.parse(localStorage.getItem('typing_best')||'{}'),
     totalSeconds: Number(localStorage.getItem('typing_total_seconds')||0),
     lastPractice: localStorage.getItem('typing_last_practice')||'',
+    board: JSON.parse(localStorage.getItem('typing_weekly_board')||'[]'),
     timer:null, started:false, secs:60, typed:'', streak:0
   };
 
@@ -183,8 +209,38 @@ textarea:focus{outline:2px solid #6991ff}
   const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels'), levelCondition=$('levelCondition');
   const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
   const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
+  const badgeWrap=$('badgeWrap'), boardList=$('boardList'), playerName=$('playerName'), certificateBtn=$('certificateBtn');
 
   const keyEls=Array.from(document.querySelectorAll('.key'));
+
+  function overallBest(){
+    const vals=Object.values(s.bestWpm||{}).map(Number);
+    return vals.length?Math.max(...vals):0;
+  }
+
+  function cleanBoard(){
+    const weekMs=7*24*60*60*1000;
+    const now=Date.now();
+    s.board=(s.board||[]).filter(r=>now-new Date(r.when).getTime()<=weekMs);
+  }
+
+  function renderGamification(){
+    cleanBoard();
+    const badges=[];
+    if(s.unlocked>=10) badges.push('Level Explorer (10+)');
+    if(s.unlocked>=25) badges.push('Consistency Champ (25+)');
+    if(s.unlocked>=50) badges.push('Halfway Hero (50+)');
+    if(s.bestWpm[100]) badges.push('Century Finisher (100)');
+    if(overallBest()>=40) badges.push('Speed Sprinter (40+ WPM)');
+    if(overallBest()>=60) badges.push('Speed Master (60+ WPM)');
+    if(s.totalSeconds>=1800) badges.push('30-Minute Grinder');
+    badgeWrap.innerHTML=badges.length?badges.map(b=>`<span class="achv">${b}</span>`).join(''):'<span class="achv">Start practicing to unlock badges</span>';
+
+    s.board.sort((a,b)=>b.score-a.score);
+    boardList.innerHTML=s.board.slice(0,10).map(r=>`<li><b>${r.name}</b> — ${r.score} WPM <span style="color:#9db0d8">(${new Date(r.when).toLocaleDateString()})</span></li>`).join('') || '<li>No scores yet. Submit your best WPM.</li>';
+
+    certificateBtn.disabled=!s.bestWpm[100];
+  }
 
   function normalizeKey(k){
     if(k==='Spacebar') return ' ';
@@ -221,6 +277,7 @@ textarea:focus{outline:2px solid #6991ff}
     localStorage.setItem('typing_best',JSON.stringify(s.bestWpm));
     localStorage.setItem('typing_total_seconds',String(s.totalSeconds));
     localStorage.setItem('typing_last_practice',s.lastPractice||'');
+    localStorage.setItem('typing_weekly_board',JSON.stringify(s.board||[]));
   }
 
   function renderProgress(){
@@ -312,7 +369,7 @@ textarea:focus{outline:2px solid #6991ff}
     levelNum.textContent=s.level;
     bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
     levelCondition.textContent='Condition: '+((levels[s.level-1]||{}).condition||'Practice');
-    renderLevels(); renderPrompt(); stats(); renderProgress();
+    renderLevels(); renderPrompt(); stats(); renderProgress(); renderGamification();
   }
 
   $('startBtn').onclick=start;
@@ -320,8 +377,8 @@ textarea:focus{outline:2px solid #6991ff}
 
   $('clearProgressBtn').onclick=()=>{
     if(!confirm('Clear all saved typing progress on this browser?')) return;
-    ['typing_level','typing_unlocked','typing_best','typing_total_seconds','typing_last_practice'].forEach(k=>localStorage.removeItem(k));
-    s.level=1; s.unlocked=1; s.bestWpm={}; s.totalSeconds=0; s.lastPractice=''; s.streak=0;
+    ['typing_level','typing_unlocked','typing_best','typing_total_seconds','typing_last_practice','typing_weekly_board'].forEach(k=>localStorage.removeItem(k));
+    s.level=1; s.unlocked=1; s.bestWpm={}; s.totalSeconds=0; s.lastPractice=''; s.board=[]; s.streak=0;
     resetLevel(); render();
     msg.textContent='Progress cleared. You can start again from Level 1.';
   };
@@ -351,6 +408,27 @@ textarea:focus{outline:2px solid #6991ff}
   });
 
   input.addEventListener('contextmenu',(e)=>e.preventDefault());
+
+  $('submitBoardBtn').onclick=()=>{
+    const name=(playerName.value||'').trim()||'Anonymous';
+    const score=Math.max(overallBest(), Number(wpmEl.textContent)||0);
+    if(score<=0){ msg.textContent='Type and complete at least one level before submitting leaderboard score.'; msg.style.color='#ffd7a1'; return; }
+    cleanBoard();
+    s.board.push({name:name.slice(0,24), score, when:new Date().toISOString()});
+    save(); renderGamification();
+    msg.textContent='Score submitted to weekly leaderboard!'; msg.style.color='#9df5ba';
+  };
+
+  certificateBtn.onclick=()=>{
+    if(!s.bestWpm[100]) return;
+    const name=(playerName.value||'').trim()||'Learner';
+    const w=window.open('','_blank');
+    if(!w) return;
+    w.document.write(`<html><head><title>Typing Certificate</title><style>body{font-family:Arial;padding:30px;text-align:center}h1{font-size:40px;margin-bottom:10px}.box{border:6px solid #1d4ed8;padding:30px;border-radius:12px}p{font-size:20px}</style></head><body><div class="box"><h1>Certificate of Completion</h1><p>This certifies that <b>${name}</b> completed <b>English Typing Mastery (100 Levels)</b>.</p><p>Best WPM: <b>${overallBest()}</b> | Date: <b>${new Date().toLocaleDateString()}</b></p><p>DataLearn10X</p></div></body></html>`);
+    w.document.close();
+    w.focus();
+    w.print();
+  };
 
   resetLevel(); render();
   if(s.lastPractice){ msg.textContent='Welcome back! Your progress has been resumed from this browser.'; }
