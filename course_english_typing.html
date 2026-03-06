@@ -14,9 +14,11 @@
 body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at 20% 10%,#1f2a4d 0,#0f172a 45%,#0b1328 100%);color:var(--txt)}
 a{color:inherit}
 .wrap{max-width:1150px;margin:auto;padding:18px 14px 34px}
-.hero{background:linear-gradient(120deg,#1f3b78,#334fbd,#6236ff);border-radius:18px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.hero{position:relative;background:linear-gradient(120deg,#1f3b78,#334fbd,#6236ff);border-radius:18px;padding:68px 20px 20px;box-shadow:0 20px 50px rgba(0,0,0,.35);text-align:center}
 .hero h1{margin:0 0 6px;font-size:clamp(24px,4vw,36px)}
 .hero p{margin:0;color:#e5ecff}
+.hero-home{position:absolute;top:14px;left:14px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;z-index:2}
+.hero-home img{height:34px;width:auto;display:block}
 .badges{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}.badge{background:#ffffff26;border:1px solid #ffffff33;padding:6px 10px;border-radius:999px;font-size:12px}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
 .card{background:linear-gradient(180deg,#131f3b,#111b33);border:1px solid #31416f;border-radius:16px;padding:16px}
@@ -52,13 +54,13 @@ textarea:focus{outline:2px solid #6991ff}
 .board-list{margin:8px 0 0;padding-left:18px;color:#d5e4ff;font-size:13px;line-height:1.7}
 .inline-input{width:100%;padding:9px;border-radius:8px;border:1px solid #3a4d80;background:#111c36;color:#fff;margin-top:6px}
 
-@media (max-width:960px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:960px){.hero{padding:72px 14px 14px}.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:10px"><img src="dl10x.png" alt="DataLearn10X logo" style="height:34px"> <b>Back to Home</b></a>
   <section class="hero">
+    <a href="index.html" aria-label="Back to Home" class="hero-home"><img src="dl10x.png" alt="DataLearn10X logo"></a>
     <h1>Free English Typing Mastery Course</h1>
     <p>100 levels • real-time speed tracking • accuracy coaching • completely free for everyone.</p>
     <div class="badges"><span class="badge">No Payment</span><span class="badge">Beginner to Advanced</span><span class="badge">WPM + CPM + Accuracy</span><span class="badge">Best Score Memory</span></div>
@@ -154,6 +156,8 @@ textarea:focus{outline:2px solid #6991ff}
       <div class="g-card">
         <b>🎓 Level 100 Certificate</b>
         <div class="kb-note">Complete level 100 to unlock your printable certificate.</div>
+        <div class="kb-note">Want a quick preview now? Enter your name above and use the sample button.</div>
+        <button class="btn sec" id="sampleCertificateBtn" style="margin-top:8px">Preview Sample Certificate</button>
         <button class="btn sec" id="certificateBtn" style="margin-top:8px" disabled>Download Certificate</button>
       </div>
     </aside>
@@ -209,7 +213,7 @@ textarea:focus{outline:2px solid #6991ff}
   const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels'), levelCondition=$('levelCondition');
   const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
   const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
-  const badgeWrap=$('badgeWrap'), boardList=$('boardList'), playerName=$('playerName'), certificateBtn=$('certificateBtn');
+  const badgeWrap=$('badgeWrap'), boardList=$('boardList'), playerName=$('playerName'), certificateBtn=$('certificateBtn'), sampleCertificateBtn=$('sampleCertificateBtn');
 
   const keyEls=Array.from(document.querySelectorAll('.key'));
 
@@ -428,6 +432,15 @@ textarea:focus{outline:2px solid #6991ff}
     w.document.close();
     w.focus();
     w.print();
+  };
+
+  sampleCertificateBtn.onclick=()=>{
+    const name=(playerName.value||'').trim()||'Your Name';
+    const w=window.open('','_blank');
+    if(!w) return;
+    w.document.write(`<html><head><title>Sample Typing Certificate</title><style>body{font-family:Arial;padding:30px;text-align:center}h1{font-size:40px;margin-bottom:10px}.box{border:6px solid #1d4ed8;padding:30px;border-radius:12px}p{font-size:20px}</style></head><body><div class="box"><h1>Certificate of Completion (Sample)</h1><p>This certifies that <b>${name}</b> completed <b>English Typing Mastery (100 Levels)</b>.</p><p>Best WPM: <b>45</b> | Date: <b>${new Date().toLocaleDateString()}</b></p><p>DataLearn10X</p></div></body></html>`);
+    w.document.close();
+    w.focus();
   };
 
   resetLevel(); render();
