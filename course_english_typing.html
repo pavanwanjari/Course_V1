@@ -73,7 +73,7 @@ textarea:focus{outline:2px solid #6991ff}
         <div class="stat"><small>WPM</small><b id="wpm">0</b></div>
         <div class="stat"><small>CPM</small><b id="cpm">0</b></div>
         <div class="stat"><small>Accuracy</small><b id="acc">100%</b></div>
-        <div class="stat"><small>Time</small><b id="time">60s</b></div>
+        <div class="stat"><small>Time</small><b id="time">120s</b></div>
         <div class="stat"><small>Streak</small><b id="streak">0</b></div>
       </div>
       <div class="finger-guide">
@@ -167,34 +167,35 @@ textarea:focus{outline:2px solid #6991ff}
 <script>
 (function(){
   const lowercasePool = [
-    'data analysis begins with clean reliable and well structured information every day',
-    'practice makes progress when your fingers stay relaxed and your eyes read ahead',
-    'strong communication and fast typing improve productivity in every office role',
-    'small daily sessions can build big confidence for interviews and online assessments'
+    'in this typing journey you will build calm finger control and stronger focus by typing complete office style paragraphs every day with steady rhythm proper posture and mindful breathing while keeping your eyes forward and your hands relaxed for long sessions that improve both speed and confidence',
+    'consistent keyboard practice helps students transform slow and random movement into accurate and intentional typing patterns because each paragraph teaches attention discipline and endurance and this daily repetition creates professional communication habits that are useful in reports email drafting and interview assessments for real jobs',
+    'when you practice longer paragraphs your brain learns how to predict words maintain flow and correct mistakes quickly which makes typing smoother across forms dashboards and documentation tasks and this gradual improvement supports better productivity in data analysis roles customer support communication and team collaboration work',
+    'strong fundamentals come from patient repetition so type each sentence clearly avoid rushing and maintain a balanced pace because accuracy first and speed second is the most reliable formula for stable progress and lasting performance during tests projects and time bound assignments'
   ];
   const uppercasePool = [
-    'Data Analysis Builds Career Confidence Through Daily Practice And Discipline',
-    'Strong Typing Habits Improve Interview Performance For Freshers And Professionals',
-    'Keyboard Accuracy Creates Better Reports Emails And Client Communication Quality'
+    'Professional Typing Growth Requires Consistent Daily Practice, Clear Breathing, And Deliberate Finger Movement Across Full Paragraph Tasks. When Learners Maintain Focus For Longer Sessions, They Build Better Endurance, Improve Reading Ahead Skills, And Produce Cleaner Business Communication For Reports, Dashboards, And Team Updates.',
+    'A Confident Candidate Types With Steady Rhythm, Proper Posture, And Strong Attention To Detail During Real Work Simulations. These Extended Paragraph Exercises Train You To Handle Documentation, Client Notes, And Project Summaries Without Panic While Preserving Accuracy Even Under Time Pressure.',
+    'Successful Analysts And Operations Professionals Depend On Reliable Typing Habits To Deliver Fast Email Responses, Error Free Records, And Structured Insights. By Practicing Complex Paragraphs With Capital Letters And Formal Sentence Patterns, You Prepare For Interviews, Assessments, And Everyday Office Communication.'
   ];
   const numberPool = [
-    'Daily target 25 words in 60 seconds with 95 percent accuracy and 0 shortcuts',
-    'Type 10 reports 5 updates and 3 follow ups before 6 pm every weekday',
-    'Practice 30 minutes for 7 days to improve from 20 wpm to 35 wpm'
+    'In Week 1, complete 4 focused sessions every day for 20 minutes and track at least 45 words per paragraph. In Week 2, raise your target to 50 words, maintain 96 percent accuracy, and reduce avoidable corrections by 30 percent while sustaining attention from line 1 to line 4 without pause.',
+    'A structured plan can include 3 practice rounds of 90 seconds, 2 review rounds of 120 seconds, and 1 final challenge round above 150 seconds. Record your score after each attempt, compare progress every 7 days, and aim to improve both consistency and confidence by small measurable steps.',
+    'Type 48 to 65 words per paragraph across 5 levels daily, hold posture for 10 minutes at a stretch, and keep your eyes on the text instead of the keyboard. This numerical routine improves speed stability, reduces random errors, and builds readiness for timed online evaluation formats.'
   ];
   const symbolPool = [
-    'Email: hiring.team@company.com | Score: 92% | Time: 08:30 pm.',
-    'Task #1: clean-data, Task #2: build-dashboard, Task #3: send-report!',
-    'Use brackets ( ), commas, dots, and slashes / to type real office text.'
+    'Project Update #4: Please verify sales_data_2026.csv, clean null values (if any), and submit the final report by 07:30 PM. Share status on email: operations.team@datalearn10x.com, include KPI trend (+12.5%), and mention pending issues in 3 bullet points before sign-off.',
+    'Task Flow (Daily): 1) collect inputs, 2) validate records, 3) fix format mismatches, 4) publish dashboard, and 5) send summary to hr.support@company.org. Accuracy target: >= 97%; rework allowance: <= 2%; completion window: 08:00 AM - 09:45 AM for every training batch.',
+    'Communication Drill: Draft a concise message, use commas, semicolons; brackets ( ), and symbols like /, -, &, and %. Example: "Team - please review Q3 metrics / priority items, confirm closures by 6:15 PM, and attach tracker_v2.xlsx before final submission."'
   ];
 
   function makeLevel(i){
     const n=i+1;
-    if(n<=20) return {condition:'Lowercase Basics', text:`${lowercasePool[i%lowercasePool.length]}. level ${n}`};
-    if(n<=40) return {condition:'Sentence Case + Capitals', text:`${uppercasePool[i%uppercasePool.length]}. Level ${n}`};
-    if(n<=60) return {condition:'Numbers + Speed Control', text:`${numberPool[i%numberPool.length]}. level ${n}`};
-    if(n<=80) return {condition:'Symbols + Punctuation', text:`${symbolPool[i%symbolPool.length]} level ${n}`};
-    return {condition:'Mixed Challenge (Caps + Numbers + Symbols)', text:`${uppercasePool[i%uppercasePool.length]} | KPI ${20+(i%9)}% | Batch ${100+n} | Focus: accuracy > 95%. Level ${n}`};
+    const phaseNote = ` This is practice level ${n} of 100, so complete the full paragraph with accuracy above ninety five percent before moving ahead.`;
+    if(n<=20) return {condition:'Lowercase Basics (Long Paragraph)', text:`${lowercasePool[i%lowercasePool.length]}${phaseNote}`};
+    if(n<=40) return {condition:'Sentence Case + Capitals (Long Paragraph)', text:`${uppercasePool[i%uppercasePool.length]}${phaseNote}`};
+    if(n<=60) return {condition:'Numbers + Time Targets (Long Paragraph)', text:`${numberPool[i%numberPool.length]}${phaseNote}`};
+    if(n<=80) return {condition:'Symbols + Punctuation Mastery (Long Paragraph)', text:`${symbolPool[i%symbolPool.length]}${phaseNote}`};
+    return {condition:'Advanced Mixed Challenge (Caps + Numbers + Symbols)', text:`${uppercasePool[i%uppercasePool.length]} ${numberPool[i%numberPool.length]} ${symbolPool[i%symbolPool.length]} This advanced level ${n} is intentionally harder, so keep flow control, error correction discipline, and consistent rhythm across the entire paragraph.`};
   }
 
   const levels = Array.from({length:100}, (_,i)=>makeLevel(i));
@@ -206,7 +207,7 @@ textarea:focus{outline:2px solid #6991ff}
     totalSeconds: Number(localStorage.getItem('typing_total_seconds')||0),
     lastPractice: localStorage.getItem('typing_last_practice')||'',
     board: JSON.parse(localStorage.getItem('typing_weekly_board')||'[]'),
-    timer:null, started:false, secs:60, typed:'', streak:0
+    timer:null, started:false, secs:120, typed:'', streak:0
   };
 
   const $ = id=>document.getElementById(id);
@@ -361,8 +362,8 @@ textarea:focus{outline:2px solid #6991ff}
   }
 
   function resetLevel(){
-    clearInterval(s.timer); s.started=false; s.secs=60; input.value=''; input.disabled=false;
-    timeEl.textContent='60s'; wpmEl.textContent='0'; cpmEl.textContent='0'; accEl.textContent='100%';
+    clearInterval(s.timer); s.started=false; s.secs=120; input.value=''; input.disabled=false;
+    timeEl.textContent='120s'; wpmEl.textContent='0'; cpmEl.textContent='0'; accEl.textContent='100%';
     renderPrompt(); renderLevels();
     keyEls.forEach(el=>el.classList.remove('correct','wrong'));
     bestText.textContent='Best WPM: '+(s.bestWpm[s.level]||0);
