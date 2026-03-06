@@ -13,14 +13,14 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at 20% 10%,#1f2a4d 0,#0f172a 45%,#0b1328 100%);color:var(--txt)}
 a{color:inherit}
-.wrap{max-width:1150px;margin:auto;padding:18px 14px 34px}
+.wrap{max-width:1460px;margin:auto;padding:18px 18px 34px}
 .hero{position:relative;background:linear-gradient(120deg,#1f3b78,#334fbd,#6236ff);border-radius:18px;padding:68px 20px 20px;box-shadow:0 20px 50px rgba(0,0,0,.35);text-align:center}
 .hero h1{margin:0 0 6px;font-size:clamp(24px,4vw,36px)}
 .hero p{margin:0;color:#e5ecff}
 .hero-home{position:absolute;top:14px;left:14px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;z-index:2}
 .hero-home img{height:34px;width:auto;display:block}
 .badges{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}.badge{background:#ffffff26;border:1px solid #ffffff33;padding:6px 10px;border-radius:999px;font-size:12px}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+.grid{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;margin-top:14px;align-items:start}
 .card{background:linear-gradient(180deg,#131f3b,#111b33);border:1px solid #31416f;border-radius:16px;padding:16px}
 .stats{display:grid;grid-template-columns:repeat(5,minmax(90px,1fr));gap:8px}.stat{background:#0e1730;border:1px solid #2f3e6a;border-radius:12px;padding:10px;text-align:center}.stat b{font-size:20px;display:block}
 #prompt{line-height:1.7;background:#0d162d;border:1px solid #2f3e6a;border-radius:12px;padding:14px;min-height:110px;font-size:18px}
@@ -54,7 +54,7 @@ textarea:focus{outline:2px solid #6991ff}
 .board-list{margin:8px 0 0;padding-left:18px;color:#d5e4ff;font-size:13px;line-height:1.7}
 .inline-input{width:100%;padding:9px;border-radius:8px;border:1px solid #3a4d80;background:#111c36;color:#fff;margin-top:6px}
 
-@media (max-width:960px){.hero{padding:72px 14px 14px}.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:1200px){.grid{grid-template-columns:1fr}.hero{padding:72px 14px 14px}.stats{grid-template-columns:repeat(3,1fr)}.level-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
