@@ -154,6 +154,8 @@ textarea:focus{outline:2px solid #6991ff}
       <div class="g-card">
         <b>🎓 Level 100 Certificate</b>
         <div class="kb-note">Complete level 100 to unlock your printable certificate.</div>
+        <div class="kb-note">Want a quick preview now? Enter your name above and use the sample button.</div>
+        <button class="btn sec" id="sampleCertificateBtn" style="margin-top:8px">Preview Sample Certificate</button>
         <button class="btn sec" id="certificateBtn" style="margin-top:8px" disabled>Download Certificate</button>
       </div>
     </aside>
@@ -209,7 +211,7 @@ textarea:focus{outline:2px solid #6991ff}
   const levelNum=$('levelNum'), promptEl=$('prompt'), input=$('input'), msg=$('msg'), levelsWrap=$('levels'), levelCondition=$('levelCondition');
   const wpmEl=$('wpm'), cpmEl=$('cpm'), accEl=$('acc'), timeEl=$('time'), streakEl=$('streak'), bestText=$('bestText');
   const progressUnlocked=$('progressUnlocked'), progressCompleted=$('progressCompleted'), progressTime=$('progressTime'), progressLast=$('progressLast');
-  const badgeWrap=$('badgeWrap'), boardList=$('boardList'), playerName=$('playerName'), certificateBtn=$('certificateBtn');
+  const badgeWrap=$('badgeWrap'), boardList=$('boardList'), playerName=$('playerName'), certificateBtn=$('certificateBtn'), sampleCertificateBtn=$('sampleCertificateBtn');
 
   const keyEls=Array.from(document.querySelectorAll('.key'));
 
@@ -428,6 +430,15 @@ textarea:focus{outline:2px solid #6991ff}
     w.document.close();
     w.focus();
     w.print();
+  };
+
+  sampleCertificateBtn.onclick=()=>{
+    const name=(playerName.value||'').trim()||'Your Name';
+    const w=window.open('','_blank');
+    if(!w) return;
+    w.document.write(`<html><head><title>Sample Typing Certificate</title><style>body{font-family:Arial;padding:30px;text-align:center}h1{font-size:40px;margin-bottom:10px}.box{border:6px solid #1d4ed8;padding:30px;border-radius:12px}p{font-size:20px}</style></head><body><div class="box"><h1>Certificate of Completion (Sample)</h1><p>This certifies that <b>${name}</b> completed <b>English Typing Mastery (100 Levels)</b>.</p><p>Best WPM: <b>45</b> | Date: <b>${new Date().toLocaleDateString()}</b></p><p>DataLearn10X</p></div></body></html>`);
+    w.document.close();
+    w.focus();
   };
 
   resetLevel(); render();
