@@ -75,6 +75,16 @@ button.danger{background:#b42318;}
   </div>
 
   <div class="panel">
+    <h3>Course Page Popularity</h3>
+    <div id="courseBars"></div>
+  </div>
+
+  <div class="panel">
+    <h3>Page Insights</h3>
+    <div id="pageBars"></div>
+  </div>
+
+  <div class="panel">
     <h3>Recent Events</h3>
     <table>
       <thead><tr><th>Time</th><th>Event</th><th>Page</th><th>Details</th></tr></thead>
@@ -184,18 +194,43 @@ async function clearDataSecure(){
 function render(){
   var events = PSAAnalytics.getStoredEvents();
   var counts = {};
-  events.forEach(function(e){ counts[e.event] = (counts[e.event] || 0) + 1; });
+  var courseCounts = {};
+  var pageCounts = {};
+  var dayCounts = {};
+
+  events.forEach(function(e){
+    counts[e.event] = (counts[e.event] || 0) + 1;
+
+    var pageName = (e.page || '/').split('/').pop() || 'index.html';
+    pageCounts[pageName] = (pageCounts[pageName] || 0) + 1;
+
+    var dayKey = new Date(e.ts).toISOString().slice(0,10);
+    dayCounts[dayKey] = (dayCounts[dayKey] || 0) + 1;
+
+    if(e.event === 'course_page_viewed'){
+      var courseName = (e.payload && e.payload.course) || pageName.replace('.html','');
+      courseCounts[courseName] = (courseCounts[courseName] || 0) + 1;
+    }
+  });
 
   var buy = counts.buy_now_clicked || 0;
   var success = counts.payment_success || 0;
   var verifySuccess = counts.verify_success || 0;
   var failed = counts.payment_failed || 0;
+  var courseViews = Object.values(courseCounts).reduce(function(a,b){ return a+b; }, 0);
+  var topCourse = Object.keys(courseCounts).sort(function(a,b){ return courseCounts[b]-courseCounts[a]; })[0] || '-';
+  var uniqueCoursePages = Object.keys(courseCounts).length;
+  var uniquePages = Object.keys(pageCounts).length;
 
   var conversion = buy ? ((success / buy) * 100).toFixed(1) + "%" : "0%";
   var verifyRate = success ? ((verifySuccess / success) * 100).toFixed(1) + "%" : "0%";
 
   var summary = [
     ["Total Events", events.length],
+    ["Course Page Views", courseViews],
+    ["Top Course", topCourse],
+    ["Unique Course Pages", uniqueCoursePages],
+    ["Unique Pages Visited", uniquePages],
     ["Buy Clicks", buy],
     ["Payments Success", success],
     ["Payments Failed", failed],
@@ -214,11 +249,34 @@ function render(){
   }).join('');
   document.getElementById("bars").innerHTML = barsHtml || '<p>No events yet.</p>';
 
+  var maxCourse = Math.max.apply(null, Object.values(courseCounts).concat([1]));
+  var courseBars = Object.keys(courseCounts).sort(function(a,b){ return courseCounts[b]-courseCounts[a]; }).map(function(name){
+    var width = Math.round((courseCounts[name]/maxCourse)*100);
+    return '<div class="bar-row"><div class="bar-label">'+name+'</div><div class="bar-track"><div class="bar-fill" style="width:'+width+'%"></div></div><div class="bar-count">'+courseCounts[name]+'</div></div>';
+  }).join('');
+  document.getElementById("courseBars").innerHTML = courseBars || '<p>No course page views yet. Open course pages to start collecting data.</p>';
+
+  var maxPage = Math.max.apply(null, Object.values(pageCounts).concat([1]));
+  var topPages = Object.keys(pageCounts).sort(function(a,b){ return pageCounts[b]-pageCounts[a]; }).slice(0,10);
+  var pageBars = topPages.map(function(name){
+    var width = Math.round((pageCounts[name]/maxPage)*100);
+    return '<div class="bar-row"><div class="bar-label">'+name+'</div><div class="bar-track"><div class="bar-fill" style="width:'+width+'%"></div></div><div class="bar-count">'+pageCounts[name]+'</div></div>';
+  }).join('');
+
+  var latestDays = Object.keys(dayCounts).sort().slice(-7);
+  var recentActivity = latestDays.map(function(day){
+    return day+' ('+dayCounts[day]+')';
+  }).join(' • ');
+
+  document.getElementById("pageBars").innerHTML = (pageBars || '<p>No page traffic yet.</p>') +
+    '<p style="margin-top:10px;font-size:12px;color:#5d6d8a"><b>Last 7 days activity:</b> '+(recentActivity || 'No recent events')+'</p>';
+
   var rows = events.slice().reverse().slice(0,20).map(function(e){
     return '<tr><td>'+new Date(e.ts).toLocaleString()+'</td><td>'+e.event+'</td><td>'+e.page+'</td><td>'+JSON.stringify(e.payload || {})+'</td></tr>';
   }).join('');
   document.getElementById("rows").innerHTML = rows || '<tr><td colspan="4">No events yet.</td></tr>';
 }
+
 
 var existing = getSession();
 if(existing){
