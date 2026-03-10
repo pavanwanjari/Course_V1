@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Join DataLearn10X job-ready data analytics programs with practical projects in Excel, Python, Power BI, Tableau, SQL, and ML.">
+  <meta name="theme-color" content="#12335f">
+  <meta property="og:title" content="DataLearn10X - Data Analytics Programs">
+  <meta property="og:description" content="Practical, job-ready data analytics programs with projects, mentor support, and affordable pricing.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="dl10x.png">
   <title>DataLearn10X - Data Analytics Programs</title>
-<link rel="icon" type="image/png" href="dl10x.png">
+  <link rel="icon" type="image/png" href="dl10x.png">
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="analytics.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -141,12 +146,12 @@
 
       <div class="total" id="totalText">Total: ₹0</div>
       <div class="form">
-        <input type="text" id="name" placeholder="Enter Name"><br>
-        <input type="email" id="email" placeholder="Enter Email"><br>
-        <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10"><br>
-        <input type="text" id="profession" placeholder="Enter Current Profession (e.g., Student / Working Professional)"><br>
+        <input type="text" id="name" placeholder="Enter Name" autocomplete="name" required><br>
+        <input type="email" id="email" placeholder="Enter Email" autocomplete="email" required><br>
+        <input type="tel" id="mobile" placeholder="Enter Mobile Number" inputmode="numeric" minlength="10" maxlength="10" pattern="[0-9]{10}" autocomplete="tel-national" required><br>
+        <input type="text" id="profession" placeholder="Enter Current Profession (e.g., Student / Working Professional)" autocomplete="organization-title" required><br>
         <button class="btn" id="buyBtn" onclick="payNow()">Buy Now</button>
-        <p id="msg"></p>
+        <p id="msg" aria-live="polite"></p>
         <a class="btn-link" href="check_email.html">Already Purchased? Access Course</a>
       </div>
     </div>
@@ -193,7 +198,7 @@
   <footer>
     <div class="brand">DataLearn10X</div>
     <div style="margin:8px 0 6px;"><a href="about.html" style="color:#bfdbfe;text-decoration:none;font-weight:600;">About Us</a></div>
-    © 2026 DataLearn10X <br> 📧 shubhams2018@gmail.com | 📞 9403030512 / 7507940073
+    © <span id="year"></span> DataLearn10X <br> 📧 shubhams2018@gmail.com | 📞 9403030512 / 7507940073
   </footer>
 
 <script>
@@ -356,6 +361,7 @@ parsePreselect();
 updateTotal();
 animateMetrics();
 track('landing_page_viewed',{page:'index_datalearn10x'});
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
